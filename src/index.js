@@ -34,6 +34,8 @@ import './assets/scss/style.scss'
 
 // ** Service Worker
 import * as serviceWorker from './serviceWorker'
+import axios from 'axios'
+axios.defaults.baseURL = process.env.REACT_APP_API_URL
 
 // ** Lazy load app
 const LazyApp = lazy(() => import('./App'))

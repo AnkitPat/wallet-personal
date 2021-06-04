@@ -13,7 +13,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import LayoutWrapper from '@layouts/components/layout-wrapper'
 
 // ** Router Components
-import { BrowserRouter as AppRouter, Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 // ** Routes & Default Routes
 import { DefaultRoute, Routes } from './routes'

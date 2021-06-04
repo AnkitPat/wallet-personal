@@ -1,24 +1,34 @@
-import InputPasswordToggle from '@components/input-password-toggle'
 import { useSkin } from '@hooks/useSkin'
 import { handleLogin } from '@store/actions/auth'
 import '@styles/base/pages/page-auth.scss'
-import classnames from 'classnames'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
   Button, CardText, CardTitle, Col,
   CustomInput, Form,
-  FormGroup, Input,
+  FormGroup,
   Label, Row
 } from 'reactstrap'
+import {yupResolver} from "@hookform/resolvers/yup"
+import * as Yup from "yup"
 
 
 const Login = props => {
   const [skin, setSkin] = useSkin()
   const dispatch = useDispatch()
 
-  const { register, errors, handleSubmit } = useForm()
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+        .email('Invalid email')
+        .required('Email is required'),
+    password: Yup.string().required('Password is required')
+  })
+
+  const { register, formState: { errors }, handleSubmit } = useForm({
+    resolver: yupResolver(validationSchema)
+  })
+
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
       source = require(`@src/assets/images/pages/${illustration}`).default
 
@@ -41,7 +51,7 @@ const Login = props => {
                   <stop stopColor='#FFFFFF' offset='100%'></stop>
                 </linearGradient>
               </defs>
-              
+
               <g id='Page-1' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
                 <g id='Artboard' transform='translate(-400.000000, -178.000000)'>
                   <g id='Group' transform='translate(400.000000, 178.000000)'>
@@ -97,31 +107,42 @@ const Login = props => {
                   <Label className='form-label' for='login-email'>
                     Email
                   </Label>
-                  <Input
-                      autoFocus
-                      type='email'
-                      id='login-email'
-                      name='username'
-                      placeholder='john@example.com'
-                      className={classnames({ 'is-invalid': errors['username'] })}
-                      innerRef={register({ required: true, validate: value => value !== '' })}
+                  <input
+                      {...register('username')}
+                      type="email"
+                      className={`form-control ${
+                          errors && errors.username ? 'is-invalid' : ''
+                      }`}
+                      placeholder="Email"
+                      aria-label="Email"
+                      aria-describedby="email-addon"
                   />
+                  <div className="invalid-feedback">
+                    {errors && errors.username && errors.username.message}
+                  </div>
                 </FormGroup>
                 <FormGroup>
                   <div className='d-flex justify-content-between'>
                     <Label className='form-label' for='login-password'>
                       Password
                     </Label>
-                    <Link to='/forgot-password'>
-                      <small>Forgot Password?</small>
-                    </Link>
                   </div>
-                  <InputPasswordToggle
-                      id='login-password'
-                      name='password'
-                      className={classnames({ 'is-invalid': errors['password'] })}
-                      innerRef={register({ required: true, validate: value => value !== '' })}
+                  <input
+                      {...register('password')}
+                      type="password"
+                      className={`form-control ${
+                          errors && errors.password ? 'is-invalid' : ''
+                      }`}
+                      placeholder="Password"
+                      aria-label="Password"
+                      aria-describedby="password-addon"
                   />
+                  <div className="invalid-feedback">
+                    {errors && errors.password && errors.password.message}
+                  </div>
+                  <Link to='/forgot-password'>
+                    <small>Forgot Password?</small>
+                  </Link>
                 </FormGroup>
                 <FormGroup>
                   <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
