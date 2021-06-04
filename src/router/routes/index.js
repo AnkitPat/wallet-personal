@@ -25,6 +25,22 @@ const Routes = [
     }
   },
   {
+    path: '/register',
+    component: lazy(() => import('../../views/Authentication/Register')),
+    layout: 'BlankLayout',
+    meta: {
+      authRoute: true
+    }
+  },
+  {
+    path: '/verification',
+    component: lazy(() => import('../../views/Authentication/Verification')),
+    layout: 'BlankLayout',
+    meta: {
+      authRoute: true
+    }
+  },
+  {
     path: '/error',
     component: lazy(() => import('../../views/Error')),
     layout: 'BlankLayout'

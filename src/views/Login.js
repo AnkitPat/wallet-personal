@@ -1,24 +1,18 @@
-import classnames from 'classnames'
-import { useSkin } from '@hooks/useSkin'
-import { useDispatch } from 'react-redux'
-import { useForm } from 'react-hook-form'
-import { handleLogin } from '@store/actions/auth'
-import { Link } from 'react-router-dom'
 import InputPasswordToggle from '@components/input-password-toggle'
+import { useSkin } from '@hooks/useSkin'
+import { handleLogin } from '@store/actions/auth'
+import '@styles/base/pages/page-auth.scss'
+import classnames from 'classnames'
+import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import {
-  Row,
-  Col,
-  CardTitle,
-  CardText,
-  Form,
-  Input,
-  FormGroup,
-  Label,
-  CustomInput,
-  Button
+  Button, CardText, CardTitle, Col,
+  CustomInput, Form,
+  FormGroup, Input,
+  Label, Row
 } from 'reactstrap'
 
-import '@styles/base/pages/page-auth.scss'
 
 const Login = props => {
   const [skin, setSkin] = useSkin()
@@ -47,6 +41,7 @@ const Login = props => {
                   <stop stopColor='#FFFFFF' offset='100%'></stop>
                 </linearGradient>
               </defs>
+              
               <g id='Page-1' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
                 <g id='Artboard' transform='translate(-400.000000, -178.000000)'>
                   <g id='Group' transform='translate(400.000000, 178.000000)'>

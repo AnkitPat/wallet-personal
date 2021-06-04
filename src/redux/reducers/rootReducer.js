@@ -5,8 +5,11 @@ import { combineReducers } from 'redux'
 import auth from './auth'
 import navbar from './navbar'
 import layout from './layout'
+import { connectRouter } from 'connected-react-router'
+import { history } from '../../utility/Utils'
 
 const rootReducer = combineReducers({
+  router: connectRouter(history),
   auth,
   navbar,
   layout

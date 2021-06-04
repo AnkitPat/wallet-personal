@@ -2,6 +2,7 @@
 import useJwt from '@src/auth/jwt/useJwt'
 import axios from "axios"
 import {toast} from "react-toastify"
+import { config as server } from '@src/config'
 import {history} from "../../../utility/Utils"
 
 const config = useJwt.jwtConfig
@@ -9,7 +10,7 @@ const config = useJwt.jwtConfig
 // ** Handle User Login
 export const handleLogin = data => {
     return dispatch => {
-        return axios.post('http://localhost:3006/auth/login', data).then(response => {
+        return axios.post(`${server.server.apiURL}auth/login`, data).then(response => {
             dispatch({
                 type: 'LOGIN',
                 [config.storageTokenKeyName]: response.data.access_token
@@ -17,6 +18,21 @@ export const handleLogin = data => {
 
             localStorage.setItem(config.storageTokenKeyName, JSON.stringify(response.data.access_token))
             history.push('/home')
+        }).catch(error => {
+            console.log(error)
+            //toast.error(error.response.data.message)
+        })
+    }
+}
+
+
+// ** Handle User Register
+export const handleRegister = data => {
+    return dispatch => {
+        return axios.post(`${server.server.apiURL}auth/register`, data).then(response => {
+            
+
+            history.push('/verification')
         }).catch(error => {
             console.log(error)
             //toast.error(error.response.data.message)
