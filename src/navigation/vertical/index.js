@@ -12,5 +12,11 @@ export default [
     title: 'Second Page',
     icon: <Mail size={20} />,
     navLink: '/second-page'
+  },
+  {
+    id: 'secondPage',
+    title: 'Second Page',
+    icon: <Mail size={20} />,
+    navLink: '/bounties'
   }
 ]
