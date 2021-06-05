@@ -45,6 +45,14 @@ const Routes = [
     }
   },
   {
+    path: '/forgotpassword',
+    component: lazy(() => import('../../views/Authentication/ForgotPassword')),
+    layout: 'BlankLayout',
+    meta: {
+      authRoute: true
+    }
+  },
+  {
     path: '/myaccount',
     exact: true,
     component: lazy(() => import('../../views/MyAccount'))

@@ -5,6 +5,7 @@ import {toast} from "react-toastify"
 import {history} from "../../../utility/Utils"
 import { axiosInstance } from '../../../utility/api'
 import { saveUserDetailsAction } from './actions'
+import {config as server} from '@src/config'
 
 const config = useJwt.jwtConfig
 
@@ -16,7 +17,7 @@ function fetchUserInformation() {
 // ** Handle User Login
 export const handleLogin = data => {
     return dispatch => {
-        return axios.post(`auth/login`, data).then(response => {
+        return axios.post(`${server.server.apiURL}auth/login`, data).then(response => {
             dispatch({
                 type: 'LOGIN',
                 [config.storageTokenKeyName]: response.data.access_token
@@ -35,8 +36,21 @@ export const handleLogin = data => {
 // ** Handle User Register
 export const handleRegister = data => {
     return dispatch => {
-        return axios.post(`auth/register`, data).then(response => {
+        return axios.post(`${server.server.apiURL}auth/register`, data).then(response => {
             history.push('/verification')
+        }).catch(error => {
+            console.log(error)
+            toast.error(error.response.data.message)
+        })
+    }
+}
+
+// ** Handle Forgot Password
+export const handleForgotPassword = data => {
+    return dispatch => {
+        return axios.post(`${server.server.apiURL}auth/forgotPassword`, data).then(response => {
+            history.push('/login')
+            toast.success("Email sent to reset password!!")
         }).catch(error => {
             console.log(error)
             toast.error(error.response.data.message)
@@ -81,6 +95,7 @@ export const handleLogout = () => {
         // ** Remove user, accessToken & refreshToken from localStorage
         localStorage.removeItem('userData')
         localStorage.removeItem(config.storageTokenKeyName)
+        localStorage.removeItem('token')
         localStorage.removeItem(config.storageRefreshTokenKeyName)
     }
 }

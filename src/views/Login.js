@@ -5,10 +5,12 @@ import classNames from 'classnames'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import InputPasswordToggle from '@components/input-password-toggle'
 import {
   Button, CardText, CardTitle, Col,
   CustomInput, Form,
   FormGroup,
+  Input,
   Label, Row
 } from 'reactstrap'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -132,7 +134,7 @@ const Login = props => {
                   <Label className='form-label' for='login-password'>
                     Password
                     </Label>
-                  <Link to='/forgot-password'>
+                  <Link to='/forgotpassword'>
                     <small>Forgot Password?</small>
                   </Link>
                 </div>
