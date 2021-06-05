@@ -1,7 +1,7 @@
+const config = {
+  server: {
+    apiURL: 'https://staging.bliiink.ga/'
+  }
+}
 
-
-const config = {server : {
-  apiURL: 'https://staging.bliiink.ga/'
-}}
-
-export {config}
+export  {config}

@@ -1,4 +1,3 @@
-import InputPasswordToggle from '@components/input-password-toggle'
 import { useSkin } from '@hooks/useSkin'
 import { handleLogin } from '@store/actions/auth'
 import '@styles/base/pages/page-auth.scss'
@@ -9,7 +8,7 @@ import { Link } from 'react-router-dom'
 import {
   Button, CardText, CardTitle, Col,
   CustomInput, Form,
-  FormGroup, Input,
+  FormGroup,
   Label, Row
 } from 'reactstrap'
 import { yupResolver } from '@hookform/resolvers/yup'
