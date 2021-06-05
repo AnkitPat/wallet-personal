@@ -1,22 +1,29 @@
+import produce from 'immer'
+import { SAVE_USER_DETAILS } from "../../actions/auth/actions"
+
 // **  Initial State
 const initialState = {
-  userData: {}
+  userDetails: {},
+  accessToken: ''
 }
 
-const authReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'LOGIN':
-      return {
-        ...state,
-        accessToken: action.accessToken
-      }
-    case 'LOGOUT':
-      const obj = { ...action }
-      delete obj.type
-      return { ...state, userData: {}, ...obj }
-    default:
-      return state
-  }
-}
+/* eslint-disable default-case, no-param-reassign */
+const authReducer = (state = initialState, action) =>
+  produce(state, draft => {
+    switch (action.type) {
+      case 'LOGIN':
+        draft.accessToken = action.accessToken
+        break
+
+      case 'LOGOUT':
+        draft.accessToken = ''
+        draft.userDetails = {}
+        break
+
+      case SAVE_USER_DETAILS:
+        draft.userDetails = action.userDetails
+        break
+    }
+  })
 
 export default authReducer

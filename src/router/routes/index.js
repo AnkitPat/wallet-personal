@@ -41,6 +41,16 @@ const Routes = [
     }
   },
   {
+    path: '/myaccount',
+    exact: true,
+    component: lazy(() => import('../../views/MyAccount'))
+  },
+  {
+    path: '/myaccount/edit',
+    exact: true,
+    component: lazy(() => import('../../views/AccountSettings'))
+  },
+  {
     path: '/error',
     component: lazy(() => import('../../views/Error')),
     layout: 'BlankLayout'

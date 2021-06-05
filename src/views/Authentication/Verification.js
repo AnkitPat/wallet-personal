@@ -9,25 +9,14 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { useDispatch } from 'react-redux'
-import { handleRegister } from '../../redux/actions/auth'
+import { handleRegister, handleVerification } from '../../redux/actions/auth'
 
 const Verification = () => {
 
   const dispatch = useDispatch()
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string()
-      .required('Email is required')
-      .email('Email is invalid'),
-    phone: Yup.string().required('Phone is required'),
-    password: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Password is required'),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Passwords must match')
-      .required('Confirm Password is required'),
-    acceptTerms: Yup.bool().oneOf([true], 'Accept Ts & Cs is required')
+    code: Yup.string().required('Code is required')
   })
 
   const {
@@ -39,7 +28,7 @@ const Verification = () => {
     resolver: yupResolver(validationSchema)
   })
 
-  const onSubmit = values => dispatch(handleRegister({...values, roleId: roleSelected === 1 ? 'artist' : 'regular'}))
+  const onSubmit = values => dispatch(handleVerification(values))
 
   return (
     <div className='auth-wrapper auth-v1 px-2'>
@@ -98,91 +87,30 @@ const Verification = () => {
               <h2 className='brand-text text-primary ml-1'>Potentiam</h2>
             </Link>
             <CardTitle tag='h4' className='mb-1'>
-              Create your account
+              Verify your account
             </CardTitle>
 
-            {/* <Form className='auth-register-form mt-2' onSubmit={handleSubmit(onSubmit)}>
-              <FormGroup className="d-flex flex-row">
-
-                <ButtonGroup>
-                  <Button color="primary" onClick={() => setRoleSelected(1)} active={roleSelected === 1}>Artist</Button>
-                  <Button color="primary" onClick={() => setRoleSelected(2)} active={roleSelected === 2}>Regular</Button>
-                </ButtonGroup>
-              </FormGroup>
+            <Form className='auth-register-form mt-2' onSubmit={handleSubmit(onSubmit)}>
+              
               <FormGroup>
                 <Label className='form-label' for='register-username'>
-                  Username
+                  Verification Code
                 </Label>
-                <Input type='text' id='register-username' placeholder='johndoe' autoFocus
-                  className={classNames({ 'is-invalid': errors['name'] })}
-                  {...register('name')}
+                <Input type='text' id='register-username' placeholder='Enter Verification Code' autoFocus
+                  className={classNames({ 'is-invalid': errors['code'] })}
+                  {...register('code')}
 
                 />
                 <small className='text-danger'>
-                  {errors.name && errors.name.message}
+                  {errors.code && errors.code.message}
                 </small>
               </FormGroup>
-              <FormGroup>
-                <Label className='form-label' for='register-email'>
-                  Email
-                </Label>
-                <Input type='email' id='register-email' placeholder='john@example.com'
-                  className={classNames({ 'is-invalid': errors['email'] })}
-                  {...register('email')}
-
-                />
-                <small className='text-danger'>
-                  {errors.email && errors.email.message}
-                </small>
-              </FormGroup>
-              <FormGroup>
-                <Label className='form-label' for='register-phone'>
-                  Phone
-                </Label>
-                <Input type='number' id='register-phone' placeholder='+4413456789'
-                  className={classNames({ 'is-invalid': errors['phone'] })}
-                  {...register('phone')}
-                />
-                <small className='text-danger'>
-                  {errors.phone && errors.phone.message}
-                </small>
-              </FormGroup>
-              <FormGroup>
-                <Label className='form-label' for='register-password'>
-                  Password
-                </Label>
-                <InputPasswordToggle 
-                className='input-group-merge' id='register-password'
-                  className={classNames({ 'is-invalid': errors['password'] })}
-                  {...register('password')}
-
-                />
-                <small className='text-danger'>
-                  {errors.password && errors.password.message}
-                </small>
-              </FormGroup>
-              <FormGroup>
-                <Label className='form-label' for='register-confirm-password'>
-                  Confirm Password
-                </Label>
-                <InputPasswordToggle className='input-group-merge' id='register-confirm-password'
-                  className={classNames({ 'is-invalid': errors['confirmPassword'] })}
-                  {...register('confirmPassword')}
-
-                />
-                <small className='text-danger'>
-                  {errors.confirmPassword && errors.confirmPassword.message}
-                </small>
-              </FormGroup>
+              
 
               <Button.Ripple color='primary' block type="submit">
                 Sign up
               </Button.Ripple>
-            </Form> */}
-            <CardText tag="h5" className="mt-2">
-              Already have an account?{' '}
-              <Link to="/login">Sign in here</Link>
-            </CardText>
+            </Form>
           </CardBody>
         </Card>
       </div>

@@ -33,6 +33,7 @@
     "flatpickr": "4.6.3",
     "history": "4.10.1",
     "html-to-draftjs": "1.5.0",
+    "immer": "^9.0.2",
     "intl-messageformat": "7.8.4",
     "jquery": "3.5.1",
     "jsonwebtoken": "8.5.1",
