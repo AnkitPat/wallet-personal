@@ -53,33 +53,7 @@ const BreadCrumbs = props => {
           </div>
         </div>
       </div>
-      <div className='content-header-right text-md-right col-md-3 col-12 d-md-block d-none'>
-        <div className='form-group breadcrum-right dropdown'>
-          <UncontrolledButtonDropdown>
-            <DropdownToggle color='primary' size='sm' className='btn-icon btn-round dropdown-toggle'>
-              <Grid size={14} />
-            </DropdownToggle>
-            <DropdownMenu tag='ul' right>
-              <DropdownItem tag={Link} to='/apps/chat'>
-                <CheckSquare className='mr-1' size={14} />
-                <span className='align-middle'>Todo</span>
-              </DropdownItem>
-              <DropdownItem tag={Link} to='/apps/chat'>
-                <MessageSquare className='mr-1' size={14} />
-                <span className='align-middle'>Chat</span>
-              </DropdownItem>
-              <DropdownItem tag={Link} to='/apps/email'>
-                <Mail className='mr-1' size={14} />
-                <span className='align-middle'>Email</span>
-              </DropdownItem>
-              <DropdownItem tag={Link} to='/apps/calendar'>
-                <Calendar className='mr-1' size={14} />
-                <span className='align-middle'>Calendar</span>
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledButtonDropdown>
-        </div>
-      </div>
+      
     </div>
   )
 }

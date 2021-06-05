@@ -4,6 +4,7 @@ import { toast } from "react-toastify"
 import { axiosInstance } from '../../../utility/api'
 import { history } from "../../../utility/Utils"
 import { handleUserInformation } from '../auth'
+import { setLoadingAction } from '../auth/actions'
 
 const config = useJwt.jwtConfig
 
@@ -33,6 +34,7 @@ function changePasswordAPI(data) {
 export const handleUserInformationUpdate = action => {
     return async (dispatch) => {
         try {
+            dispatch(setLoadingAction(true))
             const { isProfilePhotoUpdated } = action
             let { data } = action
             if (isProfilePhotoUpdated) {
@@ -48,8 +50,10 @@ export const handleUserInformationUpdate = action => {
             dispatch(handleUserInformation())
             toast.success('User information updated successfully')
             history.goBack()
+            dispatch(setLoadingAction(false))
         } catch (e) {
             console.log(e)
+            dispatch(setLoadingAction(false))
             toast.error('Error in updating user Info')
         }
     }
@@ -59,11 +63,14 @@ export const handleUserInformationUpdate = action => {
 export const handleChangePassword = data => {
     return async (dispatch) => {
         try {
+            dispatch(setLoadingAction(true))
             await changePasswordAPI(data)
             toast.success('User Password updated successfully')
             history.goBack()
+            dispatch(setLoadingAction(false))
         } catch (e) {
             console.log(e)
+            dispatch(setLoadingAction(false))
             toast.error('Error in updating user password')
         }
     }

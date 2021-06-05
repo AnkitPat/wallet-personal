@@ -5,6 +5,8 @@ import { combineReducers } from 'redux'
 import auth from './auth'
 import navbar from './navbar'
 import layout from './layout'
+import bounty from './bounty'
+import wallet from './wallet'
 import { connectRouter } from 'connected-react-router'
 import { history } from '../../utility/Utils'
 
@@ -12,7 +14,9 @@ const rootReducer = combineReducers({
   router: connectRouter(history),
   auth,
   navbar,
-  layout
+  layout,
+  bounty,
+  wallet
 })
 
 export default rootReducer

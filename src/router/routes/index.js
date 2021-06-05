@@ -17,10 +17,6 @@ const Routes = [
     component: lazy(() => import('../../views/SecondPage'))
   },
   {
-    path: '/bounties',
-    component: lazy(() => import('../../views/bounty/list/index'))
-  },
-  {
     path: '/login',
     component: lazy(() => import('../../views/Login')),
     layout: 'BlankLayout',
@@ -61,6 +57,36 @@ const Routes = [
     path: '/myaccount/edit',
     exact: true,
     component: lazy(() => import('../../views/AccountSettings'))
+  },
+  {
+    path: '/bounties',
+    exact: true,
+    component: lazy(() => import('../../views/bounty/list'))
+  },
+  {
+    path: '/bounties/add',
+    exact: true,
+    component: lazy(() => import('../../views/bounty/add'))
+  },
+  {
+    path: '/bounties/edit/:id',
+    exact: true,
+    component: lazy(() => import('../../views/bounty/add'))
+  },
+  {
+    path: '/bounties/:id',
+    exact: true,
+    component: lazy(() => import('../../views/bounty/details'))
+  },
+  {
+    path: '/wallet',
+    exact: true,
+    component: lazy(() => import('../../views/userWallet'))
+  },
+  {
+    path: '/wallet/history',
+    exact: true,
+    component: lazy(() => import('../../views/userWallet/history'))
   },
   {
     path: '/error',

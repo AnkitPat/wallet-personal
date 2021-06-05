@@ -8,7 +8,8 @@ import defaultImage from '../../assets/images/avatars/12.png'
 import { resetWarningCache } from 'prop-types'
 import { history } from '../../utility/Utils'
 import { handleUserInformationUpdate } from '../../redux/actions/myAccount'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { ProgressLoader } from '../../layouts/ProgressLoader'
 
 const GeneralTabs = ({ data }) => {
 
@@ -31,7 +32,7 @@ const GeneralTabs = ({ data }) => {
       .required('Email is required')
       .email('Email is invalid'),
     phone: Yup.string().required('Phone is required')
-    
+
   })
 
   const {
@@ -57,8 +58,7 @@ const GeneralTabs = ({ data }) => {
     }))
   }
 
-  console.log(getValues(), errors)
-
+  const loading = useSelector(state => state.auth.loading)
   return (
     <Fragment>
       <Media>
@@ -175,7 +175,7 @@ const GeneralTabs = ({ data }) => {
 
           <Col className='mt-2' sm='12'>
             <Button.Ripple type='submit' className='mr-1' color='primary'>
-              Save changes
+              {loading ? <ProgressLoader /> : ' Save changes'}
             </Button.Ripple>
             <Button.Ripple color='secondary' outline onClick={() => history.goBack()}>
               Cancel

@@ -8,8 +8,9 @@ import classNames from 'classnames'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { handleRegister } from '../../redux/actions/auth'
+import { ProgressLoader } from '../../layouts/ProgressLoader'
 
 const Register = () => {
   const [roleSelected, setRoleSelected] = useState(1)
@@ -40,8 +41,9 @@ const Register = () => {
     resolver: yupResolver(validationSchema)
   })
 
-  const onSubmit = values => dispatch(handleRegister({...values, roleId: roleSelected.toString()}))
+  const onSubmit = values => dispatch(handleRegister({ ...values }))
 
+  const loading = useSelector(state => state.auth.loading)
   return (
     <div className='auth-wrapper auth-v1 px-2'>
       <div className='auth-inner py-2'>
@@ -152,8 +154,8 @@ const Register = () => {
                 <Label className='form-label' for='register-password'>
                   Password
                 </Label>
-                <InputPasswordToggle 
-                className='input-group-merge' id='register-password'
+                <InputPasswordToggle
+                  className='input-group-merge' id='register-password'
                   className={classNames({ 'is-invalid': errors['password'] })}
                   {...register('password')}
 
@@ -176,9 +178,9 @@ const Register = () => {
                 </small>
               </FormGroup>
 
-              <Button.Ripple color='primary' block type="submit">
+              {loading ? <ProgressLoader /> : <Button.Ripple color='primary' block type="submit">
                 Sign up
-              </Button.Ripple>
+              </Button.Ripple>}
             </Form>
             <CardText tag="h5" className="mt-2">
               Already have an account?{' '}

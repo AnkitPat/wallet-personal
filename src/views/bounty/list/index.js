@@ -17,85 +17,70 @@ import {
     Media,
     Pagination,
     PaginationItem,
-    PaginationLink
+    PaginationLink,
+    ButtonToolbar,
+    Button
 } from 'reactstrap'
 
 import '@styles/base/pages/page-blog.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchBounties } from '../../../redux/actions/bounty'
+import { history } from '../../../utility/Utils'
+import { ProgressLoader } from '../../../layouts/ProgressLoader'
+import moment from 'moment'
 
 const BountyList = () => {
-    const [data, setData] = useState(null)
 
+    const dispatch = useDispatch()
     useEffect(() => {
-        axios.get('/blog/list/data').then(res => setData(res.data))
+        dispatch(fetchBounties())
     }, [])
 
-    const badgeColorsArr = {
-        Quote: 'light-info',
-        Fashion: 'light-primary',
-        Gaming: 'light-danger',
-        Video: 'light-warning',
-        Food: 'light-success'
-    }
+    const bounties = useSelector(state => state.bounty.bounties)
+
+    const loading = useSelector(state => state.bounty.loading)
+    const role = useSelector(state => state.auth.userRole)
+
     const renderRenderList = () => {
-        return data.map(item => {
-            const renderTags = () => {
-                return item.tags.map((tag, index) => {
-                    return (
-                        <a key={index} href='/' onClick={e => e.preventDefault()}>
-                            <Badge
-                                className={classnames({
-                                    'mr-50': index !== item.tags.length - 1
-                                })}
-                                color={badgeColorsArr[tag]}
-                                pill
-                            >
-                                {tag}
-                            </Badge>
-                        </a>
-                    )
-                })
-            }
+        return bounties.map((bounty, index) => {
+
 
             return (
-                <Col key={item.title} md='6'>
+                <Col key={index} md='6'>
                     <Card>
-                        <Link to={`/pages/blog/detail/${item.id}`}>
-                            <CardImg className='img-fluid' src={item.img} alt={item.title} top />
-                        </Link>
                         <CardBody>
-                            <CardTitle tag='h4'>
-                                <Link className='blog-title-truncate text-body-heading' to={`/pages/blog/detail/${item.id}`}>
-                                    {item.title}
+                            <CardTitle tag='h4' className="d-flex justify-content-between align-items-center">
+                                <Link className='blog-title-truncate text-body-heading' to={{ pathname: `/bounties/${bounty.id}`, data: bounty }}>
+                                    {bounty.title}
                                 </Link>
+                                <div className='my-1'><small>
+                                    Amount: {bounty.amount}
+                                </small>
+                                </div>
+
                             </CardTitle>
-                            <Media>
-                                <Avatar className='mr-50' img={item.avatar} imgHeight='24' imgWidth='24' />
-                                <Media body>
-                                    <small className='text-muted mr-25'>by</small>
-                                    <small>
-                                        <a className='text-body' href='/' onClick={e => e.preventDefault()}>
-                                            {item.userFullName}
-                                        </a>
-                                    </small>
-                                    <span className='text-muted ml-50 mr-25'>|</span>
-                                    <small className='text-muted'>{item.blogPosted}</small>
-                                </Media>
-                            </Media>
-                            <div className='my-1 py-25'>{renderTags()}</div>
-                            <CardText className='blog-content-truncate'>{item.excerpt}</CardText>
+                            <div className='text-danger'><small>
+                                Deadline: {moment(bounty.deadline).format('DD/MM/YYYY')}
+                            </small>
+                            </div>
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: bounty.description
+                                }}>
+                            </div>
                             <hr />
                             <div className='d-flex justify-content-between align-items-center'>
-                                <Link to={`/pages/blog/detail/${item.id}`}>
-                                    <MessageSquare size={15} className='text-body mr-50' />
-                                    <span className='text-body font-weight-bold'>{item.comment} Comments</span>
-                                </Link>
-                                <Link className='font-weight-bold' to={`/pages/blog/detail/${item.id}`}>
+
+                                <Link className='font-weight-bold' to={{ pathname: `/bounties/${bounty.id}` }}>
                                     Read More
                                 </Link>
+                                {role === 'administrator' ? <Link className='font-weight-bold' to={{ pathname: `/bounties/edit/${bounty.id}`, data: bounty }}>
+                                    Edit
+                                </Link> : <></> }
                             </div>
                         </CardBody>
                     </Card>
-                </Col>
+                </Col >
             )
         })
     }
@@ -104,65 +89,23 @@ const BountyList = () => {
         <Fragment>
             <Breadcrumbs
                 breadCrumbTitle='Blog List'
-                breadCrumbParent='Pages'
-                breadCrumbParent2='Blog'
+                breadCrumbParent='Bounties'
                 breadCrumbActive='List'
             />
             <div className='blog-wrapper'>
                 <div className='content-detached content-left'>
+                    <div className="my-2 d-flex justify-content-start">
+                        {role === 'administrator' ? <Button.Ripple color='primary' type="submit" onClick={() => history.push('/bounties/add')}>
+                            Add bounty
+              </Button.Ripple> : <></>}
+                    </div>
                     <div className='content-body'>
-                        {data !== null ? (
+                        {loading ? (<ProgressLoader size="lg" />) : (
                             <div className='blog-list-wrapper'>
                                 <Row>{renderRenderList()}</Row>
-                                <Row>
-                                    <Col sm='12'>
-                                        <Pagination className='d-flex justify-content-center mt-2'>
-                                            <PaginationItem className='prev-item'>
-                                                <PaginationLink href='#' onClick={e => e.preventDefault()}></PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                                                    1
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                                                    2
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                                                    3
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem active>
-                                                <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                                                    4
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                                                    5
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                                                    6
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                                                    7
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem className='next-item'>
-                                                <PaginationLink href='#' onClick={e => e.preventDefault()}></PaginationLink>
-                                            </PaginationItem>
-                                        </Pagination>
-                                    </Col>
-                                </Row>
+
                             </div>
-                        ) : null}
+                        )}
                     </div>
                 </div>
             </div>

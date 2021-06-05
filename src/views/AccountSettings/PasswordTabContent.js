@@ -5,8 +5,9 @@ import { Form, FormGroup, Row, Col, Button, Input } from 'reactstrap'
 import InputPasswordToggle from '@components/input-password-toggle'
 import * as Yup from 'yup'
 import { history } from '../../utility/Utils'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { handleChangePassword } from '../../redux/actions/myAccount'
+import { ProgressLoader } from '../../layouts/ProgressLoader'
 
 const PasswordTabContent = () => {
 
@@ -43,6 +44,7 @@ const PasswordTabContent = () => {
     reset({})
   }
 
+  const loading = useSelector(state => state.auth.loading)
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Row>
@@ -119,7 +121,7 @@ const PasswordTabContent = () => {
         </Col>
         <Col className='mt-1' sm='12'>
           <Button.Ripple type='submit' className='mr-1' color='primary'>
-            Save changes
+          {loading ? <ProgressLoader /> : ' Save changes'}
           </Button.Ripple>
           <Button.Ripple color='secondary' outline onClick={() => history.goBack()}>
             Cancel

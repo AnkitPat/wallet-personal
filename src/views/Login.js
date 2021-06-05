@@ -3,7 +3,7 @@ import { handleLogin } from '@store/actions/auth'
 import '@styles/base/pages/page-auth.scss'
 import classNames from 'classnames'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import InputPasswordToggle from '@components/input-password-toggle'
 import {
@@ -11,10 +11,11 @@ import {
   CustomInput, Form,
   FormGroup,
   Input,
-  Label, Row
+  Label, Row, Spinner
 } from 'reactstrap'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
+import { ProgressLoader } from '../layouts/ProgressLoader'
 
 const Login = props => {
   const [skin, setSkin] = useSkin()
@@ -44,6 +45,8 @@ const Login = props => {
   const onSubmit = data => {
     dispatch(handleLogin(data))
   }
+
+  const loading = useSelector(state => state.auth.loading)
 
   return (
     <div className='auth-wrapper auth-v2'>
@@ -151,9 +154,10 @@ const Login = props => {
               <FormGroup>
                 <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
               </FormGroup>
-              <Button.Ripple type='submit' color='primary' block>
+              {loading ? <ProgressLoader /> : <Button.Ripple type='submit' color='primary' block>
                 Sign in
-                </Button.Ripple>
+                </Button.Ripple>}
+
             </Form>
             <p className='text-center mt-2'>
               <span className='mr-25'>New on our platform?</span>

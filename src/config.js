@@ -1,6 +1,6 @@
 const config = {
   server: {
-    apiURL: 'https://staging.bliiink.ga/'
+    apiURL: process.env.REACT_APP_API_URL
   }
 }
 
