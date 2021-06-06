@@ -3,7 +3,6 @@ import { handleUserInformation } from "../auth"
 import { saveTokenInfoAction, setLoadingAction } from "./actions"
 
 async function fetchTokenInfoAPI() {
-    console.log(process.env)
     const response = await fetch(`https://api.ethplorer.io/getTokenInfo/0x7c32DB0645A259FaE61353c1f891151A2e7f8c1e?apiKey=${process.env.REACT_APP_API_ETHPLORER}`, {method: "GET"})
     return await response.json()
   }

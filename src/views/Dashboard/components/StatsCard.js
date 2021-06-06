@@ -32,7 +32,6 @@ const StatsCard = ({ cols, loader, tokenInfo }) => {
         }
     ]
 
-    console.log(tokenInfo, loader)
     return (
         <Card className='card-statistics'>
             <CardHeader>
