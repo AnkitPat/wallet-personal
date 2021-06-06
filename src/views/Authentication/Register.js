@@ -50,7 +50,7 @@ const Register = () => {
     resolver: yupResolver(validationSchema)
   })
 
-  const onSubmit = values => dispatch(handleRegister({ ...values, referralCode }))
+  const onSubmit = values => dispatch(handleRegister({ ...values, referralCode, roleId: 1 }))
 
   const loading = useSelector(state => state.auth.loading)
   return (
