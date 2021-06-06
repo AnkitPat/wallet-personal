@@ -7,6 +7,7 @@ import navbar from './navbar'
 import layout from './layout'
 import bounty from './bounty'
 import wallet from './wallet'
+import dashboard from './dashboard'
 import { connectRouter } from 'connected-react-router'
 import { history } from '../../utility/Utils'
 
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   navbar,
   layout,
   bounty,
-  wallet
+  wallet,
+  dashboard
 })
 
 export default rootReducer
