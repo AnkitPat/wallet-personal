@@ -14,7 +14,18 @@ import { ProgressLoader } from '../../layouts/ProgressLoader'
 
 const Register = () => {
   const [roleSelected, setRoleSelected] = useState(1)
+  const [referralCode, setReferralCode] = useState('')
+  const { search } = useLocation()
 
+  React.useEffect(() => {
+    if (search) {
+      const query = new URLSearchParams(search)
+      const parsedReferralCode = query ? query.get('referrer') : ''
+      if (parsedReferralCode && !isEmpty(parsedReferralCode)) {
+        setReferralCode(parsedReferralCode)
+      }
+    }
+  }, [search])
   const dispatch = useDispatch()
 
   const validationSchema = Yup.object().shape({
@@ -41,7 +52,7 @@ const Register = () => {
     resolver: yupResolver(validationSchema)
   })
 
-  const onSubmit = values => dispatch(handleRegister({ ...values }))
+  const onSubmit = values => dispatch(handleRegister({ ...values, referralCode }))
 
   const loading = useSelector(state => state.auth.loading)
   return (
@@ -105,18 +116,11 @@ const Register = () => {
             </CardTitle>
 
             <Form className='auth-register-form mt-2' onSubmit={handleSubmit(onSubmit)}>
-              <FormGroup className="d-flex flex-row">
-
-                <ButtonGroup>
-                  <Button color="primary" onClick={() => setRoleSelected(1)} active={roleSelected === 1}>Artist</Button>
-                  <Button color="primary" onClick={() => setRoleSelected(2)} active={roleSelected === 2}>Regular</Button>
-                </ButtonGroup>
-              </FormGroup>
               <FormGroup>
-                <Label className='form-label' for='register-username'>
-                  Username
+                <Label className='form-label' for='register-name'>
+                  Name
                 </Label>
-                <Input type='text' id='register-username' placeholder='johndoe' autoFocus
+                <Input type='text' id='register-name' placeholder='johndoe' autoFocus
                   className={classNames({ 'is-invalid': errors['name'] })}
                   {...register('name')}
 

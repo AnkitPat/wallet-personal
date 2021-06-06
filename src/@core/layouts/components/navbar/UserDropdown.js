@@ -52,11 +52,15 @@ const UserDropdown = () => {
           <User size={14} className='mr-75' />
           <span className='align-middle'>Profile</span>
         </DropdownItem>
-        <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
+        <DropdownItem tag={Link} to='/myaccount/referral'>
           <Mail size={14} className='mr-75' />
-          <span className='align-middle'>Inbox</span>
+          <span className='align-middle'>Referral Link</span>
         </DropdownItem>
-        <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
+        <DropdownItem tag={Link} to='/membership'>
+          <Mail size={14} className='mr-75' />
+          <span className='align-middle'>Membership</span>
+        </DropdownItem>
+        {/* <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
           <CheckSquare size={14} className='mr-75' />
           <span className='align-middle'>Tasks</span>
         </DropdownItem>
@@ -67,7 +71,7 @@ const UserDropdown = () => {
         <DropdownItem tag={Link} to='/login' onClick={() => dispatch(handleLogout())}>
           <Power size={14} className='mr-75' />
           <span className='align-middle'>Logout</span>
-        </DropdownItem>
+        </DropdownItem> */}
       </DropdownMenu>
     </UncontrolledDropdown>
   )

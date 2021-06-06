@@ -54,9 +54,19 @@ const Routes = [
     component: lazy(() => import('../../views/MyAccount'))
   },
   {
+    path: '/myaccount/referral',
+    exact: true,
+    component: lazy(() => import('../../views/MyAccount/Referral'))
+  },
+  {
     path: '/myaccount/edit',
     exact: true,
     component: lazy(() => import('../../views/AccountSettings'))
+  },
+  {
+    path: '/membership',
+    exact: true,
+    component: lazy(() => import('../../views/membership'))
   },
   {
     path: '/bounties',

@@ -1,12 +1,9 @@
 import format from 'date-fns/format'
-import PropTypes from 'prop-types'
+import moment from 'moment'
 import React, { useEffect } from 'react'
-import BootstrapTable from 'react-bootstrap-table-next'
-import paginationFactory from 'react-bootstrap-table2-paginator'
-import { connect, useDispatch, useSelector } from 'react-redux'
-import { compose } from 'redux'
+import DataTable from 'react-data-table-component'
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchWalletHistories } from '../../redux/actions/wallet'
-import { history } from '../../utility/Utils'
 
 const WalletHistory = (
     {
@@ -25,8 +22,8 @@ const WalletHistory = (
 
     const columns = [
         {
-            dataField: 'amount',
-            text: 'Amount',
+            selector: 'amount',
+            name: 'Amount',
             style: {
                 width: '20%'
             },
@@ -35,8 +32,8 @@ const WalletHistory = (
             }
         },
         {
-            dataField: 'currency',
-            text: 'Currency',
+            selector: 'currency',
+            name: 'Currency',
             style: {
                 width: '20%',
                 textAlign: 'center'
@@ -48,8 +45,8 @@ const WalletHistory = (
             }
         },
         {
-            dataField: 'orderStatus.title',
-            text: 'Status',
+            selector: 'orderStatus.title',
+            name: 'Status',
             style: {
                 width: '30%',
                 textAlign: 'center'
@@ -62,9 +59,9 @@ const WalletHistory = (
             }
         },
         {
-            dataField: 'updatedAt',
-            text: 'Purchased Date',
-            formatter: dateFormatter,
+            selector: 'updatedAt',
+            name: 'Purchased Date',
+            format: row => moment(row.updatedAt).format('DD/MM/YYYY'),
             style: {
                 width: '30%',
                 textAlign: 'center'
@@ -83,39 +80,14 @@ const WalletHistory = (
     return (
         <div>
             <div className="mt-4">
-                <BootstrapTable
-                    striped
-                    bordered={false}
-                    bootstrap4
-                    pagination={paginationFactory()}
-                    keyField="id"
-                    data={paymentHistory}
+                <DataTable
+                    title="Purchase History"
                     columns={columns}
+                    data={paymentHistory || []}
                 />
             </div>
         </div>
     )
 }
-
-// const mapStateToProps = createStructuredSelector({
-//     //   paymentHistory: makeSelectPaymentHistory(),
-//     //   influencerProfile: makeSelectInfluencerDetails(),
-//     //   withdrawalRequests: makeSelectWithdrawalRequests(),
-//     //   earnings: makeSelectEarnings(),
-//     //   userDetails: makeSelectUserDetails()
-// })
-
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         // fetchPaymentHistory: () => dispatch(fetchPaymentHistoryAction()),
-//         // getWithdrawalRequests: () => dispatch(getWithdrawalRequestsAction()),
-//         // getEarnings: () => dispatch(getEarningsAction())
-//     }
-// }
-
-// const withConnect = connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-// )
 
 export default WalletHistory

@@ -137,9 +137,6 @@ const Login = props => {
                   <Label className='form-label' for='login-password'>
                     Password
                     </Label>
-                  <Link to='/forgotpassword'>
-                    <small>Forgot Password?</small>
-                  </Link>
                 </div>
                 <InputPasswordToggle
                   className='input-group-merge' id='register-password'
@@ -150,9 +147,12 @@ const Login = props => {
                 <small className='text-danger'>
                   {errors.password && errors.password.message}
                 </small>
-              </FormGroup>
-              <FormGroup>
-                <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
+                <div className='d-flex justify-content-between'>
+
+                  <Link to='/forgotpassword'>
+                    <small>Forgot Password?</small>
+                  </Link>
+                </div>
               </FormGroup>
               {loading ? <ProgressLoader /> : <Button.Ripple type='submit' color='primary' block>
                 Sign in
