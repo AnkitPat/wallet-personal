@@ -84,6 +84,11 @@ const Routes = [
     component: lazy(() => import('../../views/userWallet'))
   },
   {
+    path: '/order/success',
+    exact: true,
+    component: lazy(() => import('../../views/userWallet/success'))
+  },
+  {
     path: '/wallet/history',
     exact: true,
     component: lazy(() => import('../../views/userWallet/history'))
