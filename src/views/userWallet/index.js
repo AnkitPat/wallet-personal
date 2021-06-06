@@ -1,19 +1,15 @@
-import { Fragment, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Facebook, Twitter, Mail, GitHub } from 'react-feather'
-import InputPasswordToggle from '@components/input-password-toggle'
-import { Card, CardBody, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput, Button, ButtonGroup } from 'reactstrap'
-import '@styles/base/pages/page-auth.scss'
-import classNames from 'classnames'
-import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as Yup from 'yup'
-import { useDispatch, useSelector } from 'react-redux'
-import { handleRegister } from '../../redux/actions/auth'
-import { ProgressLoader } from '../../layouts/ProgressLoader'
 import { loadStripe } from '@stripe/stripe-js'
+import '@styles/base/pages/page-auth.scss'
+import axios from 'axios'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { axiosInstance } from '../../utility/api'
+import { Button, Card, CardBody, CardTitle, Form, FormGroup, Label } from 'reactstrap'
+import * as Yup from 'yup'
+import { ProgressLoader } from '../../layouts/ProgressLoader'
 
 const stripePromise = loadStripe('pk_test_KcTV8d4CSSGpMfe4PIKvUeFI00hDyI8a1d')
 
@@ -51,7 +47,7 @@ const UserWallet = () => {
         const stripe = await stripePromise
 
         // Call your backend to create the Checkout Session
-        const response = await axiosInstance().post(
+        const response = await axios.post(
             '/order/create-checkout-session',
             {
                 price: (+amount + (+amount * 0.30)),

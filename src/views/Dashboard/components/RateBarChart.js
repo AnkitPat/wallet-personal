@@ -11,7 +11,7 @@ const RateBarChart = ({ tokenInfo, loader }) => {
     labels: ['1d', '7d', '30d'],
     datasets: [
       {
-        label: '# of Votes',
+        label: '',
         data:  tokenInfo && Object.keys(tokenInfo).length > 0 ? [tokenInfo.price.diff, tokenInfo.price.diff7d, tokenInfo.price.diff30d] : [],
         fill: false,
         backgroundColor: 'rgb(255, 99, 132)',

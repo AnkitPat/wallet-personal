@@ -1,18 +1,17 @@
 // ** UseJWT import to get config
 import useJwt from '@src/auth/jwt/useJwt'
 import axios from "axios"
+import jwt_decode from 'jwt-decode'
 import { toast } from "react-toastify"
 import { history } from "../../../utility/Utils"
-import { axiosInstance } from '../../../utility/api'
 import { saveUserDetailsAction, setLoadingAction, setRoleAction } from './actions'
-import jwt_decode from 'jwt-decode'
 
 
 const config = useJwt.jwtConfig
 
 
 function fetchUserInformation() {
-    return axiosInstance().get('/auth/userDetails')
+    return axios.get('/auth/userDetails')
 }
 
 // ** Handle User Login
@@ -26,7 +25,8 @@ export const handleLogin = data => {
                 [config.storageTokenKeyName]: response.data.access_token
             })
 
-            localStorage.setItem('token', response.data.access_token)
+            // localStorage.setItem('token', response.data.access_token)
+            localStorage.setItem(config.storageTokenKeyName, response.data.access_token)
             history.push('/home')
             dispatch(setLoadingAction(false))
         }).catch(error => {

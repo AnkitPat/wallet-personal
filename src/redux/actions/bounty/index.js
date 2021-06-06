@@ -1,26 +1,26 @@
+import axios from "axios"
 import { toast } from "react-toastify"
-import { axiosInstance } from "../../../utility/api"
 import { history } from "../../../utility/Utils"
 import { saveBountiesAction, saveBountyAction, setButtonLoadingAction, setLoadingAction } from "./actions"
 
 function fetchBountyAPI() {
-    return axiosInstance().get('bounty')
+    return axios.get('bounty')
 }
 
 function fetchBountyDetailsAPI(id) {
-    return axiosInstance().get(`bounty/${id}`)
+    return axios.get(`bounty/${id}`)
 }
 
 function submitBountyAPI(data) {
-    return axiosInstance().post(`/bounty/submission`, data)
+    return axios.post(`/bounty/submission`, data)
 }
 
 function addBountyAPI(data) {
-    return axiosInstance().post('bounty', data)
+    return axios.post('bounty', data)
 }
 
 function editBountyAPI(data) {
-    return axiosInstance().put('bounty', data)
+    return axios.put('bounty', data)
 }
 // ** fetch bounty list
 export const addBounty = data => {

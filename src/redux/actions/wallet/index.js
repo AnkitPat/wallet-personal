@@ -1,14 +1,14 @@
+import axios from "axios"
 import { toast } from "react-toastify"
-import { axiosInstance } from "../../../utility/api"
 import { handleUserInformation } from "../auth"
 import { saveWalletHistoryAction, setLoadingAction } from "./actions"
 
 function fetchWalletAPI() {
-    return axiosInstance().get('order/list')
+    return axios.get('order/list')
 }
 
 function createPaymentAPI(data) {
-    return axiosInstance().post('/order/createPayment', data)
+    return axios.post('/order/createPayment', data)
   }  
 
 // ** fetch history list

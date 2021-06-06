@@ -11,7 +11,7 @@ const VolumeBarChart = ({ tokenInfo, loader }) => {
     labels: ['1d', '7d', '30d'],
     datasets: [
       {
-        label: '# of Votes',
+        label: '',
         data:  tokenInfo && Object.keys(tokenInfo).length > 0 ? [tokenInfo.price.volDiff1, tokenInfo.price.volDiff7, tokenInfo.price.volDiff30] : [],
         fill: false,
         backgroundColor: 'rgb(255, 99, 132)',

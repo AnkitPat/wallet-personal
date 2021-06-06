@@ -1,7 +1,7 @@
 // ** UseJWT import to get config
 import useJwt from '@src/auth/jwt/useJwt'
+import axios from 'axios'
 import { toast } from "react-toastify"
-import { axiosInstance } from '../../../utility/api'
 import { history } from "../../../utility/Utils"
 import { handleUserInformation } from '../auth'
 import { setLoadingAction } from '../auth/actions'
@@ -18,16 +18,16 @@ function updateAvatar(data) {
             const file = new File([blob], 'filename.jpeg')
             fd.append('avatar', file)
 
-            return axiosInstance().post('users/upload/avatar', fd)
+            return axios.post('users/upload/avatar', fd)
         })
 }
 
 function updateUserDetailsApi(data) {
-    return axiosInstance().put('users', data)
+    return axios.put('users', data)
 }
 
 function changePasswordAPI(data) {
-    return axiosInstance().post('auth/changePassword', data)
+    return axios.post('auth/changePassword', data)
   }
 
 // ** Handle User Login
