@@ -14,7 +14,7 @@ import { handleLogout } from '@store/actions/auth'
 
 // ** Third Party Components
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
-import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircle, Power } from 'react-feather'
+import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircle, Power, UserPlus } from 'react-feather'
 
 // ** Default Avatar Image
 import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
@@ -57,21 +57,13 @@ const UserDropdown = () => {
           <span className='align-middle'>Referral Link</span>
         </DropdownItem>
         <DropdownItem tag={Link} to='/membership'>
-          <Mail size={14} className='mr-75' />
+          <UserPlus size={14} className='mr-75' />
           <span className='align-middle'>Membership</span>
-        </DropdownItem>
-        {/* <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
-          <CheckSquare size={14} className='mr-75' />
-          <span className='align-middle'>Tasks</span>
-        </DropdownItem>
-        <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
-          <MessageSquare size={14} className='mr-75' />
-          <span className='align-middle'>Chats</span>
         </DropdownItem>
         <DropdownItem tag={Link} to='/login' onClick={() => dispatch(handleLogout())}>
           <Power size={14} className='mr-75' />
           <span className='align-middle'>Logout</span>
-        </DropdownItem> */}
+        </DropdownItem> 
       </DropdownMenu>
     </UncontrolledDropdown>
   )
