@@ -78,26 +78,21 @@ const BountyList = () => {
     return (
         <Fragment>
             <Breadcrumbs
-                breadCrumbTitle='Blog List'
-                breadCrumbParent='Bounties'
+                breadCrumbTitle='Bounty Tasks'
+                breadCrumbParent='Tasks'
                 breadCrumbActive='List'
             />
             <div className='blog-wrapper'>
                 <div className='content-detached content-left'>
                     <div className="my-2 d-flex justify-content-start">
                         {role === 'administrator' &&
-                            <Button.Ripple color='primary' type="submit" onClick={() => history.push('/bounties/add')}>
-                                Add bounty
-                            </Button.Ripple>}
+                        <Button.Ripple color='primary' type="submit" onClick={() => history.push('/bounties/add')}>
+                            Add bounty
+                        </Button.Ripple>}
                     </div>
-                    <div className='content-body'>
-                        {loading ? (<ProgressLoader size="lg"/>) : (
-                            <div className='blog-list-wrapper'>
-                                <Row>{renderRenderList()}</Row>
-
-                            </div>
-                        )}
-                    </div>
+                    {loading ? (<ProgressLoader size="lg"/>) : (
+                        <Row>{renderRenderList()}</Row>
+                    )}
                 </div>
             </div>
         </Fragment>

@@ -10,6 +10,7 @@ import { handleContentWidth, handleMenuCollapsed, handleMenuHidden } from '@stor
 
 // ** Styles
 import 'animate.css/animate.css'
+import {handleUserInformation} from "../../../../redux/actions/auth"
 
 const LayoutWrapper = props => {
   // ** Props
@@ -41,6 +42,7 @@ const LayoutWrapper = props => {
 
   // ** ComponentDidMount
   useEffect(() => {
+    dispatch(handleUserInformation())
     if (routeMeta) {
       if (routeMeta.contentWidth) {
         dispatch(handleContentWidth(routeMeta.contentWidth))

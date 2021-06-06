@@ -3,25 +3,20 @@ import '@styles/base/pages/dashboard-ecommerce.scss'
 import '@styles/react/libs/charts/apex-charts.scss'
 import { useContext, useEffect } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { Copy, Facebook, Send, Twitter } from 'react-feather'
+import { Copy } from 'react-feather'
 import { batch, useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { Card, CardBody, CardSubtitle, Col, Row } from 'reactstrap'
 import CardTitle from 'reactstrap/lib/CardTitle'
 import { handleUserInformation } from '../../redux/actions/auth'
 import { fetchTokenInfo } from '../../redux/actions/dashboard'
-import RateBarChart from './components/RateBarChart'
 import StatsCard from './components/StatsCard'
 
 
 const Home = () => {
-  const { colors } = useContext(ThemeColors),
-    trackBgColor = '#e9ecef'
-
   const dispatch = useDispatch()
   useEffect(() => {
     batch(() => {
-      dispatch(handleUserInformation())
       dispatch(fetchTokenInfo())
     })
   }, [])

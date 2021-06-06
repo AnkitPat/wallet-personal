@@ -1,8 +1,7 @@
-import { Fragment, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Facebook, Twitter, Mail, GitHub } from 'react-feather'
+import {useEffect, useState} from 'react'
+import {Link, useLocation} from 'react-router-dom'
 import InputPasswordToggle from '@components/input-password-toggle'
-import { Card, CardBody, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput, Button, ButtonGroup } from 'reactstrap'
+import { Card, CardBody, CardTitle, CardText, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
 import classNames from 'classnames'
 import { useForm } from 'react-hook-form'
@@ -13,15 +12,14 @@ import { handleRegister } from '../../redux/actions/auth'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
 
 const Register = () => {
-  const [roleSelected, setRoleSelected] = useState(1)
   const [referralCode, setReferralCode] = useState('')
   const { search } = useLocation()
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (search) {
       const query = new URLSearchParams(search)
       const parsedReferralCode = query ? query.get('referrer') : ''
-      if (parsedReferralCode && !isEmpty(parsedReferralCode)) {
+      if (parsedReferralCode) {
         setReferralCode(parsedReferralCode)
       }
     }

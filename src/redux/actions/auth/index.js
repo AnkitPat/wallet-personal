@@ -1,7 +1,6 @@
 // ** UseJWT import to get config
 import useJwt from '@src/auth/jwt/useJwt'
 import axios from "axios"
-import jwt_decode from 'jwt-decode'
 import { toast } from "react-toastify"
 import { history } from "../../../utility/Utils"
 import { saveUserDetailsAction, setLoadingAction, setRoleAction } from './actions'
@@ -79,8 +78,7 @@ export const handleUserInformation = data => {
         try {
             const userResponse = await fetchUserInformation()
             dispatch(saveUserDetailsAction(userResponse.data))
-            const decoded = jwt_decode(localStorage.getItem('token'))
-            dispatch(setRoleAction(decoded.role))
+            dispatch(setRoleAction(userResponse.data.role.title))
         } catch (e) {
             toast.error(e)
         }
