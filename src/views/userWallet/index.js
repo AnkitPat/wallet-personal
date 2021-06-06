@@ -1,15 +1,15 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { loadStripe } from '@stripe/stripe-js'
+import {yupResolver} from '@hookform/resolvers/yup'
+import {loadStripe} from '@stripe/stripe-js'
 import '@styles/base/pages/page-auth.scss'
 import axios from 'axios'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { Button, Card, CardBody, CardTitle, Form, FormGroup, Label } from 'reactstrap'
+import {useState} from 'react'
+import {useForm} from 'react-hook-form'
+import {useDispatch, useSelector} from 'react-redux'
+import {Link} from 'react-router-dom'
+import {toast} from 'react-toastify'
+import {Button, Card, CardBody, CardTitle, Form, FormGroup, Label} from 'reactstrap'
 import * as Yup from 'yup'
-import { ProgressLoader } from '../../layouts/ProgressLoader'
+import {ProgressLoader} from '../../layouts/ProgressLoader'
 
 const stripePromise = loadStripe('pk_test_KcTV8d4CSSGpMfe4PIKvUeFI00hDyI8a1d')
 
@@ -35,7 +35,7 @@ const UserWallet = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         setValue
     } = useForm({
         resolver: yupResolver(validationSchema)
@@ -85,11 +85,13 @@ const UserWallet = () => {
                             <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
                                 <svg viewBox='0 0 139 95' version='1.1' height='28'>
                                     <defs>
-                                        <linearGradient x1='100%' y1='10.5120544%' x2='50%' y2='89.4879456%' id='linearGradient-1'>
+                                        <linearGradient x1='100%' y1='10.5120544%' x2='50%' y2='89.4879456%'
+                                                        id='linearGradient-1'>
                                             <stop stopColor='#000000' offset='0%'></stop>
                                             <stop stopColor='#FFFFFF' offset='100%'></stop>
                                         </linearGradient>
-                                        <linearGradient x1='64.0437835%' y1='46.3276743%' x2='37.373316%' y2='100%' id='linearGradient-2'>
+                                        <linearGradient x1='64.0437835%' y1='46.3276743%' x2='37.373316%' y2='100%'
+                                                        id='linearGradient-2'>
                                             <stop stopColor='#EEEEEE' stopOpacity='0' offset='0%'></stop>
                                             <stop stopColor='#FFFFFF' offset='100%'></stop>
                                         </linearGradient>
@@ -101,7 +103,7 @@ const UserWallet = () => {
                                                     d='M-5.68434189e-14,2.84217094e-14 L39.1816085,2.84217094e-14 L69.3453773,32.2519224 L101.428699,2.84217094e-14 L138.784583,2.84217094e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L6.71554594,44.4188507 C2.46876683,39.9813776 0.345377275,35.1089553 0.345377275,29.8015838 C0.345377275,24.4942122 0.230251516,14.560351 -5.68434189e-14,2.84217094e-14 Z'
                                                     id='Path'
                                                     className='text-primary'
-                                                    style={{ fill: 'currentColor' }}
+                                                    style={{fill: 'currentColor'}}
                                                 ></path>
                                                 <path
                                                     d='M69.3453773,32.2519224 L101.428699,1.42108547e-14 L138.784583,1.42108547e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L32.8435758,70.5039241 L69.3453773,32.2519224 Z'
@@ -135,20 +137,20 @@ const UserWallet = () => {
                             </Link>
                             <CardTitle tag='h4' className='mb-1'>
                                 Add Money
-            </CardTitle>
+                            </CardTitle>
 
                             <Form className='auth-register-form mt-2' onSubmit={handleSubmit(onSubmit)}>
 
                                 <FormGroup>
                                     <Label className='form-label' for='register-phone'>
                                         Credit
-                </Label>
+                                    </Label>
                                     <input
                                         {...register('amount')}
 
                                         type="number"
                                         className={`form-control bg-transparent text-black ${errors.amount ? 'is-invalid' : ''
-                                            }`}
+                                        }`}
                                         size="lg"
                                         name="amount"
                                         id="credit"
@@ -163,14 +165,15 @@ const UserWallet = () => {
                                 </FormGroup>
                                 <div className="form-group col-md-6">
                                     <label htmlFor="amount">Dollar Amount</label>
-                                    <input type="text" readOnly className="form-control bg-transparent text-black" id="amount"
-                                        value={dollarAmount} />
+                                    <input type="text" readOnly className="form-control bg-transparent text-black"
+                                           id="amount"
+                                           value={dollarAmount}/>
                                 </div>
 
 
-                                {loading ? <ProgressLoader /> : <Button.Ripple color='primary' block type="submit">
+                                {loading ? <ProgressLoader/> : <Button.Ripple color='primary' block type="submit">
                                     Add Credit
-              </Button.Ripple>}
+                                </Button.Ripple>}
                             </Form>
 
                         </CardBody>

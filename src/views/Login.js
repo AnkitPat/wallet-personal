@@ -15,7 +15,7 @@ import {
 } from 'reactstrap'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import Logo from '@src/assets/images/icons/logo-white.png'
+import Logo from '@src/assets/images/icons/logo.png'
 import { ProgressLoader } from '../layouts/ProgressLoader'
 
 const Login = props => {

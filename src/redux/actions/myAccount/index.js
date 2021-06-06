@@ -1,13 +1,9 @@
 // ** UseJWT import to get config
-import useJwt from '@src/auth/jwt/useJwt'
 import axios from 'axios'
 import { toast } from "react-toastify"
 import { history } from "../../../utility/Utils"
 import { handleUserInformation } from '../auth'
 import { setLoadingAction } from '../auth/actions'
-
-const config = useJwt.jwtConfig
-
 
 function updateAvatar(data) {
     const base64 = data

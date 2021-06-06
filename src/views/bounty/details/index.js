@@ -1,20 +1,4 @@
 import { Fragment, useState, useEffect } from 'react'
-import axios from 'axios'
-import classnames from 'classnames'
-import Avatar from '@components/avatar'
-import cmtImg from '@src/assets/images/portrait/small/avatar-s-6.jpg'
-import { kFormatter } from '@utils'
-import {
-  Share2,
-  MessageSquare,
-  Bookmark,
-  GitHub,
-  Gitlab,
-  Facebook,
-  Twitter,
-  Linkedin,
-  CornerUpLeft
-} from 'react-feather'
 import Breadcrumbs from '@components/breadcrumbs'
 import {
   Row,
@@ -22,23 +6,12 @@ import {
   Card,
   CardBody,
   CardTitle,
-  CardText,
-  CardImg,
-  Badge,
   Media,
-  UncontrolledDropdown,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  Form,
-  Input,
-  Button,
-  FormGroup,
-  CustomInput
+  Button
 } from 'reactstrap'
 
 import '@styles/base/pages/page-blog.scss'
-import { useHistory, useLocation, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import moment from 'moment'
 import { ProgressLoader } from '../../../layouts/ProgressLoader'
 import { useDispatch, useSelector } from 'react-redux'

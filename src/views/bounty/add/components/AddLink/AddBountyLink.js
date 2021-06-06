@@ -6,7 +6,7 @@ import { Button, FormGroup, Modal, ModalBody, ModalFooter, ModalHeader } from 'r
 import * as Yup from 'yup'
 import { submitBounty } from '../../../../../redux/actions/bounty'
 
-export const AddBountyLink = ({ completeBounty, selectedBounty, showConfirmationPopup, setShowConfirmationPopup }) => {
+export const AddBountyLink = ({ selectedBounty, showConfirmationPopup, setShowConfirmationPopup }) => {
 
     const dispatch = useDispatch()
     const validationSchema = Yup.object().shape({
@@ -32,7 +32,6 @@ export const AddBountyLink = ({ completeBounty, selectedBounty, showConfirmation
             userId,
             result: values.link
         }))
-        // completeBounty({ ...selectedBounty, link: values.link })
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -64,7 +63,6 @@ export const AddBountyLink = ({ completeBounty, selectedBounty, showConfirmation
 
                 </ModalBody>
                 <ModalFooter>
-
                     <Button color="primary" type="submit" onClick={handleSubmit(onSubmit)}>Submit</Button>{' '}
                     <Button color="secondary" onClick={() => { setShowConfirmationPopup(false) }}>Cancel</Button>
                 </ModalFooter>

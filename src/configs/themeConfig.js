@@ -3,8 +3,8 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'Potentiam Wallet',
-    appLogoImage: require('@src/assets/images/icons/logo-white.png').default
+    appName: 'Potentiam',
+    appLogoImage: require('@src/assets/images/icons/logo.png').default
   },
   layout: {
     isRTL: false,

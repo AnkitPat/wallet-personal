@@ -5,10 +5,6 @@
   "dependencies": {
     "@casl/ability": "5.2.2",
     "@casl/react": "2.1.1",
-    "@fortawesome/fontawesome-svg-core": "^1.2.35",
-    "@fortawesome/free-brands-svg-icons": "^5.15.3",
-    "@fortawesome/free-solid-svg-icons": "^5.15.3",
-    "@fortawesome/react-fontawesome": "^0.1.14",
     "@fullcalendar/core": "5.3.0",
     "@fullcalendar/daygrid": "5.3.0",
     "@fullcalendar/interaction": "5.3.0",

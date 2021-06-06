@@ -1,32 +1,20 @@
-import { Fragment, useState, useEffect } from 'react'
-import axios from 'axios'
-import classnames from 'classnames'
-import Avatar from '@components/avatar'
-import { Link } from 'react-router-dom'
-import { MessageSquare } from 'react-feather'
+import {Fragment, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import Breadcrumbs from '@components/breadcrumbs'
 import {
     Row,
     Col,
     Card,
     CardBody,
-    CardText,
     CardTitle,
-    CardImg,
-    Badge,
-    Media,
-    Pagination,
-    PaginationItem,
-    PaginationLink,
-    ButtonToolbar,
     Button
 } from 'reactstrap'
 
 import '@styles/base/pages/page-blog.scss'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchBounties } from '../../../redux/actions/bounty'
-import { history } from '../../../utility/Utils'
-import { ProgressLoader } from '../../../layouts/ProgressLoader'
+import {useDispatch, useSelector} from 'react-redux'
+import {fetchBounties} from '../../../redux/actions/bounty'
+import {history} from '../../../utility/Utils'
+import {ProgressLoader} from '../../../layouts/ProgressLoader'
 import moment from 'moment'
 
 const BountyList = () => {
@@ -43,14 +31,13 @@ const BountyList = () => {
 
     const renderRenderList = () => {
         return bounties.map((bounty, index) => {
-
-
             return (
                 <Col key={index} md='6'>
                     <Card>
                         <CardBody>
                             <CardTitle tag='h4' className="d-flex justify-content-between align-items-center">
-                                <Link className='blog-title-truncate text-body-heading' to={{ pathname: `/bounties/${bounty.id}`, data: bounty }}>
+                                <Link className='blog-title-truncate text-body-heading'
+                                      to={{pathname: `/bounties/${bounty.id}`, data: bounty}}>
                                     {bounty.title}
                                 </Link>
                                 <div className='my-1'><small>
@@ -68,19 +55,22 @@ const BountyList = () => {
                                     __html: bounty.description
                                 }}>
                             </div>
-                            <hr />
+                            <hr/>
                             <div className='d-flex justify-content-between align-items-center'>
 
-                                <Link className='font-weight-bold' to={{ pathname: `/bounties/${bounty.id}` }}>
+                                <Link className='font-weight-bold' to={{pathname: `/bounties/${bounty.id}`}}>
                                     Read More
                                 </Link>
-                                {role === 'administrator' ? <Link className='font-weight-bold' to={{ pathname: `/bounties/edit/${bounty.id}`, data: bounty }}>
+                                {role === 'administrator' ? <Link className='font-weight-bold' to={{
+                                    pathname: `/bounties/edit/${bounty.id}`,
+                                    data: bounty
+                                }}>
                                     Edit
-                                </Link> : <></> }
+                                </Link> : <></>}
                             </div>
                         </CardBody>
                     </Card>
-                </Col >
+                </Col>
             )
         })
     }
@@ -95,12 +85,13 @@ const BountyList = () => {
             <div className='blog-wrapper'>
                 <div className='content-detached content-left'>
                     <div className="my-2 d-flex justify-content-start">
-                        {role === 'administrator' ? <Button.Ripple color='primary' type="submit" onClick={() => history.push('/bounties/add')}>
-                            Add bounty
-              </Button.Ripple> : <></>}
+                        {role === 'administrator' &&
+                            <Button.Ripple color='primary' type="submit" onClick={() => history.push('/bounties/add')}>
+                                Add bounty
+                            </Button.Ripple>}
                     </div>
                     <div className='content-body'>
-                        {loading ? (<ProgressLoader size="lg" />) : (
+                        {loading ? (<ProgressLoader size="lg"/>) : (
                             <div className='blog-list-wrapper'>
                                 <Row>{renderRenderList()}</Row>
 

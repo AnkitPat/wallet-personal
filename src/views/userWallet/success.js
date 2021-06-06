@@ -1,9 +1,8 @@
-
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
-import { Button, Card, Col, ListGroup, ListGroupItem, Row } from 'reactstrap'
-import { createPayment } from '../../redux/actions/wallet'
+import React, {useEffect} from 'react'
+import {useDispatch} from 'react-redux'
+import {Link, useLocation} from 'react-router-dom'
+import {Button, Card, Col, ListGroup, ListGroupItem, Row} from 'reactstrap'
+import {createPayment} from '../../redux/actions/wallet'
 
 function useQuery() {
     return new URLSearchParams(useLocation().search)
@@ -28,7 +27,7 @@ export function OrderSuccess() {
                         <Card className="bg-transparent blick-border">
                             <ListGroup>
                                 <ListGroupItem className="p-4 bg-transparent border-0 text-center">
-                                    
+
                                     <div className="h1 text-center text-success">Success</div>
                                     <div className="m-4">
                                         <small className="h6">Your credit purchase order was successful</small>
@@ -36,7 +35,7 @@ export function OrderSuccess() {
                                     <Link to="/wallet">
                                         <Button className="mt-2" color="success">
                                             Go back to wallet
-                    </Button>
+                                        </Button>
                                     </Link>
                                 </ListGroupItem>
                             </ListGroup>
