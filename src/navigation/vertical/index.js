@@ -1,4 +1,4 @@
-import { Mail, Home } from 'react-feather'
+import { Mail, Home, DollarSign } from 'react-feather'
 
 export default [
   {
@@ -7,10 +7,17 @@ export default [
     icon: <Home size={20} />,
     navLink: '/home'
   },
+  
   {
-    id: 'secondPage',
-    title: 'Second Page',
+    id: 'bounties',
+    title: 'Bounties',
     icon: <Mail size={20} />,
-    navLink: '/second-page'
+    navLink: '/bounties'
+  },
+  {
+    id: 'userWallet',
+    title: 'User Wallet',
+    icon: <DollarSign size={20} />,
+    navLink: '/wallet'
   }
 ]

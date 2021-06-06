@@ -31,6 +31,7 @@ import { useNavbarColor } from '@hooks/useNavbarColor'
 // ** Styles
 import '@styles/base/core/menu/menu-types/vertical-menu.scss'
 import '@styles/base/core/menu/menu-types/vertical-overlay-menu.scss'
+import { handleUserInformation } from '../../redux/actions/auth'
 
 const VerticalLayout = props => {
   // ** Props
@@ -88,6 +89,7 @@ const VerticalLayout = props => {
 
   //** ComponentDidMount
   useEffect(() => {
+    dispatch(handleUserInformation())
     setIsMounted(true)
     return () => setIsMounted(false)
   }, [])
@@ -200,13 +202,7 @@ const VerticalLayout = props => {
           themeConfig={themeConfig}
         />
       ) : null}
-      <footer
-        className={classnames(`footer footer-light ${footerClasses[footerType] || 'footer-static'}`, {
-          'd-none': footerType === 'hidden'
-        })}
-      >
-        {footer ? footer : <FooterComponent footerType={footerType} footerClasses={footerClasses} />}
-      </footer>
+     
 
       {themeConfig.layout.scrollTop === true ? (
         <div className='scroll-to-top'>

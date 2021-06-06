@@ -3,8 +3,8 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'Vuexy',
-    appLogoImage: require('@src/assets/images/logo/logo.svg').default
+    appName: 'Potentiam Wallet',
+    appLogoImage: require('@src/assets/images/icons/logo-white.png').default
   },
   layout: {
     isRTL: false,

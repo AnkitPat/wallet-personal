@@ -6,13 +6,14 @@ import { isUserLoggedIn } from '@utils'
 import { useLayout } from '@hooks/useLayout'
 import { AbilityContext } from '@src/utility/context/Can'
 import { useRouterTransition } from '@hooks/useRouterTransition'
+import { ConnectedRouter } from 'connected-react-router'
 
 // ** Custom Components
 // import Spinner from '@components/spinner/Loading-spinner' // Uncomment if your require content fallback
 import LayoutWrapper from '@layouts/components/layout-wrapper'
 
 // ** Router Components
-import { BrowserRouter as AppRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 // ** Routes & Default Routes
 import { DefaultRoute, Routes } from './routes'
@@ -21,6 +22,7 @@ import { DefaultRoute, Routes } from './routes'
 import BlankLayout from '@layouts/BlankLayout'
 import VerticalLayout from '@src/layouts/VerticalLayout'
 import HorizontalLayout from '@src/layouts/HorizontalLayout'
+import { history } from '../utility/Utils'
 
 const Router = () => {
   // ** Hooks
@@ -90,10 +92,7 @@ const Router = () => {
     } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
       // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
       return <Redirect to='/' />
-    } else if (isUserLoggedIn() && !ability.can(action || 'read', resource)) {
-      // ** If user is Logged in and doesn't have ability to visit the page redirect the user to Not Authorized
-      return <Redirect to='/misc/not-authorized' />
-    } else {
+    }  else {
       // ** If none of the above render component
       return <route.component {...props} />
     }
@@ -117,7 +116,6 @@ const Router = () => {
 
       // ** RouterProps to pass them to Layouts
       const routerProps = {}
-
       return (
         <Route path={LayoutPaths} key={index}>
           <LayoutTag
@@ -153,20 +151,20 @@ const Router = () => {
                             /*eslint-disable */
                             {...(route.appLayout
                               ? {
-                                  appLayout: route.appLayout
-                                }
+                                appLayout: route.appLayout
+                              }
                               : {})}
                             {...(route.meta
                               ? {
-                                  routeMeta: route.meta
-                                }
+                                routeMeta: route.meta
+                              }
                               : {})}
                             {...(route.className
                               ? {
-                                  wrapperClass: route.className
-                                }
+                                wrapperClass: route.className
+                              }
                               : {})}
-                            /*eslint-enable */
+                          /*eslint-enable */
                           >
                             <FinalRoute route={route} {...props} />
                           </LayoutWrapper>
@@ -184,38 +182,38 @@ const Router = () => {
   }
 
   return (
-    <AppRouter basename={process.env.REACT_APP_BASENAME}>
-      <Switch>
-        {/* If user is logged in Redirect user to DefaultRoute else to login */}
-        <Route
-          exact
-          path='/'
-          render={() => {
-            return isUserLoggedIn() ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
-          }}
-        />
-        <Route
-          exact
-          path='/'
-          render={() => {
-            return <Redirect to={DefaultRoute} />
-          }}
-        />
-        {/* Not Auth Route */}
-        <Route
-          exact
-          path='/not-authorized'
-          render={props => (
-            <Layouts.BlankLayout>
-              <NotAuthorized />
-            </Layouts.BlankLayout>
-          )}
-        />
-        {ResolveRoutes()}
-        {/* NotFound Error page */}
-        <Route path='*' component={Error} />/
+    <ConnectedRouter history={history}>
+        <Switch>
+          {/* If user is logged in Redirect user to DefaultRoute else to login */}
+          <Route
+            exact
+            path='/'
+            render={() => {
+              return isUserLoggedIn() ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
+            }}
+          />
+          <Route
+            exact
+            path='/'
+            render={() => {
+              return <Redirect to={DefaultRoute} />
+            }}
+          />
+          {/* Not Auth Route */}
+          <Route
+            exact
+            path='/not-authorized'
+            render={props => (
+              <Layouts.BlankLayout>
+                <NotAuthorized />
+              </Layouts.BlankLayout>
+            )}
+          />
+          {ResolveRoutes()}
+          {/* NotFound Error page */}
+          <Route path='*' component={Error} />/
       </Switch>
-    </AppRouter>
+    </ConnectedRouter>
   )
 }
 
