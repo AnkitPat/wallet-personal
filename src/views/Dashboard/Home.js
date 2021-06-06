@@ -12,13 +12,7 @@ import { handleUserInformation } from '../../redux/actions/auth'
 import { fetchTokenInfo } from '../../redux/actions/dashboard'
 import RateBarChart from './components/RateBarChart'
 import StatsCard from './components/StatsCard'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faFacebook,
-  faReddit,
-  faTwitter,
-  faYoutube
-} from '@fortawesome/free-brands-svg-icons'
+
 
 const Home = () => {
   const { colors } = useContext(ThemeColors),
@@ -81,10 +75,7 @@ const Home = () => {
               <div className="d-flex justify-content-between">
                 <a href="https://www.potentiam.io">https://www.potentiam.io</a>
                 <div>
-                  {tokenInfo.facebook && <FontAwesomeIcon icon={faFacebook} size="1x" className="cursor-pointer mr-1" onClick={() => window.open(`https://www.facebook.com/${tokenInfo.facebook}`)} />}
-                  {tokenInfo.twitter && <FontAwesomeIcon icon={faTwitter} size="1x" className="cursor-pointer mr-1" onClick={() => window.open(`https://www.twitter.com/${tokenInfo.twitter}`)} />}
-                  {tokenInfo.reddit && <FontAwesomeIcon icon={faReddit} size="1x" className="cursor-pointer mr-1" onClick={() => window.open(`https://www.twitter.com/${tokenInfo.twitter}`)} />}
-                  {tokenInfo.telegram && <Send size="15" className="cursor-pointer mr-1" onClick={() => window.open(`https://www.twitter.com/${tokenInfo.twitter}`)} />}
+
                 </div>
               </div>
             </CardSubtitle>

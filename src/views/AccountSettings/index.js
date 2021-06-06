@@ -1,16 +1,9 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState } from 'react'
 import Tabs from './Tabs'
-import axios from 'axios'
-import InfoTabContent from './InfoTabContent'
 import Breadcrumbs from '@components/breadcrumbs'
-import SocialTabContent from './SocialTabContent'
 import GeneralTabContent from './GeneralTabContent'
 import PasswordTabContent from './PasswordTabContent'
-import NotificationsTabContent from './NotificationsTabContent'
 import { Row, Col, TabContent, TabPane, Card, CardBody } from 'reactstrap'
-
-import '@styles/react/libs/flatpickr/flatpickr.scss'
-import '@styles/react/pages/page-account-settings.scss'
 import { useSelector } from 'react-redux'
 
 const AccountSettings = () => {

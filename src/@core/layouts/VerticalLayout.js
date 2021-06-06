@@ -17,7 +17,6 @@ import themeConfig from '@configs/themeConfig'
 
 // ** Custom Components
 import Customizer from '@components/customizer'
-import FooterComponent from './components/footer'
 import NavbarComponent from './components/navbar'
 import SidebarComponent from './components/menu/vertical-menu'
 
@@ -31,11 +30,10 @@ import { useNavbarColor } from '@hooks/useNavbarColor'
 // ** Styles
 import '@styles/base/core/menu/menu-types/vertical-menu.scss'
 import '@styles/base/core/menu/menu-types/vertical-overlay-menu.scss'
-import { handleUserInformation } from '../../redux/actions/auth'
 
 const VerticalLayout = props => {
   // ** Props
-  const { children, navbar, footer, menu, routerProps, currentActiveItem } = props
+  const { children, navbar, menu, routerProps, currentActiveItem } = props
 
   // ** Hooks
   const [skin, setSkin] = useSkin()
@@ -89,7 +87,6 @@ const VerticalLayout = props => {
 
   //** ComponentDidMount
   useEffect(() => {
-    dispatch(handleUserInformation())
     setIsMounted(true)
     return () => setIsMounted(false)
   }, [])
@@ -202,7 +199,7 @@ const VerticalLayout = props => {
           themeConfig={themeConfig}
         />
       ) : null}
-     
+
 
       {themeConfig.layout.scrollTop === true ? (
         <div className='scroll-to-top'>

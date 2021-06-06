@@ -2,10 +2,9 @@ import { Fragment, useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import { Button, Media, Label, Row, Col, Input, FormGroup, Alert, Form } from 'reactstrap'
+import { Button, Media, Label, Row, Col, Input, FormGroup, Form } from 'reactstrap'
 import classNames from 'classnames'
 import defaultImage from '../../assets/images/avatars/12.png'
-import { resetWarningCache } from 'prop-types'
 import { history } from '../../utility/Utils'
 import { handleUserInformationUpdate } from '../../redux/actions/myAccount'
 import { useDispatch, useSelector } from 'react-redux'
@@ -36,7 +35,6 @@ const GeneralTabs = ({ data }) => {
   })
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     getValues,

@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { AlignJustify, Rss, Info, Image, Users, Edit } from 'react-feather'
-import { Card, CardImg, Collapse, Navbar, Nav, NavItem, NavLink, Button } from 'reactstrap'
-import bannerImage from '../../assets/images/avatars/banner-bg.jpg'
+import { AlignJustify, Edit } from 'react-feather'
+import { Card, Collapse, Navbar, Button } from 'reactstrap'
+
 import { history } from '../../utility/Utils'
 
 const ProfileHeader = ({ data }) => {
@@ -11,7 +11,6 @@ const ProfileHeader = ({ data }) => {
 
   return (
     <Card className='profile-header mb-2'>
-      <CardImg src={bannerImage} alt='User Profile Image' top />
       <div className='position-relative'>
         <div className='profile-img-container d-flex align-items-center'>
           <div className='profile-img'>
@@ -30,7 +29,7 @@ const ProfileHeader = ({ data }) => {
           </Button>
           <Collapse isOpen={isOpen} navbar>
             <div className='profile-tabs d-flex justify-content-end flex-wrap mt-1 mt-md-0'>
-              
+
               <Button color='primary' onClick={() => history.push('/myaccount/edit')}>
                 <Edit className='d-block d-md-none' size={14} />
                 <span className='font-weight-bold d-none d-md-block'>Edit</span>

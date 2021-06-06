@@ -1,14 +1,12 @@
 import format from 'date-fns/format'
 import moment from 'moment'
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react'
 import DataTable from 'react-data-table-component'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchWalletHistories } from '../../redux/actions/wallet'
+import {useDispatch, useSelector} from 'react-redux'
+import {fetchWalletHistories} from '../../redux/actions/wallet'
 
 const WalletHistory = (
-    {
-
-    }) => {
+    {}) => {
 
     const dispatch = useDispatch()
     useEffect(() => {

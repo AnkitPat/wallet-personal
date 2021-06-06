@@ -1,46 +1,33 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import Select from 'react-select'
-import Avatar from '@components/avatar'
-import htmlToDraft from 'html-to-draftjs'
-import { selectThemeColors } from '@utils'
-import { Editor } from 'react-draft-wysiwyg'
+import {useState, useEffect} from 'react'
 import Breadcrumbs from '@components/breadcrumbs'
-import { EditorState, ContentState, convertFromHTML } from 'draft-js'
+import {EditorState, ContentState, convertFromHTML} from 'draft-js'
 import {
     Row,
     Col,
     Card,
     CardBody,
-    CardText,
-    Media,
     Form,
     Label,
-    Input,
     FormGroup,
-    CustomInput,
     Button
 } from 'reactstrap'
 import * as Yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
+import {yupResolver} from '@hookform/resolvers/yup'
 import '@styles/react/libs/editor/editor.scss'
 import '@styles/base/plugins/forms/form-quill-editor.scss'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/base/pages/page-blog.scss'
 import "react-datepicker/dist/react-datepicker.css"
-import { Controller, useForm } from 'react-hook-form'
+import {Controller, useForm} from 'react-hook-form'
 import DatePicker from 'react-datepicker'
 import WYSIWYGEditor from './components/Htmleditor/Editor'
-import { useDispatch, useSelector } from 'react-redux'
-import { addBounty, editBounty, fetchBountyDetails } from '../../../redux/actions/bounty'
-import moment from 'moment'
-import { ProgressLoader } from '../../../layouts/ProgressLoader'
-import { useLocation } from 'react-router'
+import {useDispatch, useSelector} from 'react-redux'
+import {addBounty, editBounty} from '../../../redux/actions/bounty'
+import {ProgressLoader} from '../../../layouts/ProgressLoader'
+import {useLocation} from 'react-router'
 
 const BlogEdit = () => {
-
     const dispatch = useDispatch()
-
     const validationSchema = Yup.object().shape({
         title: Yup.string().required('Title is required'),
         description: Yup.string()
@@ -51,11 +38,10 @@ const BlogEdit = () => {
             .transform(value => (isNaN(value) ? undefined : value))
     })
 
-
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         control,
         getValues,
         setValue,
@@ -75,7 +61,7 @@ const BlogEdit = () => {
         if (location && location.data) {
             dispatch(editBounty(values))
         } else {
-            dispatch(addBounty({ ...values }))
+            dispatch(addBounty(values))
         }
     }
 
@@ -85,7 +71,7 @@ const BlogEdit = () => {
     const [editorDataState, setEditorDataState] = useState(EditorState.createWithContent(contentDataState))
     useEffect(() => {
         if (location && location.data) {
-            reset({ ...location.data, deadline: new Date(location.data.deadline) })
+            reset({...location.data, deadline: new Date(location.data.deadline)})
 
             const contentDataState =
                 ContentState.createFromBlockArray(convertFromHTML(getValues().description))
@@ -110,7 +96,7 @@ const BlogEdit = () => {
                             <Form className='mt-2' onSubmit={handleSubmit(onSubmit)}>
                                 <Row>
                                     <Col md='6'>
-                                        <FormGroup className="d-flex flex-column" >
+                                        <FormGroup className="d-flex flex-column">
                                             <label htmlFor="title">Bounty Title</label>
                                             <input
                                                 name="title"
@@ -124,7 +110,7 @@ const BlogEdit = () => {
                                         </FormGroup>
                                     </Col>
                                     <Col md='6'>
-                                        <FormGroup className="d-flex flex-column" >
+                                        <FormGroup className="d-flex flex-column">
                                             <label htmlFor="price">Amount</label>
                                             <input
                                                 name="amount"
@@ -141,13 +127,13 @@ const BlogEdit = () => {
                                 </Row>
                                 <Row>
                                     <Col md='6'>
-                                        <FormGroup className="d-flex flex-column" >
+                                        <FormGroup className="d-flex flex-column">
                                             <label htmlFor="title">Bounty deadline</label>
                                             <Controller
                                                 dateFormat={'dd/MM/yyyy'}
                                                 name="deadline"
                                                 control={control}
-                                                render={({ onChange, value }) => (
+                                                render={({onChange, value}) => (
                                                     <DatePicker
                                                         popperPlacement="top-start"
                                                         popperModifiers={{
@@ -160,7 +146,7 @@ const BlogEdit = () => {
                                                         }}
                                                         className={`form-control ${errors.deadline ? 'is-invalid' : ''}`}
                                                         selected={getValues().deadline}
-                                                        style={{ flex: 1 }}
+                                                        style={{flex: 1}}
                                                         onChange={(value) => {
                                                             setValue('deadline', value)
                                                             if (value !== undefined) {
@@ -182,7 +168,7 @@ const BlogEdit = () => {
                                     <Controller
                                         name="description"
                                         control={control}
-                                        render={({ onChange, value }) => (
+                                        render={({onChange, value}) => (
                                             <WYSIWYGEditor
                                                 editorDataState={editorDataState}
                                                 onChange={(value) => {
@@ -202,11 +188,11 @@ const BlogEdit = () => {
 
                                     <Col className='mt-50'>
                                         <Button.Ripple type="submit" color='primary' className='mr-1'>
-                                            {loading ? <ProgressLoader /> : 'Save Changes'}
+                                            {loading ? <ProgressLoader/> : 'Save Changes'}
                                         </Button.Ripple>
                                         <Button.Ripple color='secondary' outline>
                                             Cancel
-                      </Button.Ripple>
+                                        </Button.Ripple>
                                     </Col>
                                 </Row>
                             </Form>
