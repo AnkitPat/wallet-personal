@@ -1,7 +1,7 @@
 import axios from "axios"
 import { toast } from "react-toastify"
 import { history } from "../../../utility/Utils"
-import { saveBountiesAction, saveBountyAction, setButtonLoadingAction, setLoadingAction } from "./actions"
+import { saveBountiesAction, saveBountyAction, saveMyBountiesAction, saveProjectsAction, saveSocialMediumsAction, saveSubmissionsAction, setButtonLoadingAction, setLoadingAction } from "./actions"
 
 function fetchBountyAPI() {
     return axios.get('bounty')
@@ -13,6 +13,32 @@ function fetchBountyDetailsAPI(id) {
 
 function submitBountyAPI(data) {
     return axios.post(`/bounty/submission`, data)
+}
+
+
+function fetchProjectsAPI() {
+    return axios.get(`/bounty/projects`)
+}
+
+function fetchSocialMediumsAPI() {
+    return axios.get(`/bounty/socialMediums`)
+}
+
+function fetchMyBountiesAPI() {
+    return axios.get(`/bounty/myBounties`)
+}
+
+
+function fetchAllSubmissionAPI() {
+    return axios.get(`/bounty/submissions`)
+}
+
+function claimMyBountyAPI(id) {
+    return axios.post(`/bounty/claim`, {id})
+}
+
+function verifyBountyAPI(id) {
+    return axios.post(`/bounty/verify`, {id})
 }
 
 function addBountyAPI(data) {
@@ -109,3 +135,90 @@ export const submitBounty = (data) => {
         }
     }
 }
+
+// ** fetch projects
+export const fetchProjectsAndSocialMediums = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoadingAction(true))
+            let response = await fetchProjectsAPI()
+            if (response && response.data) dispatch(saveProjectsAction(response.data))
+            response = await fetchSocialMediumsAPI()
+            if (response && response.data) dispatch(saveSocialMediumsAction(response.data))
+            dispatch(setLoadingAction(false))
+        } catch (e) {
+            console.log(e)
+            dispatch(setLoadingAction(false))
+            toast.error('Error in fetching')
+        }
+    }
+}
+
+// ** fetch my Bounties
+export const fetchMyBounties = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoadingAction(true))
+            const response = await fetchMyBountiesAPI()
+            if (response && response.data) dispatch(saveMyBountiesAction(response.data))
+            dispatch(setLoadingAction(false))
+        } catch (e) {
+            console.log(e)
+            dispatch(setLoadingAction(false))
+            toast.error('Error in fetching')
+        }
+    }
+}
+
+// ** fetch all submission
+export const fetchSubmission = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoadingAction(true))
+            const response = await fetchAllSubmissionAPI()
+            if (response && response.data) dispatch(saveSubmissionsAction(response.data))
+            dispatch(setLoadingAction(false))
+        } catch (e) {
+            console.log(e)
+            dispatch(setLoadingAction(false))
+            toast.error('Error in fetching')
+        }
+    }
+}
+
+
+// ** Claim my Bounties
+export const claimMyBounty = (id) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setButtonLoadingAction(true))
+            const response = await claimMyBountyAPI(id)
+            toast.success("Bounty Claimed!!")
+            dispatch(fetchMyBounties())
+            dispatch(setButtonLoadingAction(false))
+        } catch (e) {
+            console.log(e)
+            dispatch(setLoadingAction(false))
+            toast.error('Failed to claim it')
+        }
+    }
+}
+
+
+// ** Claim my Bounties
+export const verifyBounty = (id) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setButtonLoadingAction(true))
+            const response = await verifyBountyAPI(id)
+            toast.success("Bounty Verified!!")
+            dispatch(fetchSubmission())
+            dispatch(setButtonLoadingAction(false))
+        } catch (e) {
+            console.log(e)
+            dispatch(setLoadingAction(false))
+            toast.error('Failed to verify it')
+        }
+    }
+}
+
