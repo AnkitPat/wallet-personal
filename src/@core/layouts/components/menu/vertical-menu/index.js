@@ -2,7 +2,7 @@
 import { Fragment, useState, useRef } from 'react'
 
 // ** Vertical Menu Items Array
-import {regularItems} from '@src/navigation/vertical'
+import {regularItems, adminItems} from '@src/navigation/vertical'
 
 // ** Third Party Components
 import classnames from 'classnames'
@@ -12,7 +12,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import VerticalMenuHeader from './VerticalMenuHeader'
 import VerticalNavMenuItems from './VerticalNavMenuItems'
 import { useSelector } from 'react-redux'
-import { adminItems } from '../../../../../navigation/vertical'
 
 const Sidebar = props => {
   // ** Props
