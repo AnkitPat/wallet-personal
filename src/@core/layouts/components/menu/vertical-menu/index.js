@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useState, useRef } from 'react'
+import { Fragment, useState, useRef, useEffect } from 'react'
 
 // ** Vertical Menu Items Array
 import {regularItems, adminItems} from '@src/navigation/vertical'
