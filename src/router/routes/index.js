@@ -104,6 +104,11 @@ const Routes = [
     component: lazy(() => import('../../views/userWallet'))
   },
   {
+    path: '/withdrawal',
+    exact: true,
+    component: lazy(() => import('../../views/Withdrawal'))
+  },
+  {
     path: '/order/success',
     exact: true,
     component: lazy(() => import('../../views/userWallet/success'))

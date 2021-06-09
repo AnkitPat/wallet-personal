@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'reactstrap'
 import { ProgressLoader } from '../../../layouts/ProgressLoader'
 import { claimMyBounty, fetchSubmission, verifyBounty } from '../../../redux/actions/bounty'
+import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { Text } from 'recharts'
 
 const Submissions = (
     { }) => {
@@ -34,10 +36,10 @@ const Submissions = (
             selector: 'bountyTask.amount',
             name: 'Amount',
             style: {
-                width: '20%'
+                width: '10%'
             },
             headerStyle: {
-                width: '20%'
+                width: '10%'
             }
         },
         {
@@ -54,6 +56,19 @@ const Submissions = (
             selector: 'bountyTask.updatedAt',
             name: 'Last updated',
             format: row => moment(row.bountyTask.updatedAt).format('DD/MM/YYYY'),
+            style: {
+                width: '20%'
+            },
+            headerStyle: {
+                width: '20%'
+            }
+        },
+        {
+            selector: 'user.name',
+            name: 'Submitted by',
+            cell: row => <div>
+                {row.user.name}
+            </div>,
             style: {
                 width: '20%'
             },
@@ -81,9 +96,12 @@ const Submissions = (
     return (
         <div>
             {loading ? <ProgressLoader size='lg' /> : <div className="mt-4">
+            <div className="mb-2"><Text className="h1 text-primary">Submissions</Text></div>
                 <DataTable
+                    noHeader
                     title="All Submissions"
                     columns={columns}
+                    className='react-dataTable'
                     data={submissions || []}
                 />
             </div>}

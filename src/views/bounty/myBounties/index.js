@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'reactstrap'
 import { ProgressLoader } from '../../../layouts/ProgressLoader'
 import { claimMyBounty, fetchMyBounties } from '../../../redux/actions/bounty'
+import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { Text } from 'recharts'
 
 const MyBounties = (
     { }) => {
@@ -66,7 +68,7 @@ const MyBounties = (
             selector: 'bountyTask.updatedAt',
             name: 'Claim Status',
             cell: row => <div>
-                { (row.verified && row.claimed) ? <div>Claimed</div> : row.verified ? <Button.Ripple disabled={moment(row.bountyTask.deadline).isBefore(moment())} color='primary' type="submit" onClick={() => dispatch(claimMyBounty(row.id))}>
+                {(row.verified && row.claimed) ? <div>Claimed</div> : row.verified ? <Button.Ripple disabled={moment(row.bountyTask.deadline).isAfter(moment())} color='primary' type="submit" onClick={() => dispatch(claimMyBounty(row.id))}>
                     {buttonLoading ? <ProgressLoader /> : 'Claim bounty'}
                 </Button.Ripple> : 'Not verified'}
             </div>,
@@ -82,9 +84,13 @@ const MyBounties = (
     return (
         <div>
             {loading ? <ProgressLoader size='lg' /> : <div className="mt-4">
+                <div className="mb-2"><Text className="h1 text-primary">My Bounties</Text></div>
                 <DataTable
+                    noHeader
+
                     title="My Bounties"
                     columns={columns}
+                    className='react-dataTable'
                     data={myBounties || []}
                 />
             </div>}
