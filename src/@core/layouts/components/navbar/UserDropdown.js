@@ -10,7 +10,7 @@ import { handleLogout } from '@store/actions/auth'
 
 // ** Third Party Components
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
-import { User, Mail, Power, UserPlus } from 'react-feather'
+import { User, Mail, Power, UserPlus, LogOut } from 'react-feather'
 
 // ** Default Avatar Image
 import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
@@ -42,6 +42,10 @@ const UserDropdown = () => {
         <DropdownItem tag={Link} to='/membership'>
           <UserPlus size={14} className='mr-75' />
           <span className='align-middle'>Membership</span>
+        </DropdownItem>
+        <DropdownItem tag={Link} to='/withdrawal'>
+          <LogOut className="mr-75" />
+          <span className='align-middle'>Withdrawal</span>
         </DropdownItem>
         <DropdownItem tag={Link} to='/login' onClick={() => dispatch(handleLogout())}>
           <Power size={14} className='mr-75' />

@@ -89,6 +89,10 @@ const BountyList = () => {
                         <Button.Ripple color='primary' type="submit" onClick={() => history.push('/bounties/add')}>
                             Add bounty
                         </Button.Ripple>}
+
+                        <Button.Ripple color='primary' type="submit" onClick={() => history.push('/bounties/myBounties')}>
+                            My bounties
+                        </Button.Ripple>
                     </div>
                     {loading ? (<ProgressLoader size="lg"/>) : (
                         <Row>{renderRenderList()}</Row>

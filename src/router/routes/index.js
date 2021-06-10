@@ -84,6 +84,16 @@ const Routes = [
     component: lazy(() => import('../../views/bounty/add'))
   },
   {
+    path: '/bounties/myBounties',
+    exact: true,
+    component: lazy(() => import('../../views/bounty/myBounties'))
+  },
+  {
+    path: '/bounties/submissions',
+    exact: true,
+    component: lazy(() => import('../../views/bounty/submissions'))
+  },
+  {
     path: '/bounties/:id',
     exact: true,
     component: lazy(() => import('../../views/bounty/details'))
@@ -92,6 +102,11 @@ const Routes = [
     path: '/wallet',
     exact: true,
     component: lazy(() => import('../../views/userWallet'))
+  },
+  {
+    path: '/withdrawal',
+    exact: true,
+    component: lazy(() => import('../../views/Withdrawal'))
   },
   {
     path: '/order/success',

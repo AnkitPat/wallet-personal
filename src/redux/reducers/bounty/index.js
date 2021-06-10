@@ -1,12 +1,16 @@
 import produce from 'immer'
-import { SAVE_BOUNTIES, SAVE_BOUNTY_DETAIL, SET_BUTTON_LOADING, SET_LOADING } from '../../actions/bounty/actions'
+import { SAVE_BOUNTIES, SAVE_BOUNTY_DETAIL, SAVE_MY_BOUNTIES, SAVE_PROJECTS, SAVE_SOCIAL_MEDIUMS, SAVE_SUBMISSIONS, SET_BUTTON_LOADING, SET_LOADING } from '../../actions/bounty/actions'
 
 // **  Initial State
 const initialState = {
     bounties: [],
     loading: false,
     buttonLoading: false,
-    bounty: {}
+    bounty: {},
+    projects: [],
+    socialMediums: [],
+    myBounties: [],
+    submissions: []
 }
 
 /* eslint-disable default-case, no-param-reassign */
@@ -31,6 +35,21 @@ const bountyReducer = (state = initialState, action) =>
                 draft.bounty = action.bounty
                 break
 
+            case SAVE_PROJECTS:
+                draft.projects = action.projects
+                break
+
+            case SAVE_SOCIAL_MEDIUMS:
+                draft.socialMediums = action.socialMediums
+                break
+
+            case SAVE_MY_BOUNTIES:
+                draft.myBounties = action.myBounties
+                break
+
+            case SAVE_SUBMISSIONS:
+                draft.submissions = action.submissions
+                break
         }
     })
 

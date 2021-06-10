@@ -1,8 +1,8 @@
 // ** React Imports
-import { Fragment, useState, useRef } from 'react'
+import { Fragment, useState, useRef, useEffect } from 'react'
 
 // ** Vertical Menu Items Array
-import navigation from '@src/navigation/vertical'
+import {regularItems, adminItems} from '@src/navigation/vertical'
 
 // ** Third Party Components
 import classnames from 'classnames'
@@ -11,6 +11,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 // ** Vertical Menu Components
 import VerticalMenuHeader from './VerticalMenuHeader'
 import VerticalNavMenuItems from './VerticalNavMenuItems'
+import { useSelector } from 'react-redux'
 
 const Sidebar = props => {
   // ** Props
@@ -47,6 +48,7 @@ const Sidebar = props => {
     }
   }
 
+  const role = useSelector(state => state.auth.userRole)
   return (
     <Fragment>
       <div
@@ -74,7 +76,7 @@ const Sidebar = props => {
             >
               <ul className='navigation navigation-main'>
                 <VerticalNavMenuItems
-                  items={navigation}
+                  items={role === 'regular' ? regularItems : adminItems}
                   groupActive={groupActive}
                   setGroupActive={setGroupActive}
                   activeItem={activeItem}
