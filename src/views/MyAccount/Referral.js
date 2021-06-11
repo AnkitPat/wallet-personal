@@ -1,13 +1,13 @@
-import {Twitter, Facebook, Send} from 'react-feather'
-import {Link} from 'react-router-dom'
-import {toast} from 'react-toastify'
-import {Card, Button, CardBody, CardTitle, Row, Col} from 'reactstrap'
+import { Facebook, Send, Twitter } from 'react-feather'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import {
     FacebookShareButton,
     TelegramShareButton,
     TwitterShareButton
 } from "react-share"
-import {useSelector} from 'react-redux'
+import { toast } from 'react-toastify'
+import { Button, Card, CardBody, CardTitle, Col, Row } from 'reactstrap'
 
 const Referral = () => {
     const referralCode = useSelector(state => state.auth.userDetails.referralCode)
@@ -21,17 +21,17 @@ const Referral = () => {
                         <CardBody>
                             <div className="form-group d-flex flex-row">
                                 <Link onClick={() => {
-                                    navigator.clipboard.writeText(`https://dummyLink.com?referralLink=${referralCode}`)
+                                    navigator.clipboard.writeText(`${window.location.origin}/register?referralLink=${referralCode}`)
                                     toast.success('Link copied!!')
 
                                 }} className="d-flex bg-transparent text-blue" style={{flex: 1}}>
                                     <div type="text" readOnly
                                          className="form-control bg-transparent text-primary border border-primary"
                                          id="amount"
-                                    >{`https://dummyLink.com?referralLink=${referralCode}`}</div>
+                                    >{`${window.location.origin}/register?referralLink=${referralCode}`}</div>
                                 </Link>
                                 <Button.Ripple to='/' color='primary' style={{borderRadius: 0}} onClick={() => {
-                                    navigator.clipboard.writeText(`https://dummyLink.com?referralLink=${referralCode}`)
+                                    navigator.clipboard.writeText(`${window.location.origin}/register?referralLink=${referralCode}`)
                                     toast.success('Link copied!!')
 
                                 }} className='d-flex btn-sm-block mb-2 rounded-right'>
@@ -41,19 +41,19 @@ const Referral = () => {
                             <div className="d-flex flex-row">
                                 <FacebookShareButton
                                     className='d-flex flex-fill mb-2 justify-content-center align-items-center rounded mx-1 bg-primary text-white py-1'
-                                    color="primary" url={`https://dummyLink.com?referralLink=${referralCode}`}>
+                                    color="primary" url={`${window.location.origin}/register?referralLink=${referralCode}`}>
                                     <Facebook/>
 
                                 </FacebookShareButton>
                                 <TelegramShareButton
                                     className='d-flex flex-fill mb-2 justify-content-center align-items-center rounded mx-1 bg-primary text-white'
-                                    color="primary" url={`https://dummyLink.com?referralLink=${referralCode}`}>
+                                    color="primary" url={`${window.location.origin}/register?referralLink=${referralCode}`}>
                                     <Send/>
 
                                 </TelegramShareButton>
                                 <TwitterShareButton
                                     className='d-flex flex-fill mb-2 justify-content-center align-items-center rounded mx-1 bg-primary text-white'
-                                    color="primary" url={`https://dummyLink.com?referralLink=${referralCode}`}>
+                                    color="primary" url={`${window.location.origin}/register?referralLink=${referralCode}`}>
                                     <Twitter/>
 
                                 </TwitterShareButton>
