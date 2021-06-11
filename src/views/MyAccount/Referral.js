@@ -12,6 +12,7 @@ import { Button, Card, CardBody, CardTitle, Col, Row } from 'reactstrap'
 const Referral = () => {
     const referralCode = useSelector(state => state.auth.userDetails.referralCode)
 
+    const shareableUrl = `${window.location.origin}/register?referralLink=${referralCode}`
     return (
         <div>
             <Row className="d-flex justify-content-center">
@@ -21,17 +22,17 @@ const Referral = () => {
                         <CardBody>
                             <div className="form-group d-flex flex-row">
                                 <Link onClick={() => {
-                                    navigator.clipboard.writeText(`${window.location.origin}/register?referralLink=${referralCode}`)
+                                    navigator.clipboard.writeText(shareableUrl)
                                     toast.success('Link copied!!')
 
                                 }} className="d-flex bg-transparent text-blue" style={{flex: 1}}>
                                     <div type="text" readOnly
                                          className="form-control bg-transparent text-primary border border-primary"
                                          id="amount"
-                                    >{`${window.location.origin}/register?referralLink=${referralCode}`}</div>
+                                    >{shareableUrl}</div>
                                 </Link>
                                 <Button.Ripple to='/' color='primary' style={{borderRadius: 0}} onClick={() => {
-                                    navigator.clipboard.writeText(`${window.location.origin}/register?referralLink=${referralCode}`)
+                                    navigator.clipboard.writeText(shareableUrl)
                                     toast.success('Link copied!!')
 
                                 }} className='d-flex btn-sm-block mb-2 rounded-right'>
@@ -41,19 +42,19 @@ const Referral = () => {
                             <div className="d-flex flex-row">
                                 <FacebookShareButton
                                     className='d-flex flex-fill mb-2 justify-content-center align-items-center rounded mx-1 bg-primary text-white py-1'
-                                    color="primary" url={`${window.location.origin}/register?referralLink=${referralCode}`}>
+                                    color="primary" url={shareableUrl}>
                                     <Facebook/>
 
                                 </FacebookShareButton>
                                 <TelegramShareButton
                                     className='d-flex flex-fill mb-2 justify-content-center align-items-center rounded mx-1 bg-primary text-white'
-                                    color="primary" url={`${window.location.origin}/register?referralLink=${referralCode}`}>
+                                    color="primary" url={shareableUrl}>
                                     <Send/>
 
                                 </TelegramShareButton>
                                 <TwitterShareButton
                                     className='d-flex flex-fill mb-2 justify-content-center align-items-center rounded mx-1 bg-primary text-white'
-                                    color="primary" url={`${window.location.origin}/register?referralLink=${referralCode}`}>
+                                    color="primary" url={shareableUrl}>
                                     <Twitter/>
 
                                 </TwitterShareButton>
