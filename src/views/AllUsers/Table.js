@@ -1,20 +1,13 @@
-// ** React Imports
-// ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { Fragment, useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
-// ** Columns
 import { ChevronDown, Slash, UserCheck } from 'react-feather'
 import ReactPaginate from 'react-paginate'
-// ** Store & Actions
-// import { getAllData, getData } from '../store/action'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { Button, Card, Col, CustomInput, Input, Label, Row } from 'reactstrap'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
 import { blockUser, fetchUsers } from '../../redux/actions/users'
-
 
 // ** Table Header
 const CustomHeader = ({ handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
@@ -181,27 +174,27 @@ const UsersList = () => {
   return (
     <Fragment>
       {loading ? <ProgressLoader size="lg" /> : <Card>
-          <DataTable
-            noHeader
-            pagination
-            subHeader
-            responsive
-            paginationServer
-            columns={columns}
-            sortIcon={<ChevronDown />}
-            className='react-dataTable'
-            paginationComponent={CustomPagination}
-            data={dataToRender()}
-            subHeaderComponent={
-              <CustomHeader
-                handlePerPage={handlePerPage}
-                rowsPerPage={rowsPerPage}
-                searchTerm={searchTerm}
-                handleFilter={handleFilter}
-              />
-            }
-          />
-        </Card>}
+        <DataTable
+          noHeader
+          pagination
+          subHeader
+          responsive
+          paginationServer
+          columns={columns}
+          sortIcon={<ChevronDown />}
+          className='react-dataTable'
+          paginationComponent={CustomPagination}
+          data={dataToRender()}
+          subHeaderComponent={
+            <CustomHeader
+              handlePerPage={handlePerPage}
+              rowsPerPage={rowsPerPage}
+              searchTerm={searchTerm}
+              handleFilter={handleFilter}
+            />
+          }
+        />
+      </Card>}
 
     </Fragment>
   )
