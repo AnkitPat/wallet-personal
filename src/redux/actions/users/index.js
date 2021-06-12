@@ -2,13 +2,16 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import { saveUsersListAction, setLoadingAction } from "./actions"
 
-async function fetchUsersList(page, limit, searchTerm) {
-    if (searchTerm.length > 0) return axios.get(`admin/all-users?page=${page}&limit=${limit}&search=${searchTerm}`)
-    else return axios.get(`admin/all-users?page=${page}&limit=${limit}`)
+function fetchUsersList(page, limit, searchTerm) {
+    if (searchTerm.length > 0) {
+        return axios.get(`admin/all-users?page=${page}&limit=${limit}&search=${searchTerm}`)
+    }
+
+    return axios.get(`admin/all-users?page=${page}&limit=${limit}`)
 }
 
 
-async function blockUserApi(userId, block) {
+function blockUserApi(userId, block) {
     return axios.put(`/admin/block-user/`, {
         id: userId,
         block
@@ -27,7 +30,6 @@ export const fetchUsers = (page, limit, searchTerm = '') => {
             dispatch(setLoadingAction(false))
         } catch (e) {
             dispatch(setLoadingAction(false))
-            console.log(e)
             toast.error('Error in fetching')
         }
     }
@@ -35,14 +37,12 @@ export const fetchUsers = (page, limit, searchTerm = '') => {
 
 export const blockUser = (userId, page, limit, block, searchTerm) => {
     return async (dispatch) => {
-
         try {
-            const response = await blockUserApi(userId, block)
-            toast.success('User blocked')
+            await blockUserApi(userId, block)
+            toast.success('User status is changed')
             dispatch(fetchUsers(page - 1, limit, searchTerm))
         } catch (e) {
             toast.error(e)
-            console.log(e)
         }
     }
 }

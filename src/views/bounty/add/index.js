@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
 import Breadcrumbs from '@components/breadcrumbs'
-import { EditorState, ContentState, convertFromHTML } from 'draft-js'
+import {EditorState, ContentState, convertFromHTML} from 'draft-js'
 import {
     Row,
     Col,
@@ -13,19 +13,19 @@ import {
     Input
 } from 'reactstrap'
 import * as Yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
+import {yupResolver} from '@hookform/resolvers/yup'
 import '@styles/react/libs/editor/editor.scss'
 import '@styles/base/plugins/forms/form-quill-editor.scss'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/base/pages/page-blog.scss'
 import "react-datepicker/dist/react-datepicker.css"
-import { Controller, useForm } from 'react-hook-form'
+import {Controller, useForm} from 'react-hook-form'
 import DatePicker from 'react-datepicker'
 import WYSIWYGEditor from './components/Htmleditor/Editor'
-import { useDispatch, useSelector } from 'react-redux'
-import { addBounty, editBounty, fetchProjects, fetchProjectsAndSocialMediums } from '../../../redux/actions/bounty'
-import { ProgressLoader } from '../../../layouts/ProgressLoader'
-import { useLocation } from 'react-router'
+import {useDispatch, useSelector} from 'react-redux'
+import {addBounty, editBounty, fetchProjectsAndSocialMediums} from '../../../redux/actions/bounty'
+import {ProgressLoader} from '../../../layouts/ProgressLoader'
+import {Link, useLocation} from "react-router-dom"
 
 const BlogEdit = () => {
     const dispatch = useDispatch()
@@ -33,6 +33,8 @@ const BlogEdit = () => {
         title: Yup.string().required('Title is required'),
         description: Yup.string()
             .required('Description is required'),
+        shortDescription: Yup.string()
+            .required('Short description is required'),
         deadline: Yup.string().required('Deadline is required'),
         amount: Yup.number('Invalid Amount').required("Price is required")
             .nullable()
@@ -46,7 +48,7 @@ const BlogEdit = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         control,
         getValues,
         setValue,
@@ -56,6 +58,7 @@ const BlogEdit = () => {
         resolver: yupResolver(validationSchema),
         defaultValues: {
             description: '',
+            shortDescription: '',
             deadline: '',
             projectId: '',
             socialMediumId: ''
@@ -80,7 +83,7 @@ const BlogEdit = () => {
     const [editorDataState, setEditorDataState] = useState(EditorState.createWithContent(contentDataState))
     useEffect(() => {
         if (location && location.data) {
-            reset({ ...location.data, deadline: new Date(location.data.deadline)})
+            reset({...location.data, deadline: new Date(location.data.deadline)})
 
             const contentDataState =
                 ContentState.createFromBlockArray(convertFromHTML(getValues().description))
@@ -146,7 +149,7 @@ const BlogEdit = () => {
                                                 dateFormat={'dd/MM/yyyy'}
                                                 name="deadline"
                                                 control={control}
-                                                render={({ onChange, value }) => (
+                                                render={({onChange, value}) => (
                                                     <DatePicker
                                                         popperPlacement="top-start"
                                                         popperModifiers={{
@@ -159,7 +162,7 @@ const BlogEdit = () => {
                                                         }}
                                                         className={`form-control ${errors.deadline ? 'is-invalid' : ''}`}
                                                         selected={getValues().deadline}
-                                                        style={{ flex: 1 }}
+                                                        style={{flex: 1}}
                                                         onChange={(value) => {
                                                             setValue('deadline', value)
                                                             if (value !== undefined) {
@@ -196,7 +199,6 @@ const BlogEdit = () => {
 
                                                 {projects.map(project =>
                                                     <option value={project.id}>{project.title}</option>
-
                                                 )}
 
                                             </Input>
@@ -229,7 +231,6 @@ const BlogEdit = () => {
                                                 <option value={''}>{'Select Social medium'}</option>
                                                 {socialMediums.map(social =>
                                                     <option value={social.id}>{social.title}</option>
-
                                                 )}
 
                                             </Input>
@@ -240,35 +241,55 @@ const BlogEdit = () => {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Label>Description</Label>
-                                    <Controller
-                                        name="description"
-                                        control={control}
-                                        render={({ onChange, value }) => (
-                                            <WYSIWYGEditor
-                                                editorDataState={editorDataState}
-                                                onChange={(value) => {
-                                                    setValue('description', value)
-                                                    if (value !== undefined) {
-                                                        clearErrors('description')
-                                                    }
-                                                }}
+                                    <Col>
+                                        <FormGroup className='mb-2'>
+                                            <label>Bounty Short Description</label>
+                                            <textarea
+                                                id="shortDescription"
+                                                name="shortDescription"
+                                                placeholder="Enter Short Description"
+                                                {...register('shortDescription')}
+                                                className={`form-control ${errors.shortDescription ? 'is-invalid' : ''}`}
                                             />
-                                        )}
-                                    />
-                                    <small className='text-danger'>
-                                        {errors.description && errors.description.message}
-                                    </small>
+                                            <small className='text-danger'>
+                                                {errors.shortDescription && errors.shortDescription.message}
+                                            </small>
+                                        </FormGroup>
+                                    </Col>
                                 </Row>
                                 <Row>
-
+                                    <Col>
+                                        <Label>Description</Label>
+                                        <Controller
+                                            name="description"
+                                            control={control}
+                                            render={({onChange, value}) => (
+                                                <WYSIWYGEditor
+                                                    editorDataState={editorDataState}
+                                                    onChange={(value) => {
+                                                        setValue('description', value)
+                                                        if (value !== undefined) {
+                                                            clearErrors('description')
+                                                        }
+                                                    }}
+                                                />
+                                            )}
+                                        />
+                                        <small className='text-danger'>
+                                            {errors.description && errors.description.message}
+                                        </small>
+                                    </Col>
+                                </Row>
+                                <Row>
                                     <Col className='mt-50'>
                                         <Button.Ripple type="submit" color='primary' className='mr-1'>
-                                            {loading ? <ProgressLoader /> : 'Save Changes'}
+                                            {loading ? <ProgressLoader/> : 'Save Changes'}
                                         </Button.Ripple>
-                                        <Button.Ripple color='secondary' outline>
-                                            Cancel
-                                        </Button.Ripple>
+                                        <Link to={`/bounties`}>
+                                            <Button.Ripple color='secondary' outline>
+                                                Cancel
+                                            </Button.Ripple>
+                                        </Link>
                                     </Col>
                                 </Row>
                             </Form>
