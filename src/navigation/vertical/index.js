@@ -48,6 +48,12 @@ const adminItems = [
     title: 'All submission',
     icon: <User size={20} />,
     navLink: '/bounties/submissions'
+  },
+  {
+    id: 'users',
+    title: 'All Users',
+    icon: <User size={20} />,
+    navLink: '/users'
   }
 ]
 
