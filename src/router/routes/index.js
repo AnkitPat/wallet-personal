@@ -119,6 +119,11 @@ const Routes = [
     component: lazy(() => import('../../views/userWallet/history'))
   },
   {
+    path: '/users',
+    exact: true,
+    component: lazy(() => import('../../views/AllUsers'))
+  },
+  {
     path: '/error',
     component: lazy(() => import('../../views/Error')),
     layout: 'BlankLayout'
