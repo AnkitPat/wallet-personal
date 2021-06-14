@@ -14,8 +14,6 @@ const withdrawalReducer = (state = initialState, action) =>
             case SET_LOADING:
                 draft.loading = action.flag
                 break
-
-
         }
     })
 

@@ -12,7 +12,7 @@ export const transferCredits = (credits) => {
         try {
             dispatch(setLoadingAction(true))
             const response = await transferCreditsAPI(credits)
-           
+            toast.success("Successfully Transfered!!")
             dispatch(setLoadingAction(false))
         } catch (e) {
             console.log(e)
