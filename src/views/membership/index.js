@@ -6,27 +6,19 @@ import PricingTrial from './PricingTrial'
 import PricingHeader from './PricingHeader'
 
 import '@styles/base/pages/page-pricing.scss'
+import { useDispatch } from 'react-redux'
+import { fetchPlans } from '../../redux/actions/membership'
 
 const Pricing = () => {
+
+
   const [data, setData] = useState(null),
     [faq, setFaq] = useState(null),
     [duration, setDuration] = useState('monthly')
 
+    const dispatch = useDispatch()
   useEffect(() => {
-    axios.get('/pricing/data').then(res => {
-      const dataArr = [],
-        faqArr = []
-
-      Object.entries(res.data).forEach(([key, val]) => {
-        if (key !== 'qandA') {
-          dataArr.push(val)
-          setData([...dataArr])
-        } else {
-          faqArr.push(val)
-          setFaq(faqArr[0])
-        }
-      })
-    })
+      dispatch(fetchPlans())
   }, [])
 
   return (
@@ -34,7 +26,6 @@ const Pricing = () => {
       <PricingHeader duration={duration} setDuration={setDuration} />
         <Fragment>
           <PricingCards duration={duration} />
-          <PricingTrial />
           <PricingFaqs data={faq} />
         </Fragment>
     </div>

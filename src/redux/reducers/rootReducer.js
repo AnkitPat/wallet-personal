@@ -9,6 +9,7 @@ import bounty from './bounty'
 import wallet from './wallet'
 import users from './users'
 import dashboard from './dashboard'
+import membership from './membership'
 import { connectRouter } from 'connected-react-router'
 import { history } from '../../utility/Utils'
 
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   bounty,
   wallet,
   dashboard,
-  users
+  users,
+  membership
 })
 
 export default rootReducer
