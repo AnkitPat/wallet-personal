@@ -52,7 +52,7 @@ const BountyList = () => {
                             </div>
                             <div
                                 dangerouslySetInnerHTML={{
-                                    __html: bounty.description
+                                    __html: bounty.shortDescription
                                 }}>
                             </div>
                             <hr/>
