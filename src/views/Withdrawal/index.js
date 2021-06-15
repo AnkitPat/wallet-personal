@@ -16,17 +16,47 @@ import * as Yup from 'yup'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
 import { fetchTokenInfo } from '../../redux/actions/dashboard'
 import { transferCredits } from '../../redux/actions/withdrawal'
+import { history } from '../../utility/Utils'
 
 function PtmWithdrawal({ }) {
   const [account, setAccount] = useState('')
   const [showMetaMask, setShowMetaMask] = useState(false)
   const [ptmAmount, setPTMAmount] = useState(0)
+  const [exclusiveAmount, setExclusiveAmount] = useState(0)
 
+  const tokenInfo = useSelector(state => state.dashboard.tokenInfo)
+  const userCredits = useSelector(state => state.auth.userDetails.credit)
+  const loading = useSelector(state => state.withdrawal.loading)
+
+  const validationSchema = Yup.object().shape({
+    amount: Yup.number('Amount is required')
+      .typeError('Please enter the credit amount')
+      .positive()
+      .integer('Amount should not be in decimal values')
+      .min(10, 'Amount should be more than 10')
+      .max(userCredits, `Amount should be less than available credits ${userCredits}`)
+      .required('Amount is required')
+  })
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    getValues,
+    clearErrors
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+    defaultValues: {
+      walletAddress: account
+    }
+  })
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.enable()
       web3.eth.getAccounts().then(addr => {
         setAccount(addr[0])
+        setValue('walletAddress', addr[0])
       })
     } else {
       setShowMetaMask(true)
@@ -41,41 +71,29 @@ function PtmWithdrawal({ }) {
   useEffect(() => {
     window.ethereum.on('accountsChanged', (accounts) => {
       setAccount(accounts[0])
+      setValue('walletAddress', accounts[0])
+
     })
   })
 
 
-  const tokenInfo = useSelector(state => state.dashboard.tokenInfo)
-  const loading = useSelector(state => state.membership.loading)
-
   const changeCreditToPTM = credit => {
     if (tokenInfo && tokenInfo.price) {
-      console.log(credit, tokenInfo.price.rate)
       setPTMAmount(+credit / tokenInfo.price.rate)
     }
   }
 
-  const validationSchema = Yup.object().shape({
-    amount: Yup.number('Amount is required')
-      .typeError('Please enter the credit amount')
-      .positive()
-      .integer('Amount should not be in decimal values')
-      .min(10, 'Amount should be more than 10')
-      .required('Amount is required')
-  })
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue
-  } = useForm({
-    resolver: yupResolver(validationSchema)
-  })
 
   const onSubmit = values => {
-    dispatch(transferCredits(values))
+    dispatch(transferCredits({
+      ...values,
+      fees: 20,
+      exclusiveAmount: values.amount,
+      amount: values.amount * 0.8,
+      token: ptmAmount * 0.8
+    }))
   }
+
 
   return <Fragment>
     <Breadcrumbs
@@ -100,7 +118,10 @@ function PtmWithdrawal({ }) {
       </div>
     </div>
 
-    <Row className="match-height">
+    <Button.Ripple color='primary' className='my-2' onClick={() => history.push('/withdrawal/history')}>
+      Withdrawal History
+    </Button.Ripple>
+    {account && account.length > 0 && <Row className="match-height">
       <Col xl='8' md='6' xs='12'>
         <Card className='mb-0'>
           <CardBody>
@@ -118,7 +139,6 @@ function PtmWithdrawal({ }) {
                   Credit
                 </Label>
                 <input
-                  {...register('amount')}
 
                   type="number"
                   className={`form-control bg-transparent text-black ${errors.amount ? 'is-invalid' : ''
@@ -127,8 +147,17 @@ function PtmWithdrawal({ }) {
                   name="amount"
                   id="credit"
 
-                  onChange={e => changeCreditToPTM(e.target.value)}
                   placeholder="Enter Amount"
+                  {...register('amount')}
+                  onChange={e => {
+                    if (e.target.value > 10 && e.target.value < userCredits) {
+                      clearErrors('amount', null)
+                    }
+                    setExclusiveAmount(e.target.value)
+                    changeCreditToPTM(e.target.value)
+                    setValue(e.target.value)
+                  }}
+
                 />
 
                 <small className='text-danger'>
@@ -141,7 +170,6 @@ function PtmWithdrawal({ }) {
                 </Label>
                 <input
                   className={`form-control bg-transparent text-black `}
-                  type="number"
                   size="lg"
                   name="amount"
                   value={ptmAmount}
@@ -156,7 +184,22 @@ function PtmWithdrawal({ }) {
                 </Label>
 
               </FormGroup>
+              <FormGroup>
+                <Label className='form-label' for='register-phone'>
+                  Credits after transfer fee
+                </Label>
+                <input
+                  className={`form-control bg-transparent text-black `}
 
+
+                  size="lg"
+                  name="amount"
+                  value={exclusiveAmount * 0.8}
+                  id="credit"
+                  readOnly
+                />
+
+              </FormGroup>
               <FormGroup>
                 <Label className='form-label' for='register-phone'>
                   PTM Token after transfer fee
@@ -164,13 +207,28 @@ function PtmWithdrawal({ }) {
                 <input
                   className={`form-control bg-transparent text-black `}
 
-                  type="number"
 
                   size="lg"
                   name="amount"
                   value={ptmAmount * 0.8}
                   id="credit"
                   readOnly
+                />
+
+              </FormGroup>
+              <FormGroup>
+                <Label className='form-label' for='register-phone'>
+                  Your Address
+                </Label>
+                <input
+                  className={`form-control bg-transparent text-black `}
+                  size="lg"
+                  name="walletAddress"
+                  value={getValues().walletAddress}
+                  id="credit"
+                  readOnly
+                  {...register('walletAddress')}
+
                 />
 
               </FormGroup>
@@ -184,7 +242,7 @@ function PtmWithdrawal({ }) {
           </CardBody>
         </Card>
       </Col>
-    </Row>
+    </Row>}
   </Fragment>
 }
 

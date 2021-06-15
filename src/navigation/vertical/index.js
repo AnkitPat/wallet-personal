@@ -1,4 +1,4 @@
-import {Home, DollarSign, Award, Users, Circle} from 'react-feather'
+import {Home, DollarSign, Award, Users, Circle, LogOut} from 'react-feather'
 
 const regularItems = [
     {
@@ -92,6 +92,12 @@ const adminItems = [
         title: 'Users',
         icon: <Users size={20}/>,
         navLink: '/users'
+    },
+    {
+        id: 'withdrawal',
+        title: 'Withdrawal Requests',
+        icon: <LogOut size={20}/>,
+        navLink: '/withdrawal/all'
     }
 ]
 
