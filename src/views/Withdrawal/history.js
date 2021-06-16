@@ -3,15 +3,17 @@ import moment from 'moment'
 import React, { useEffect } from 'react'
 import DataTable from 'react-data-table-component'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchWalletHistories } from '../../redux/actions/wallet'
+import { fetchWithdrawalHistories } from '../../redux/actions/withdrawal'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { Text } from 'recharts'
+import { ProgressLoader } from '../../layouts/ProgressLoader'
 
-const WalletHistory = (
+const WithdrawalHistory = (
     { }) => {
 
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(fetchWalletHistories())
+        dispatch(fetchWithdrawalHistories())
     }, [])
 
     // eslint-disable-next-line no-unused-vars
@@ -31,8 +33,21 @@ const WalletHistory = (
             }
         },
         {
-            selector: 'currency',
-            name: 'Currency',
+            selector: 'token',
+            name: 'PTM Token',
+            style: {
+                width: '20%',
+                textAlign: 'center'
+            },
+            headerStyle: {
+                width: '20%',
+                textAlign: 'center'
+
+            }
+        },
+        {
+            selector: 'exclusiveAmount',
+            name: 'Exclusive Amount',
             style: {
                 width: '20%',
                 textAlign: 'center'
@@ -59,7 +74,7 @@ const WalletHistory = (
         },
         {
             selector: 'updatedAt',
-            name: 'Purchased Date',
+            name: 'Last Updated Date',
             format: row => moment(row.updatedAt).format('DD/MM/YYYY'),
             style: {
                 width: '30%',
@@ -74,21 +89,23 @@ const WalletHistory = (
         }
     ]
 
-    const paymentHistory = useSelector(state => state.wallet.history)
-
+    const paymentHistory = useSelector(state => state.withdrawal.withdrawals)
+    const loading = useSelector(state => state.withdrawal.pageLoading)
     return (
         <div>
             <div className="mt-4">
-                <DataTable
+            <div className="mb-2"><Text className="h1 text-primary">Withdrawal History</Text></div>
+
+                {loading ? <ProgressLoader size='lg'/> : <DataTable
                     className='react-dataTable'
                     noHeader
                     title="Purchase History"
                     columns={columns}
                     data={paymentHistory || []}
-                />
+                />}
             </div>
         </div>
     )
 }
 
-export default WalletHistory
+export default WithdrawalHistory

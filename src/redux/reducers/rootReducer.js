@@ -10,6 +10,7 @@ import wallet from './wallet'
 import users from './users'
 import dashboard from './dashboard'
 import membership from './membership'
+import withdrawal from './withdrawal'
 import { connectRouter } from 'connected-react-router'
 import { history } from '../../utility/Utils'
 
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   wallet,
   dashboard,
   users,
-  membership
+  membership,
+  withdrawal
 })
 
 export default rootReducer
