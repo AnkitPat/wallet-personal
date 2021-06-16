@@ -90,7 +90,7 @@ function PtmWithdrawal({ }) {
       fees: 20,
       exclusiveAmount: values.amount,
       amount: values.amount * 0.8,
-      token: ptmAmount * 0.8
+      token: Number((ptmAmount * 0.8).toFixed(2))
     }))
   }
 

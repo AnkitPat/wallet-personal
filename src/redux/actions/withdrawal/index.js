@@ -32,7 +32,7 @@ export const transferCredits = (data) => {
         } catch (e) {
             console.log(e)
             dispatch(setLoadingAction(false))
-            toast.error('Error in fetching')
+            toast.error('Error in transfering')
         }
     }
 }
@@ -82,6 +82,8 @@ export const approveWithdrawal = (id) => {
             const response = await approveWithdrawalAPI(id)
             dispatch(fetchAllWithdrawalRequests())
             dispatch(setLoadingAction(false))
+            toast.success('Request Approved')
+
         } catch (e) {
             console.log(e)
             dispatch(setLoadingAction(false))
@@ -97,7 +99,8 @@ export const rejectWithdrawal = (id, reason) => {
             dispatch(setLoadingAction(true))
             const response = await rejectWithdrawalAPI(id, reason)
             dispatch(fetchAllWithdrawalRequests())
-            dispatch(v(false))
+            toast.success('Rejected request')
+            dispatch(setLoadingAction(false))
         } catch (e) {
             console.log(e)
             dispatch(setLoadingAction(false))
