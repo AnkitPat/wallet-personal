@@ -16,7 +16,7 @@ const regularItems = [
     },
     {
         id: 'userWallet',
-        title: 'Wallet',
+        title: 'Manager',
         icon: <DollarSign size={20}/>,
         children: [
             {
@@ -70,7 +70,7 @@ const adminItems = [
     },
     {
         id: 'userWallet',
-        title: 'Wallet',
+        title: 'Manager',
         icon: <DollarSign size={20}/>,
         children: [
             {
