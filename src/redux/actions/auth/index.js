@@ -4,6 +4,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import { history } from "../../../utility/Utils"
 import { saveUserDetailsAction, setLoadingAction, setRoleAction } from './actions'
+import speakeasy from 'speakeasy'
 
 const config = useJwt.jwtConfig
 
@@ -96,5 +97,22 @@ export const handleLogout = () => {
         localStorage.removeItem(config.storageTokenKeyName)
         localStorage.removeItem('token')
         localStorage.removeItem(config.storageRefreshTokenKeyName)
+    }
+}
+
+// ** Handle two factor verification
+export const verifyTwoFactorAuth = (secret, token) => {
+    return async(dispatch) => {
+        const verified = await speakeasy.totp.verify({
+            secret: secret.ascii,
+            encoding: 'ascii',
+            token
+        })
+        if (verified) {
+            toast.success('Secret Code verified!!')
+            // save secret to api
+        } else {
+            toast.error('Code is wrong, try again')
+        }
     }
 }

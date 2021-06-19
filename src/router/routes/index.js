@@ -49,6 +49,12 @@ const Routes = [
     }
   },
   {
+    path: '/authenticator',
+    exact: true,
+    component: lazy(() => import('../../views/Authenticator/index')),
+    layout: 'BlankLayout'
+  },
+  {
     path: '/myaccount',
     exact: true,
     component: lazy(() => import('../../views/MyAccount'))
