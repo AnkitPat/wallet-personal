@@ -43,10 +43,6 @@ const UserDropdown = () => {
           <UserPlus size={14} className='mr-75' />
           <span className='align-middle'>Membership</span>
         </DropdownItem>
-        <DropdownItem tag={Link} to='/withdrawal'>
-          <LogOut className="mr-75" />
-          <span className='align-middle'>Withdrawal</span>
-        </DropdownItem>
         <DropdownItem tag={Link} to='/login' onClick={() => dispatch(handleLogout())}>
           <Power size={14} className='mr-75' />
           <span className='align-middle'>Logout</span>

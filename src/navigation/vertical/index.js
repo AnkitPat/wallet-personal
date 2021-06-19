@@ -43,6 +43,12 @@ const regularItems = [
                 title: 'History',
                 icon: <Circle size={12}/>,
                 navLink: '/wallet/history'
+            },
+            {
+                id: 'withdrawal',
+                title: 'Withdrawal',
+                icon: <Circle size={12}/>,
+                navLink: '/withdrawal'
             }
         ]
     }
