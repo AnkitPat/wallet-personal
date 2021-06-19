@@ -1,6 +1,6 @@
 import format from 'date-fns/format'
 import moment from 'moment'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import { useDispatch, useSelector } from 'react-redux'
 import { approveWithdrawal, fetchAllWithdrawalRequests, fetchWithdrawalHistories } from '../../redux/actions/withdrawal'
@@ -9,10 +9,13 @@ import { Text } from 'recharts'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
 import { Check, XCircle } from 'react-feather'
 import { Button } from 'reactstrap'
+import { WithdrawalReject } from './components/WithdrawalReject/WithdrawalReject'
 
 const AllWithdrawals = (
     { }) => {
 
+  const [showConfirmationPopup, setShowConfirmationPopup] = useState(false)
+  const [selectedWithdrawal, setSelectedWithdrawal] = useState({})
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchAllWithdrawalRequests())
@@ -25,9 +28,19 @@ const AllWithdrawals = (
 
     const withdrawalw = useSelector(state => state.withdrawal.allWithdrawals)
     const loading = useSelector(state => state.withdrawal.pageLoading)
-    const buttonLoading = useSelector(state => state.withdrawal.loading)
 
     const columns = [
+        {
+            selector: 'user.name',
+            name: 'User',
+            cell: row => <div className="text-primary">{row.user.name} <br/> <small className="text-secondary">{row.user.email}</small></div>,
+            style: {
+                width: '20%'
+            },
+            headerStyle: {
+                width: '20%'
+            }
+        },
         {
             selector: 'amount',
             name: 'Amount',
@@ -78,21 +91,7 @@ const AllWithdrawals = (
 
             }
         },
-        {
-            selector: 'updatedAt',
-            name: 'Last Updated Date',
-            format: row => moment(row.updatedAt).format('DD/MM/YYYY'),
-            style: {
-                width: '30%',
-                textAlign: 'center'
-
-            },
-            headerStyle: {
-                width: '30%',
-                textAlign: 'center'
-
-            }
-        },
+       
         {
             name: 'Actions',
             cell: row => {
@@ -105,7 +104,10 @@ const AllWithdrawals = (
                     <Button.Ripple color='primary' onClick={() => dispatch(approveWithdrawal(row.id))}>
                         <Check size='15' />
                     </Button.Ripple>
-                    <Button.Ripple color='danger' className="ml-2" onClick={() => { }}>
+                    <Button.Ripple color='danger' className="ml-2" onClick={() => {
+                        setSelectedWithdrawal(row)
+                        setShowConfirmationPopup(true)
+                     }}>
                         <XCircle size='15' color="white" />
                     </Button.Ripple>
                 </div>
@@ -132,6 +134,7 @@ const AllWithdrawals = (
                     columns={columns}
                     data={withdrawalw || []}
                 />}
+                {showConfirmationPopup && <WithdrawalReject  selectedWithdrawal={selectedWithdrawal} showConfirmationPopup={showConfirmationPopup} setShowConfirmationPopup={setShowConfirmationPopup}/>}
             </div>
         </div>
     )

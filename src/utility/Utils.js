@@ -1,5 +1,6 @@
 import { createBrowserHistory } from 'history'
 import useJwt from '../@core/auth/jwt/useJwt'
+import jwtDecode from "jwt-decode"
 // ** Checks if an object is empty (returns boolean)
 export const isObjEmpty = obj => Object.keys(obj).length === 0
 
@@ -51,7 +52,23 @@ export const formatDateToMonthShort = (value, toTimeForCurrentDay = true) => {
  ** This is completely up to you and how you want to store the token in your frontend application
  *  ? e.g. If you are using cookies to store the application please update this function
  */
-export const isUserLoggedIn = () => localStorage.getItem('accessToken')
+export const isUserLoggedIn = () => {
+  const token = localStorage.getItem('accessToken')
+  let isAuthorized = false
+  if (token) {
+    const decoded = jwtDecode(token)
+    if (decoded.exp < new Date().getTime() / 1000) {
+      localStorage.removeItem('accessToken')
+    } else {
+      isAuthorized = true
+    }
+
+    return isAuthorized
+  }
+
+
+  return localStorage.getItem('accessToken')
+}
 export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
 
 /**

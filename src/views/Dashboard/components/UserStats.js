@@ -20,7 +20,7 @@ const UserStats = () => {
                 <h4 className='mb-75 mt-2 pt-50'>
                     Credits:  ${userCredits > 1000 ? `${(userCredits / 1000)}k` : userCredits}
                 </h4>
-                <h4 className='mt-1 pt-50 text-muted'>
+                <h4 className='mt-1 pt-50'>
                     PTM Token:  {convertCredits}
                 </h4>
                 <img className='congratulation-medal' src={medal} alt='Medal Pic' />
