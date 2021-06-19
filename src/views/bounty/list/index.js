@@ -6,14 +6,12 @@ import {
     Col,
     Card,
     CardBody,
-    CardTitle,
-    Button
+    CardTitle
 } from 'reactstrap'
 
 import '@styles/base/pages/page-blog.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchBounties} from '../../../redux/actions/bounty'
-import {history} from '../../../utility/Utils'
 import {ProgressLoader} from '../../../layouts/ProgressLoader'
 import moment from 'moment'
 
@@ -84,16 +82,6 @@ const BountyList = () => {
             />
             <div className='blog-wrapper'>
                 <div className='content-detached content-left'>
-                    <div className="my-2 d-flex justify-content-start">
-                        {role === 'administrator' &&
-                        <Button.Ripple color='primary' type="submit" onClick={() => history.push('/bounties/add')}>
-                            Add bounty
-                        </Button.Ripple>}
-
-                        <Button.Ripple color='primary' type="submit" onClick={() => history.push('/bounties/myBounties')}>
-                            My bounties
-                        </Button.Ripple>
-                    </div>
                     {loading ? (<ProgressLoader size="lg"/>) : (
                         <Row>{renderRenderList()}</Row>
                     )}

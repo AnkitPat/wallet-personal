@@ -37,8 +37,8 @@ function claimMyBountyAPI(id) {
     return axios.post(`/bounty/claim`, {id})
 }
 
-function verifyBountyAPI(id) {
-    return axios.post(`/bounty/verify`, {id})
+function verifyBountyAPI(id, status) {
+    return axios.post(`/bounty/verify`, {id, verified: status})
 }
 
 function addBountyAPI(data) {
@@ -128,10 +128,10 @@ export const submitBounty = (data) => {
             await submitBountyAPI(data)
             toast.success("Submitted successfully!!")
             dispatch(setButtonLoadingAction(false))
-        } catch (e) {
-            console.log(e)
+            history.push('/bounties')
+        } catch (error) {
             dispatch(setButtonLoadingAction(false))
-            toast.error('Error in fetching')
+            toast.error(error.response.data.message)
         }
     }
 }
@@ -206,12 +206,12 @@ export const claimMyBounty = (id) => {
 
 
 // ** Claim my Bounties
-export const verifyBounty = (id) => {
+export const verifyBounty = (id, status) => {
     return async (dispatch) => {
         try {
             dispatch(setButtonLoadingAction(true))
-            const response = await verifyBountyAPI(id)
-            toast.success("Bounty Verified!!")
+            const response = await verifyBountyAPI(id, status)
+            toast.success("Bounty task status changed!!")
             dispatch(fetchSubmission())
             dispatch(setButtonLoadingAction(false))
         } catch (e) {

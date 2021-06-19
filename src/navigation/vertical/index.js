@@ -12,7 +12,20 @@ const regularItems = [
         id: 'bounties',
         title: 'Bounties',
         icon: <Award size={20}/>,
-        navLink: '/bounties'
+        children: [
+            {
+                id: 'listBounties',
+                title: 'List',
+                icon: <Circle size={12}/>,
+                navLink: '/bounties'
+            },
+            {
+                id: 'myBounties',
+                title: 'My Bounties',
+                icon: <Circle size={12}/>,
+                navLink: '/bounties/myBounties'
+            }
+        ]
     },
     {
         id: 'userWallet',
