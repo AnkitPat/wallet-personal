@@ -12,9 +12,9 @@ function fetchUserInformation() {
     return axios.get('/auth/userDetails')
 }
 
-function secretInformationToAPI(secret) {
+function secretInformationToAPI(secret, enable) {
     return axios.put('/users/2fa', {
-        twoFactorAuthentication: true,
+        twoFactorAuthentication: enable,
         twoFactorAuthenticationMetaData: secret
     })
 }
@@ -132,7 +132,7 @@ export const verifyTwoFactorAuth = (secret, token, fromAuth = false) => {
             if (verified) {
                 toast.success('Secret Code verified!!', {})
                 // save secret to api
-                await secretInformationToAPI(secret)
+                await secretInformationToAPI(secret, true)
                 dispatch(handleUserInformation())
                 dispatch(setTwoFactorAction(true))
                 if (fromAuth) history.push("/home")
@@ -147,5 +147,32 @@ export const verifyTwoFactorAuth = (secret, token, fromAuth = false) => {
             toast.error('Something went wrong')
         }
 
+    }
+}
+
+// Verify and disable two factor authentication
+export const verifyAndDisableTwoFactor = (secret, token) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoadingAction(true))
+            if (IsJsonString(secret)) secret = JSON.parse(secret)
+            const verified = await speakeasy.totp.verify({
+                secret: secret.ascii,
+                encoding: 'ascii',
+                token
+            })
+            if (verified) {
+                toast.success('Two Factor authentication disabled!!')
+                await secretInformationToAPI(null, false)
+                dispatch(handleUserInformation())
+                dispatch(setTwoFactorAction(true))
+            } else {
+                toast.error('Code is wrong, try again')
+            }
+            dispatch(setLoadingAction(false))
+        } catch (e) {
+            console.log(e)
+            toast.error('Something went wrong')
+        }
     }
 }

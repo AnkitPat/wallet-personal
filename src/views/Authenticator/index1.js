@@ -8,22 +8,22 @@ import { Button, CardText, CardTitle, Col, Form, FormGroup, Input, Label, Row } 
 import * as Yup from 'yup'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
 import { verifyTwoFactorAuth } from '../../redux/actions/auth'
+import { useSkin } from '../../utility/hooks/useSkin'
 
 
 const Authenticator = () => {
+
+    const [skin, setSkin] = useSkin()
+
+    const illustration = skin === 'dark' ? 'forgot-password-v2-dark.svg' : 'forgot-password-v2.svg',
+        source = require(`@src/assets/images/pages/${illustration}`).default
     const dispatch = useDispatch()
     const secret = useSelector(state => state.auth.userDetails.twoFactorAuthenticationMetaData)
     const loading = useSelector(state => state.auth.loading)
 
-    const illustration = skin === 'dark' ? 'forgot-password-v2-dark.svg' : 'forgot-password-v2.svg',
-        source = require(`@src/assets/images/pages/${illustration}`).default
-
     const validationSchema = Yup.object().shape({
-        token: Yup.number('Invalid token').required("Token is required")
-            .nullable()
-            .test('len', 'Must be exactly 6 digits', val => val?.toString().length === 6)
-            .transform(value => (isNaN(value) ? undefined : value))
-
+        token: Yup.string().required('Token is required')
+        .test('len', 'Must be exactly 6 digits', val => { console.log(val); return val?.toString().length === 6 })
     })
     const {
         register,
@@ -116,7 +116,8 @@ const Authenticator = () => {
                                     Secret Code
                                 </Label>
                                 <Input
-                                    type='number'
+                                    type="number" pattern="[0-9]*"
+                                           autoFocus
                                     id='login-token'
                                     placeholder='123456'
                                     className={classNames({ 'is-invalid': errors['token'] })}
@@ -128,7 +129,7 @@ const Authenticator = () => {
                                 </small>
                             </FormGroup>
                             <Button.Ripple type="submit" color='primary' block>
-                                {loading ? <ProgressLoader/> : 'Verify'}
+                                {loading ? <ProgressLoader /> : 'Verify'}
                             </Button.Ripple>
                         </Form>
 

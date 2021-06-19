@@ -13,30 +13,39 @@ import { useEffect, useState } from 'react'
 import speakeasy from 'speakeasy'
 import QRCode from 'qrcode'
 import { verifyTwoFactorAuth } from '../../redux/actions/auth'
+import { DisableTwoFactorPopup } from './components/DisableTwoFactorPopup'
 
 const AuthenticatorTabContent = () => {
 
   const dispatch = useDispatch()
   const [dataQR, setDataQr] = useState('')
+  const [showConfirmationPopup, setShowConfirmationPopup] = useState(false)
   const [secret, setSecret] = useState({})
 
 
   const loading = useSelector(state => state.auth.loading)
   const hasTwoFactorAuthentication = useSelector(state => state.auth.userDetails.twoFactorAuthentication)
+  const twoFactorAuthentationMeta = useSelector(state => state.auth.userDetails.twoFactorAuthenticationMetaData)
   useEffect(() => {
-    const secret = speakeasy.generateSecret()
-    setSecret(secret)
+    if (twoFactorAuthentationMeta === null) {
+      const secret = speakeasy.generateSecret({ name: 'https://potentiam.io' })
+      setSecret(secret)
+    } else if (twoFactorAuthentationMeta !== undefined) {
+      setSecret(JSON.parse(twoFactorAuthentationMeta))
+    }
+
+  }, [twoFactorAuthentationMeta])
+
+  useEffect(() => {
     QRCode.toDataURL(secret.otpauth_url, function (err, data_url) {
       setDataQr(data_url)
     })
-  }, [])
-
+  }, [secret])
 
   const validationSchema = Yup.object().shape({
-    token: Yup.number('Invalid token').required("Token is required")
-      .nullable()
-      .test('len', 'Must be exactly 6 digits', val => val?.toString().length === 6)
-      .transform(value => (isNaN(value) ? undefined : value))
+    token: Yup.string().required('Token is required')
+      .test('len', 'Must be exactly 6 digits', val => { console.log(val); return val?.toString().length === 6 })
+
 
   })
   const {
@@ -75,13 +84,13 @@ const AuthenticatorTabContent = () => {
               <Label className='form-label' for='login-email'>
                 After scanning QR, Please enter Secret Code
               </Label>
-              <Input
-                type='number'
-                id='login-token'
-                placeholder='123456'
-                className={classNames({ 'is-invalid': errors['token'] })}
+              <input
+                name="token"
+                type="number" pattern="[0-9]*"
+                                autoFocus
+                placeholder="Enter secret code"
+                className={`form-control ${errors.token ? 'is-invalid' : ''}`}
                 {...register('token')}
-
               />
               <small className='text-danger'>
                 {errors.token && errors.token.message}
@@ -95,8 +104,12 @@ const AuthenticatorTabContent = () => {
           <CardText className='mb-2'>
             You have already secured account with 2-Factor authenticator
           </CardText>
+          <Button.Ripple onClick={() => setShowConfirmationPopup(true)} color='danger'>
+            Disable 2-factor authentication
+          </Button.Ripple>
         </>}
 
+        {showConfirmationPopup && <DisableTwoFactorPopup showConfirmationPopup={showConfirmationPopup} setShowConfirmationPopup={setShowConfirmationPopup} />}
       </Col>
     </Row>
   )
