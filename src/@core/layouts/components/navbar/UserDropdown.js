@@ -19,7 +19,6 @@ const UserDropdown = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const userDetails = useSelector(state => state.auth.userDetails)
-  const userAvatar = (userDetails && userDetails.avatar) || defaultAvatar
 
   return (
     <UncontrolledDropdown tag='li' className='dropdown-user nav-item'>
@@ -28,10 +27,13 @@ const UserDropdown = () => {
           <span className='user-name font-weight-bold'>{(userDetails && userDetails['name'])}</span>
           <span className='user-status'>{(userDetails && userDetails.role && userDetails.role.title)}</span>
         </div>
-        <Avatar img={userAvatar} imgHeight='40' imgWidth='40' status='online' />
+        {
+          userDetails && userDetails.avatar ? <Avatar img={userDetails.avatar} imgHeight='40' imgWidth='40' status='online' /> : <Avatar color='primary' initials content={userDetails['name']} />
+        }
+
       </DropdownToggle>
       <DropdownMenu right>
-        <DropdownItem tag={Link} to='/myaccount'>
+        <DropdownItem tag={Link} to='/myaccount/edit'>
           <User size={14} className='mr-75' />
           <span className='align-middle'>Profile</span>
         </DropdownItem>

@@ -74,11 +74,7 @@ const UserWallet = () => {
 
     return (
         <>
-            <Link to="/wallet/history">
-                Wallet History
-            </Link>
             <div className='auth-wrapper align-items-start auth-v1 px-2'>
-
                 <div className='auth-inner py-2'>
                     <Card className='mb-0'>
                         <CardBody>
@@ -136,11 +132,10 @@ const UserWallet = () => {
                                 <h2 className='brand-text text-primary ml-1'>Potentiam</h2>
                             </Link>
                             <CardTitle tag='h4' className='mb-1'>
-                                Add Money
+                                Add Credits to your account
                             </CardTitle>
 
                             <Form className='auth-register-form mt-2' onSubmit={handleSubmit(onSubmit)}>
-
                                 <FormGroup>
                                     <Label className='form-label' for='register-phone'>
                                         Credit
@@ -163,19 +158,17 @@ const UserWallet = () => {
                                         {errors.amount && errors.amount.message}
                                     </small>
                                 </FormGroup>
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="amount">Dollar Amount</label>
-                                    <input type="text" readOnly className="form-control bg-transparent text-black"
-                                           id="amount"
-                                           value={dollarAmount}/>
-                                </div>
-
-
+                                <hr/>
+                                <ul className='list-unstyled'>
+                                    <li className='price-detail d-flex justify-content-between'>
+                                        <div className='detail-title detail-total'>Total</div>
+                                        <div className='detail-amt font-weight-bolder'>${dollarAmount}</div>
+                                    </li>
+                                </ul>
                                 {loading ? <ProgressLoader/> : <Button.Ripple color='primary' block type="submit">
                                     Add Credit
                                 </Button.Ripple>}
                             </Form>
-
                         </CardBody>
                     </Card>
                 </div>
