@@ -22,6 +22,7 @@ const AuthenticatorTabContent = () => {
 
 
   const loading = useSelector(state => state.auth.loading)
+  const hasTwoFactorAuthentication = useSelector(state => state.auth.userDetails.twoFactorAuthentication)
   useEffect(() => {
     const secret = speakeasy.generateSecret()
     setSecret(secret)
@@ -62,7 +63,7 @@ const AuthenticatorTabContent = () => {
         <CardTitle tag='h2' className='font-weight-bold mb-1'>
           2FA Authenticator 🔒
         </CardTitle>
-        { false ? <> <CardText className='mb-2'>
+        {!hasTwoFactorAuthentication ? <> <CardText className='mb-2'>
           Scan QR code 2FA apps.
         </CardText>
           <img
@@ -79,7 +80,6 @@ const AuthenticatorTabContent = () => {
                 id='login-token'
                 placeholder='123456'
                 className={classNames({ 'is-invalid': errors['token'] })}
-                value={getValues().token}
                 {...register('token')}
 
               />
@@ -88,14 +88,14 @@ const AuthenticatorTabContent = () => {
               </small>
             </FormGroup>
             <Button.Ripple type="submit" color='primary' block>
-              Verify
+              {loading ? <ProgressLoader /> : 'Verify'}
             </Button.Ripple>
           </Form>
         </> : <>
-        <CardText className='mb-2'>
-         You have already secured account with 2-Factor authenticator
-        </CardText>
-        </> }
+          <CardText className='mb-2'>
+            You have already secured account with 2-Factor authenticator
+          </CardText>
+        </>}
 
       </Col>
     </Row>

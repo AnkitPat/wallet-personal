@@ -10,6 +10,7 @@ const DefaultRoute = '/home'
 const Routes = [
   {
     path: '/home',
+    exact: true,
     component: lazy(() => import('../../views/Dashboard/Home'))
   },
   {
@@ -51,7 +52,7 @@ const Routes = [
   {
     path: '/authenticator',
     exact: true,
-    component: lazy(() => import('../../views/Authenticator/index')),
+    component: lazy(() => import('../../views/Authenticator/index1')),
     layout: 'BlankLayout'
   },
   {

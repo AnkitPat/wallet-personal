@@ -1,28 +1,46 @@
-import { Link } from 'react-router-dom'
-import { useSkin } from '@hooks/useSkin'
-import { ChevronLeft } from 'react-feather'
-import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, Button } from 'reactstrap'
+import { yupResolver } from '@hookform/resolvers/yup'
 import '@styles/base/pages/page-auth.scss'
-import { useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
-import speakeasy from 'speakeasy'
-import QRCode from 'qrcode'
+import classNames from 'classnames'
+import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { Button, CardText, CardTitle, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap'
+import * as Yup from 'yup'
+import { ProgressLoader } from '../../layouts/ProgressLoader'
+import { verifyTwoFactorAuth } from '../../redux/actions/auth'
 
 
-const ForgotPasswordV2 = () => {
-    const [skin, setSkin] = useSkin()
-    const [dataQR, setDataQr] = useState('')
+const Authenticator = () => {
+    const dispatch = useDispatch()
+    const secret = useSelector(state => state.auth.userDetails.twoFactorAuthenticationMetaData)
+    const loading = useSelector(state => state.auth.loading)
 
     const illustration = skin === 'dark' ? 'forgot-password-v2-dark.svg' : 'forgot-password-v2.svg',
         source = require(`@src/assets/images/pages/${illustration}`).default
 
-    const secret = useSelector(state => state.auth.secret)
+    const validationSchema = Yup.object().shape({
+        token: Yup.number('Invalid token').required("Token is required")
+            .nullable()
+            .test('len', 'Must be exactly 6 digits', val => val?.toString().length === 6)
+            .transform(value => (isNaN(value) ? undefined : value))
 
-    useEffect(() => {
-        QRCode.toDataURL(secret.otpauth_url, function (err, data_url) {
-            setDataQr(data_url)
-        })
-    }, [secret])
+    })
+    const {
+        register,
+        handleSubmit,
+        reset,
+        control,
+        getValues,
+        setValue,
+        formState: { errors }
+    } = useForm({
+        resolver: yupResolver(validationSchema)
+    })
+
+    const onSubmit = data => {
+        dispatch(verifyTwoFactorAuth(secret, data.token, true))
+        reset({})
+    }
 
     return (
         <div className='auth-wrapper auth-v2'>
@@ -89,20 +107,28 @@ const ForgotPasswordV2 = () => {
                             2FA Authenticator 🔒
                         </CardTitle>
                         <CardText className='mb-2'>
-                            Scan QR code 2FA apps.
+                            Enter secret code from app.
                         </CardText>
-                        <img
-                            src={dataQR}
-                        />
-                        <Form className='auth-forgot-password-form mt-2' onSubmit={e => e.preventDefault()}>
+
+                        <Form className='auth-forgot-password-form mt-2' onSubmit={handleSubmit(onSubmit)}>
                             <FormGroup>
                                 <Label className='form-label' for='login-email'>
                                     Secret Code
                                 </Label>
-                                <Input type='number' id='login-email' placeholder='123456' autoFocus />
+                                <Input
+                                    type='number'
+                                    id='login-token'
+                                    placeholder='123456'
+                                    className={classNames({ 'is-invalid': errors['token'] })}
+                                    {...register('token')}
+
+                                />
+                                <small className='text-danger'>
+                                    {errors.token && errors.token.message}
+                                </small>
                             </FormGroup>
-                            <Button.Ripple color='primary' block>
-                                Verify
+                            <Button.Ripple type="submit" color='primary' block>
+                                {loading ? <ProgressLoader/> : 'Verify'}
                             </Button.Ripple>
                         </Form>
 
@@ -113,4 +139,4 @@ const ForgotPasswordV2 = () => {
     )
 }
 
-export default ForgotPasswordV2
+export default Authenticator
