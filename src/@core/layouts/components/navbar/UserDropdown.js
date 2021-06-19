@@ -10,15 +10,13 @@ import { handleLogout } from '@store/actions/auth'
 
 // ** Third Party Components
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
-import { User, Mail, Power, UserPlus, LogOut } from 'react-feather'
-
-// ** Default Avatar Image
-import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
+import { User, Mail, Power, UserPlus } from 'react-feather'
 
 const UserDropdown = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const userDetails = useSelector(state => state.auth.userDetails)
+  const userName = Object.keys(userDetails).length === 0 ? 'Name' : userDetails['name']
 
   return (
     <UncontrolledDropdown tag='li' className='dropdown-user nav-item'>
@@ -28,9 +26,8 @@ const UserDropdown = () => {
           <span className='user-status'>{(userDetails && userDetails.role && userDetails.role.title)}</span>
         </div>
         {
-          userDetails && userDetails.avatar ? <Avatar img={userDetails.avatar} imgHeight='40' imgWidth='40' status='online' /> : <Avatar color='primary' initials content={userDetails['name']} />
+          userDetails && userDetails.avatar ? <Avatar img={userDetails.avatar} imgHeight='40' imgWidth='40' status='online' /> : <Avatar color='primary' initials content={userName} />
         }
-
       </DropdownToggle>
       <DropdownMenu right>
         <DropdownItem tag={Link} to='/myaccount/edit'>
