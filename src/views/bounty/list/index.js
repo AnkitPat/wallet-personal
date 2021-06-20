@@ -1,5 +1,5 @@
-import {Fragment, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import { Fragment, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import Breadcrumbs from '@components/breadcrumbs'
 import {
     Row,
@@ -10,10 +10,11 @@ import {
 } from 'reactstrap'
 
 import '@styles/base/pages/page-blog.scss'
-import {useDispatch, useSelector} from 'react-redux'
-import {fetchBounties} from '../../../redux/actions/bounty'
-import {ProgressLoader} from '../../../layouts/ProgressLoader'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchBounties } from '../../../redux/actions/bounty'
+import { ProgressLoader } from '../../../layouts/ProgressLoader'
 import moment from 'moment'
+import Sidebar from './components/Sidebar'
 
 const BountyList = () => {
 
@@ -35,7 +36,7 @@ const BountyList = () => {
                         <CardBody>
                             <CardTitle tag='h4' className="d-flex justify-content-between align-items-center">
                                 <Link className='blog-title-truncate text-body-heading'
-                                      to={{pathname: `/bounties/${bounty.id}`, data: bounty}}>
+                                    to={{ pathname: `/bounties/${bounty.id}`, data: bounty }}>
                                     {bounty.title}
                                 </Link>
                                 <div className='my-1'><small>
@@ -53,10 +54,10 @@ const BountyList = () => {
                                     __html: bounty.shortDescription
                                 }}>
                             </div>
-                            <hr/>
+                            <hr />
                             <div className='d-flex justify-content-between align-items-center'>
 
-                                <Link className='font-weight-bold' to={{pathname: `/bounties/${bounty.id}`}}>
+                                <Link className='font-weight-bold' to={{ pathname: `/bounties/${bounty.id}` }}>
                                     Read More
                                 </Link>
                                 {role === 'administrator' ? <Link className='font-weight-bold' to={{
@@ -75,16 +76,22 @@ const BountyList = () => {
 
     return (
         <Fragment>
+            <Sidebar
+    
+            />
             <Breadcrumbs
                 breadCrumbTitle='Bounty Tasks'
                 breadCrumbParent='Tasks'
                 breadCrumbActive='List'
             />
-            <div className='blog-wrapper'>
-                <div className='content-detached content-left'>
-                    {loading ? (<ProgressLoader size="lg"/>) : (
-                        <Row>{renderRenderList()}</Row>
-                    )}
+            <div className='content-right pl-2'>
+                <div className='content-wrapper'>
+                    <div className='content-body'>
+
+                        {loading ? (<ProgressLoader size="lg" />) : (
+                            bounties.length > 0 ? <Row>{renderRenderList()}</Row> : <Row className="mx-3"><h2>No Entries Found</h2></Row>
+                        )}
+                    </div>
                 </div>
             </div>
         </Fragment>
