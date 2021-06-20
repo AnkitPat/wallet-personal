@@ -3,8 +3,28 @@ import { toast } from "react-toastify"
 import { history } from "../../../utility/Utils"
 import { saveBountiesAction, saveBountyAction, saveMyBountiesAction, saveProjectsAction, saveSocialMediumsAction, saveSubmissionsAction, setButtonLoadingAction, setLoadingAction } from "./actions"
 
-function fetchBountyAPI() {
-    return axios.get('bounty')
+function fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRange, searchTerm) {
+    let url = 'bounty'
+
+    if (selectedSocialMedium && selectedSocialMedium !== '') {
+        url = `${url}?socialMedium=${selectedSocialMedium}`
+    } else {
+        url = `${url}?socialMedium=`
+    }
+
+
+    if (searchTerm && searchTerm !== '') {
+        url = `${url}&text=${searchTerm}`
+    }
+    
+    if (selectedPriceRange && selectedPriceRange !== '') {
+        url = `${url}&${selectedPriceRange}`
+    }
+
+    if (selectedProjects.length > 0) {
+        url = `${url}&${selectedProjects.map((project, index) => `projects[${index}]=${project.id}`).join('&')}`
+    }
+    return axios.get(url)
 }
 
 function fetchBountyDetailsAPI(id) {
@@ -34,11 +54,11 @@ function fetchAllSubmissionAPI() {
 }
 
 function claimMyBountyAPI(id) {
-    return axios.post(`/bounty/claim`, {id})
+    return axios.post(`/bounty/claim`, { id })
 }
 
 function verifyBountyAPI(id, status) {
-    return axios.post(`/bounty/verify`, {id, verified: status})
+    return axios.post(`/bounty/verify`, { id, verified: status })
 }
 
 function addBountyAPI(data) {
@@ -84,11 +104,11 @@ export const editBounty = data => {
 }
 
 // ** fetch bounty list
-export const fetchBounties = () => {
+export const fetchBounties = (selectedProjects = [], selectedSocialMedium = '', selectedPriceRange = '', searchTerm = '') => {
     return async (dispatch) => {
         try {
             dispatch(setLoadingAction(true))
-            const response = await fetchBountyAPI()
+            const response = await fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRange, searchTerm)
             if (response && response.data) {
                 dispatch(saveBountiesAction(response.data))
             }
