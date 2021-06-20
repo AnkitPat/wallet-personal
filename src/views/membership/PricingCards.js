@@ -2,48 +2,33 @@ import classnames from 'classnames'
 import { useMemo } from 'react'
 import { Row, Col, Card, CardBody, CardText, Badge, ListGroup, ListGroupItem, Button } from 'reactstrap'
 
-const PricingCards = ({ data, duration }) => {
+const PricingCards = ({ plans, duration }) => {
   const renderPricingCards = () => {
-    return [data].map((item, index) => {
-
+    return plans.map((item, index) => {
       return (
         <Col key={index} md='4' xs='12'>
           <Card
             className={classnames('text-center', {
-              [`${item.title.toLowerCase()}-pricing`]: item.title,
-              popular: item.popular === true
+              [`${item.title.toLowerCase()}-pricing`]: item.title
             })}
           >
             <CardBody>
-              {item.popular === true ? (
-                <div className='pricing-badge text-right'>
-                  <Badge color='light-primary' pill>
-                    Popular
-                  </Badge>
-                </div>
-              ) : null}
-              <img className={imgClasses} src={item.img} alt='pricing svg' />
+              {/*<img className={imgClasses} src={item.img} alt='pricing svg' />*/}
               <h3>{item.title}</h3>
-              <CardText>{item.subtitle}</CardText>
+              {/*<CardText>{item.subtitle}</CardText>*/}
               <div className='annual-plan'>
                 <div className='plan-price mt-2'>
                   <sup className='font-medium-1 font-weight-bold text-primary mr-25'>$</sup>
                   <span className={`pricing-${item.title.toLowerCase()}-value font-weight-bolder text-primary`}>
-                    {monthlyPrice}
+                    {item.price / 100}
                   </span>
                   <span className='pricing-duration text-body font-medium-1 font-weight-bold ml-25'>/month</span>
                 </div>
-                {item.title !== 'Basic' && duration === 'yearly' ? (
-                  <small className='annual-pricing text-muted'>USD {yearlyPrice} / year</small>
-                ) : null}
+                {/*{item.title !== 'Basic' && duration === 'yearly' ? (*/}
+                {/*  <small className='annual-pricing text-muted'>USD {yearlyPrice} / year</small>*/}
+                {/*) : null}*/}
               </div>
-              <ListGroup tag='ul' className='list-group-circle text-left mb-2'>
-                {item.planBenefits.map((benefit, i) => (
-                  <ListGroupItem key={i} tag='li'>
-                    {benefit}
-                  </ListGroupItem>
-                ))}
-              </ListGroup>
+              <div dangerouslySetInnerHTML={{__html: item.description}}/>
               <Button.Ripple
                 color={item.title === 'Basic' ? 'success' : 'primary'}
                 outline={item.title !== 'Standard'}
@@ -58,121 +43,10 @@ const PricingCards = ({ data, duration }) => {
     })
   }
 
-  const regularUserFeatures = useMemo(() => ["Ad-free listening", "Access full catalog", "Expertly curated playlists", "Automatic entry into draws & competitions", "Earn Rewards", "Support your chosen artists directly"], [])
-
   return (
     <Row className='pricing-card'>
       <Col className='mx-auto' sm={{ offset: 2, size: 10 }} lg={{ offset: 2, size: 10 }} md='12'>
-        {/* <Row>{renderPricingCards()}</Row> */}
-        <Row>
-          <Col md='4' xs='12'>
-            <Card
-              className={classnames('text-center')}
-            >
-              <CardBody>
-                {/* <img className={''} src={item.img} alt='pricing svg' /> */}
-                <h3>{'Regular'}</h3>
-                <CardText>{'Normal'}</CardText>
-                <div className='annual-plan'>
-                  <div className='plan-price mt-2'>
-                    <sup className='font-medium-1 font-weight-bold text-primary mr-25'>$</sup>
-                    <span className={` font-weight-bolder text-primary`}>
-                      {'19/y'}
-                    </span>
-                    <span className='pricing-duration text-body font-medium-1 font-weight-bold ml-25'>/month</span>
-                  </div>
-                  
-                    <small className='annual-pricing text-muted'>USD 19 / year</small>
-                </div>
-                <ListGroup tag='ul' className='list-group-circle text-left mb-2'>
-                  {regularUserFeatures.map((benefit, i) => (
-                    <ListGroupItem key={i} tag='li'>
-                      {benefit}
-                    </ListGroupItem>
-                  ))}
-                </ListGroup>
-                <Button.Ripple
-                  color={'primary'}
-                  block
-                >
-                  {'Upgrade'}
-                </Button.Ripple>
-              </CardBody>
-            </Card>
-          </Col>
-
-          <Col md='4' xs='12'>
-            <Card
-              className={classnames('text-center')}
-            >
-              <CardBody>
-                {/* <img className={''} src={item.img} alt='pricing svg' /> */}
-                <h3>{'Regular'}</h3>
-                <CardText>{'Normal'}</CardText>
-                <div className='annual-plan'>
-                  <div className='plan-price mt-2'>
-                    <sup className='font-medium-1 font-weight-bold text-primary mr-25'>$</sup>
-                    <span className={` font-weight-bolder text-primary`}>
-                      {'19/y'}
-                    </span>
-                    <span className='pricing-duration text-body font-medium-1 font-weight-bold ml-25'>/month</span>
-                  </div>
-                  
-                    <small className='annual-pricing text-muted'>USD 19 / year</small>
-                </div>
-                <ListGroup tag='ul' className='list-group-circle text-left mb-2'>
-                  {regularUserFeatures.map((benefit, i) => (
-                    <ListGroupItem key={i} tag='li'>
-                      {benefit}
-                    </ListGroupItem>
-                  ))}
-                </ListGroup>
-                <Button.Ripple
-                  color={'primary'}
-                  block
-                >
-                  {'Upgrade'}
-                </Button.Ripple>
-              </CardBody>
-            </Card>
-          </Col>
-
-          <Col md='4' xs='12'>
-            <Card
-              className={classnames('text-center')}
-            >
-              <CardBody>
-                {/* <img className={''} src={item.img} alt='pricing svg' /> */}
-                <h3>{'Regular'}</h3>
-                <CardText>{'Normal'}</CardText>
-                <div className='annual-plan'>
-                  <div className='plan-price mt-2'>
-                    <sup className='font-medium-1 font-weight-bold text-primary mr-25'>$</sup>
-                    <span className={` font-weight-bolder text-primary`}>
-                      {'19/y'}
-                    </span>
-                    <span className='pricing-duration text-body font-medium-1 font-weight-bold ml-25'>/month</span>
-                  </div>
-                  
-                    <small className='annual-pricing text-muted'>USD 19 / year</small>
-                </div>
-                <ListGroup tag='ul' className='list-group-circle text-left mb-2'>
-                  {regularUserFeatures.map((benefit, i) => (
-                    <ListGroupItem key={i} tag='li'>
-                      {benefit}
-                    </ListGroupItem>
-                  ))}
-                </ListGroup>
-                <Button.Ripple
-                  color={'primary'}
-                  block
-                >
-                  {'Upgrade'}
-                </Button.Ripple>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
+         <Row>{renderPricingCards()}</Row>
       </Col>
     </Row>
   )
