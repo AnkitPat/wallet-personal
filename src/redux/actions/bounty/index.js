@@ -8,14 +8,14 @@ function fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRan
     
 
     if (searchTerm && searchTerm !== '') {
-        url = `${url}&text=${searchTerm}`
+        url = `${url}?text=${searchTerm}`
     } else {
         url = `${url}?text=`
     }
 
 
     if (selectedSocialMedium && selectedSocialMedium !== '') {
-        url = `${url}?socialMedium=${selectedSocialMedium}`
+        url = `${url}&socialMedium=${selectedSocialMedium}`
     }
     
     if (selectedPriceRange && selectedPriceRange !== '') {
