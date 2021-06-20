@@ -12,7 +12,20 @@ const regularItems = [
         id: 'bounties',
         title: 'Bounties',
         icon: <Award size={20}/>,
-        navLink: '/bounties'
+        children: [
+            {
+                id: 'listBounties',
+                title: 'List',
+                icon: <Circle size={12}/>,
+                navLink: '/bounties'
+            },
+            {
+                id: 'myBounties',
+                title: 'My Bounties',
+                icon: <Circle size={12}/>,
+                navLink: '/bounties/myBounties'
+            }
+        ]
     },
     {
         id: 'userWallet',
@@ -27,9 +40,15 @@ const regularItems = [
             },
             {
                 id: 'creditHistory',
-                title: 'History',
+                title: 'Transaction',
                 icon: <Circle size={12}/>,
-                navLink: '/wallet/history'
+                navLink: '/wallet/transactions'
+            },
+            {
+                id: 'withdrawal',
+                title: 'Withdrawal',
+                icon: <Circle size={12}/>,
+                navLink: '/withdrawal'
             }
         ]
     }

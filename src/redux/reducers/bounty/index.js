@@ -6,7 +6,7 @@ const initialState = {
     bounties: [],
     loading: false,
     buttonLoading: false,
-    bounty: {},
+    bounty: null,
     projects: [],
     socialMediums: [],
     myBounties: [],

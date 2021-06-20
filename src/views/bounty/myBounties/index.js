@@ -1,16 +1,15 @@
-import format from 'date-fns/format'
 import moment from 'moment'
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react'
 import DataTable from 'react-data-table-component'
-import { useDispatch, useSelector } from 'react-redux'
-import { Button } from 'reactstrap'
-import { ProgressLoader } from '../../../layouts/ProgressLoader'
-import { claimMyBounty, fetchMyBounties } from '../../../redux/actions/bounty'
+import {useDispatch, useSelector} from 'react-redux'
+import {Badge, Button, UncontrolledTooltip} from 'reactstrap'
+import {ProgressLoader} from '../../../layouts/ProgressLoader'
+import {claimMyBounty, fetchMyBounties} from '../../../redux/actions/bounty'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-import { Text } from 'recharts'
+import {Text} from 'recharts'
+import {Info} from "react-feather"
 
-const MyBounties = (
-    { }) => {
+const MyBounties = () => {
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -55,8 +54,8 @@ const MyBounties = (
         },
         {
             selector: 'bountyTask.updatedAt',
-            name: 'Last updated',
-            format: row => moment(row.bountyTask.updatedAt).format('DD/MM/YYYY'),
+            name: 'Deadline',
+            format: row => moment(row.bountyTask.deadline).fromNow(),
             style: {
                 width: '20%'
             },
@@ -66,12 +65,43 @@ const MyBounties = (
         },
         {
             selector: 'bountyTask.updatedAt',
-            name: 'Claim Status',
-            cell: row => <div>
-                {(row.verified && row.claimed) ? <div>Claimed</div> : row.verified ? <Button.Ripple disabled={moment(row.bountyTask.deadline).isAfter(moment())} color='primary' type="submit" onClick={() => dispatch(claimMyBounty(row.id))}>
-                    {buttonLoading ? <ProgressLoader /> : 'Claim bounty'}
-                </Button.Ripple> : 'Not verified'}
-            </div>,
+            name: 'Status',
+            cell: row => {
+                if (row.verified === 'pending') {
+                    return <Badge color='light-warning' pill>
+                        Pending
+                    </Badge>
+                }
+
+                if (row.verified === 'rejected') {
+                    return <Badge color='light-danger' pill>
+                        Rejected
+                    </Badge>
+                }
+
+                if (row.verified === 'verified' && moment(row.bountyTask.deadline).isAfter(moment())) {
+                    return (
+                        <>
+                            <Badge color='light-success' className="mr-1" pill>
+                                Verified
+                            </Badge>
+                            <Info size={15} id="UnControlledExample"/>
+                            <UncontrolledTooltip placement='top' target='UnControlledExample'>
+                                Your task is successfully verified. Once deadline is over, you will be able to claim
+                                your reward.
+                            </UncontrolledTooltip>
+                        </>
+                    )
+                }
+
+                if (row.claimed) {
+                    return <Badge color='light-info' pill>
+                        Claimed
+                    </Badge>
+                }
+
+                return <Button.Ripple color='primary' onClick={() => dispatch(claimMyBounty(row.id))}>Claim Reward</Button.Ripple>
+            },
             style: {
                 width: '20%'
             },
@@ -83,7 +113,7 @@ const MyBounties = (
 
     return (
         <div>
-            {loading ? <ProgressLoader size='lg' /> : <div className="mt-4">
+            {loading ? <ProgressLoader size='lg'/> : <div className="mt-4">
                 <div className="mb-2"><Text className="h1 text-primary">My Bounties</Text></div>
                 <DataTable
                     noHeader

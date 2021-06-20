@@ -3,8 +3,29 @@ import { toast } from "react-toastify"
 import { history } from "../../../utility/Utils"
 import { saveBountiesAction, saveBountyAction, saveMyBountiesAction, saveProjectsAction, saveSocialMediumsAction, saveSubmissionsAction, setButtonLoadingAction, setLoadingAction } from "./actions"
 
-function fetchBountyAPI() {
-    return axios.get('bounty')
+function fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRange, searchTerm) {
+    let url = 'bounty'
+    
+
+    if (searchTerm && searchTerm !== '') {
+        url = `${url}?text=${searchTerm}`
+    } else {
+        url = `${url}?text=`
+    }
+
+
+    if (selectedSocialMedium && selectedSocialMedium !== '') {
+        url = `${url}&socialMedium=${selectedSocialMedium}`
+    }
+    
+    if (selectedPriceRange && selectedPriceRange !== '') {
+        url = `${url}&${selectedPriceRange}`
+    }
+
+    if (selectedProjects.length > 0) {
+        url = `${url}&${selectedProjects.map((project, index) => `projects[${index}]=${project.id}`).join('&')}`
+    }
+    return axios.get(url)
 }
 
 function fetchBountyDetailsAPI(id) {
@@ -34,11 +55,11 @@ function fetchAllSubmissionAPI() {
 }
 
 function claimMyBountyAPI(id) {
-    return axios.post(`/bounty/claim`, {id})
+    return axios.post(`/bounty/claim`, { id })
 }
 
-function verifyBountyAPI(id) {
-    return axios.post(`/bounty/verify`, {id})
+function verifyBountyAPI(id, status) {
+    return axios.post(`/bounty/verify`, { id, verified: status })
 }
 
 function addBountyAPI(data) {
@@ -84,11 +105,11 @@ export const editBounty = data => {
 }
 
 // ** fetch bounty list
-export const fetchBounties = () => {
+export const fetchBounties = (selectedProjects = [], selectedSocialMedium = '', selectedPriceRange = '', searchTerm = '') => {
     return async (dispatch) => {
         try {
             dispatch(setLoadingAction(true))
-            const response = await fetchBountyAPI()
+            const response = await fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRange, searchTerm)
             if (response && response.data) {
                 dispatch(saveBountiesAction(response.data))
             }
@@ -128,10 +149,10 @@ export const submitBounty = (data) => {
             await submitBountyAPI(data)
             toast.success("Submitted successfully!!")
             dispatch(setButtonLoadingAction(false))
-        } catch (e) {
-            console.log(e)
+            history.push('/bounties')
+        } catch (error) {
             dispatch(setButtonLoadingAction(false))
-            toast.error('Error in fetching')
+            toast.error(error.response.data.message)
         }
     }
 }
@@ -206,12 +227,12 @@ export const claimMyBounty = (id) => {
 
 
 // ** Claim my Bounties
-export const verifyBounty = (id) => {
+export const verifyBounty = (id, status) => {
     return async (dispatch) => {
         try {
             dispatch(setButtonLoadingAction(true))
-            const response = await verifyBountyAPI(id)
-            toast.success("Bounty Verified!!")
+            const response = await verifyBountyAPI(id, status)
+            toast.success("Bounty task status changed!!")
             dispatch(fetchSubmission())
             dispatch(setButtonLoadingAction(false))
         } catch (e) {

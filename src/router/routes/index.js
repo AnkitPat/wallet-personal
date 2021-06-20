@@ -131,9 +131,9 @@ const Routes = [
     component: lazy(() => import('../../views/userWallet/success'))
   },
   {
-    path: '/wallet/history',
+    path: '/wallet/transactions',
     exact: true,
-    component: lazy(() => import('../../views/userWallet/history'))
+    component: lazy(() => import('../../views/Transactions'))
   },
   {
     path: '/users',

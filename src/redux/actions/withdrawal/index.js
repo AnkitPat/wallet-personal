@@ -1,6 +1,7 @@
 import axios from "axios"
 import { toast } from "react-toastify"
 import { setAllWithdrawalHistoryAction, setLoadingAction, setPageLoadingAction, setWithdrawalHistoryAction } from "./actions"
+import { history } from "../../../utility/Utils"
 
 function transferCreditsAPI(data) {
     return axios.post('withdrawal', data)
@@ -26,17 +27,16 @@ export const transferCredits = (data) => {
     return async (dispatch) => {
         try {
             dispatch(setLoadingAction(true))
-            const response = await transferCreditsAPI(data)
-            toast.success("Successfully Transfered!!")
+            await transferCreditsAPI(data)
+            toast.success("Withdrawal request placed successfully")
+            history.push('/wallet/history')
             dispatch(setLoadingAction(false))
         } catch (e) {
-            console.log(e)
             dispatch(setLoadingAction(false))
-            toast.error('Error in transfering')
+            toast.error(e.response.data.message)
         }
     }
 }
-
 
 // ** fetch history list
 export const fetchWithdrawalHistories = () => {
@@ -49,9 +49,8 @@ export const fetchWithdrawalHistories = () => {
             }
             dispatch(setPageLoadingAction(false))
         } catch (e) {
-            console.log(e)
             dispatch(setPageLoadingAction(false))
-            toast.error('Error in fetching')
+            toast.error(e.response.data.message)
         }
     }
 }
