@@ -100,7 +100,7 @@ const AllWithdrawals = (
                 else if (row.orderStatusId === 3) return <div>Failed</div>
                 else if (row.orderStatusId === 4) return <div>Refunded</div>
                 else if (row.orderStatusId === 6) return <div>Rejected: ({row.rejectReason})</div>
-                else if (row.orderStatusId === 5) return <div>
+                else if (row.orderStatusId === 5) return <div className="d-flex flex-wrap">
                     <Button.Ripple color='primary' onClick={() => dispatch(approveWithdrawal(row.id))}>
                         <Check size='15' />
                     </Button.Ripple>

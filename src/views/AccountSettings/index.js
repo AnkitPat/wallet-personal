@@ -5,6 +5,7 @@ import GeneralTabContent from './GeneralTabContent'
 import PasswordTabContent from './PasswordTabContent'
 import { Row, Col, TabContent, TabPane, Card, CardBody } from 'reactstrap'
 import { useSelector } from 'react-redux'
+import AuthenticatorTabContent from './AuthenticatorTabContent'
 
 const AccountSettings = () => {
   const [activeTab, setActiveTab] = useState('1')
@@ -32,6 +33,9 @@ const AccountSettings = () => {
                   </TabPane>
                   <TabPane tabId='2'>
                     <PasswordTabContent />
+                  </TabPane>
+                  <TabPane tabId='3'>
+                    <AuthenticatorTabContent />
                   </TabPane>
                 </TabContent>
               </CardBody>

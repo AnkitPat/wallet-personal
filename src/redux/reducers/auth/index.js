@@ -1,12 +1,13 @@
 import produce from 'immer'
-import { SAVE_USER_DETAILS, SET_LOADING, SET_ROLE } from "../../actions/auth/actions"
+import { SAVE_USER_DETAILS, SET_LOADING, SET_ROLE, SET_TWO_FACTOR } from "../../actions/auth/actions"
 
 // **  Initial State
 const initialState = {
   userDetails: {},
   accessToken: '',
   loading: false,
-  userRole: ''
+  userRole: '',
+  twoFactorSuccess: false
 }
 
 /* eslint-disable default-case, no-param-reassign */
@@ -32,6 +33,10 @@ const authReducer = (state = initialState, action) =>
 
       case SET_ROLE:
         draft.userRole = action.role
+        break
+
+      case SET_TWO_FACTOR:
+        draft.twoFactorSuccess = action.flag
         break
     }
   })

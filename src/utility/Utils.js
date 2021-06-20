@@ -70,8 +70,20 @@ export const isUserLoggedIn = () => {
 
   return localStorage.getItem('accessToken')
 }
-export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
 
+// check to see user is two factor authenticated or not
+export const isTwoFactorAuthenticated = (userDetails, twoFactorSuccess) => {
+  return userDetails && Object.keys(userDetails).length > 0 && (userDetails.twoFactorAuthentication ? twoFactorSuccess : true)
+}
+export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
+export function IsJsonString(str) {
+  try {
+      JSON.parse(str)
+  } catch (e) {
+      return false
+  }
+  return true
+}
 /**
  ** This function is used for demo purpose route navigation
  ** In real app you won't need this function because your app will navigate to same route for each users regardless of ability

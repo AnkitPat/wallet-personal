@@ -22,12 +22,15 @@ import { DefaultRoute, Routes } from './routes'
 import BlankLayout from '@layouts/BlankLayout'
 import VerticalLayout from '@src/layouts/VerticalLayout'
 import HorizontalLayout from '@src/layouts/HorizontalLayout'
-import { history } from '../utility/Utils'
+import { history, isTwoFactorAuthenticated } from '../utility/Utils'
+import { useSelector } from 'react-redux'
 
 const Router = () => {
   // ** Hooks
   const [layout, setLayout] = useLayout()
   const [transition, setTransition] = useRouterTransition()
+  const userDetails = useSelector(state => state.auth.userDetails)
+  const twoFactorSuccess = useSelector(state => state.auth.twoFactorSuccess)
 
   // ** ACL Ability Context
   const ability = useContext(AbilityContext)
@@ -89,12 +92,16 @@ const Router = () => {
        */
 
       return <Redirect to='/login' />
-    } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
+    } else if (route.meta && route.meta.authRoute && isUserLoggedIn() && userDetails && (userDetails.twoFactorAuthentication ? !twoFactorSuccess : false)) {
       // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
-      return <Redirect to='/' />
-    }  else {
+      return <Redirect to='/authenticator' />
+    } else if (route.meta && route.meta.authRoute && isUserLoggedIn() && userDetails && (userDetails.twoFactorAuthentication ? twoFactorSuccess : true)) {
+      // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
+      return <Redirect to="/"/>
+    } else {
       // ** If none of the above render component
       return <route.component {...props} />
+      // return null
     }
   }
 
@@ -183,35 +190,35 @@ const Router = () => {
 
   return (
     <ConnectedRouter history={history}>
-        <Switch>
-          {/* If user is logged in Redirect user to DefaultRoute else to login */}
-          <Route
+      <Switch>
+        {/* If user is logged in Redirect user to DefaultRoute else to login */}
+        {/* <Route
             exact
             path='/'
             render={() => {
-              return isUserLoggedIn() ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
+              return isUserLoggedIn() ? isTwoFactorAuthenticated(userDetails, twoFactorSuccess) ? <Redirect to={DefaultRoute} /> : <Redirect to="/authenticator"/> : <Redirect to='/login' />
             }}
-          />
-          <Route
-            exact
-            path='/'
-            render={() => {
-              return <Redirect to={DefaultRoute} />
-            }}
-          />
-          {/* Not Auth Route */}
-          <Route
-            exact
-            path='/not-authorized'
-            render={props => (
-              <Layouts.BlankLayout>
-                <NotAuthorized />
-              </Layouts.BlankLayout>
-            )}
-          />
-          {ResolveRoutes()}
-          {/* NotFound Error page */}
-          <Route path='*' component={Error} />/
+          /> */}
+        <Route
+          exact
+          path='/'
+          render={() => {
+            return <Redirect to={DefaultRoute} />
+          }}
+        />
+        {/* Not Auth Route */}
+        <Route
+          exact
+          path='/not-authorized'
+          render={props => (
+            <Layouts.BlankLayout>
+              <NotAuthorized />
+            </Layouts.BlankLayout>
+          )}
+        />
+        {ResolveRoutes()}
+        {/* NotFound Error page */}
+        <Route path='*' component={Error} />/
       </Switch>
     </ConnectedRouter>
   )
