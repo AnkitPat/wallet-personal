@@ -5,7 +5,7 @@ import GeneralTabContent from './GeneralTabContent'
 import PasswordTabContent from './PasswordTabContent'
 import { Row, Col, TabContent, TabPane, Card, CardBody } from 'reactstrap'
 import { useSelector } from 'react-redux'
-import AuthenticatorTabContent from './2FATabContent'
+import AuthenticatorTabContent from './AuthenticatorTabContent'
 
 const AccountSettings = () => {
   const [activeTab, setActiveTab] = useState('1')

@@ -19,7 +19,7 @@ const Tabs = ({ activeTab, toggleTab }) => {
       <NavItem>
         <NavLink active={activeTab === '3'} onClick={() => toggleTab('3')}>
           <Tool size={18} className='mr-1' />
-          <span className='font-weight-bold'>2FA Settings</span>
+          <span className='font-weight-bold'>Security</span>
         </NavLink>
       </NavItem>
     </Nav>

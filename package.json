@@ -104,14 +104,10 @@
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "lint": "eslint src/**/*.js src/**/*.jsx",
-    "lint:fix": "eslint src/**/*.js --fix",
-    "preinstall": "npx npm-force-resolutions"
+    "lint:fix": "eslint src/**/*.js --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "resolutions": {
-    "graceful-fs": "^4.2.4"
   },
   "devDependencies": {
     "@types/sortablejs": "^1.10.6",

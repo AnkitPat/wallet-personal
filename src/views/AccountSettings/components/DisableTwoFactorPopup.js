@@ -13,7 +13,7 @@ export const DisableTwoFactorPopup = ({ showConfirmationPopup, setShowConfirmati
 
     const validationSchema = Yup.object().shape({
         token: Yup.string().required('Token is required')
-            .test('len', 'Must be exactly 6 digits', val => { console.log(val); return val?.toString().length === 6 })
+            .test('len', 'Must be exactly 6 digits', val => { return val.toString().length === 6 })
     })
     const {
         register,
