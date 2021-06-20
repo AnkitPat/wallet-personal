@@ -40,9 +40,9 @@ const regularItems = [
             },
             {
                 id: 'creditHistory',
-                title: 'History',
+                title: 'Transaction',
                 icon: <Circle size={12}/>,
-                navLink: '/wallet/history'
+                navLink: '/wallet/transactions'
             },
             {
                 id: 'withdrawal',

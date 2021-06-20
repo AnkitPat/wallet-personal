@@ -1,10 +1,12 @@
 import produce from 'immer'
-import { SAVE_WALLET_HISTORY, SET_LOADING } from '../../actions/wallet/actions'
+import { SAVE_EARNINGS, SAVE_SPENTS_HISTORY, SAVE_WALLET_HISTORY, SET_LOADING } from '../../actions/wallet/actions'
 
 // **  Initial State
 const initialState = {
     history: [],
-    loading: false
+    loading: false,
+    earnings: [],
+    spentHistory: []
 }
 
 /* eslint-disable default-case, no-param-reassign */
@@ -20,7 +22,13 @@ const walletReducer = (state = initialState, action) =>
                 draft.loading = action.flag
                 break
 
+            case SAVE_EARNINGS:
+                draft.earnings = action.earnings
+                break
 
+            case SAVE_SPENTS_HISTORY:
+                draft.spentHistory = action.spents
+                break
         }
     })
 

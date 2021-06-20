@@ -1,6 +1,7 @@
 import { createBrowserHistory } from 'history'
 import useJwt from '../@core/auth/jwt/useJwt'
 import jwtDecode from "jwt-decode"
+import { debounce } from 'lodash'
 // ** Checks if an object is empty (returns boolean)
 export const isObjEmpty = obj => Object.keys(obj).length === 0
 
@@ -97,3 +98,8 @@ export const selectThemeColors = theme => ({
     neutral30: '#ededed' // for input hover border-color
   }
 })
+
+
+export const searchEnhancer = debounce(fuctionToExecute => {
+  fuctionToExecute()
+}, 300)
