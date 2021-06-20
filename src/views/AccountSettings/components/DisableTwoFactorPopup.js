@@ -13,7 +13,7 @@ export const DisableTwoFactorPopup = ({ showConfirmationPopup, setShowConfirmati
 
     const validationSchema = Yup.object().shape({
         token: Yup.string().required('Token is required')
-      .test('len', 'Must be exactly 6 digits', val => { console.log(val); return val?.toString().length === 6 })
+            .test('len', 'Must be exactly 6 digits', val => { console.log(val); return val?.toString().length === 6 })
     })
     const {
         register,
@@ -45,9 +45,9 @@ export const DisableTwoFactorPopup = ({ showConfirmationPopup, setShowConfirmati
                     <FormGroup className="d-flex flex-column" >
                         <label htmlFor="token">Please enter secret code</label>
                         <input
-                           name="token"
-                           type="number" pattern="[0-9]*"
-                                           autoFocus
+                            name="token"
+                            type="number" pattern="[0-9]*"
+                            autoFocus
                             placeholder="Enter secret code"
                             className={`form-control ${errors.token ? 'is-invalid' : ''}`}
                             {...register('token')}
