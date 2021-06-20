@@ -18,9 +18,6 @@ import Sidebar from './components/Sidebar'
 const BountyList = () => {
 
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(fetchBounties())
-    }, [])
 
     const bounties = useSelector(state => state.bounty.bounties)
     const [searchTerm, setSearchTerm] = useState('')
@@ -77,7 +74,6 @@ const BountyList = () => {
 
     // ** Search Header
     const CustomHeader = useCallback(() => {
-        console.log(searchTerm, 'search term')
         return (
             <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
                 <Row>
