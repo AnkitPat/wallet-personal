@@ -1,11 +1,16 @@
 import axios from "axios"
-import { toast } from "react-toastify"
-import { savePlansActions, setLoadingAction } from "./actions"
+import {toast} from "react-toastify"
+import {savePlansActions, setLoadingAction} from "./actions"
+import { history } from "../../../utility/Utils"
+
 
 function fetchPlansAPI() {
     return axios.get('subscriptions')
 }
 
+function saveSubscription(data) {
+    return axios.post('subscriptions/createPayment', data)
+}
 
 // ** fetch plans list
 export const fetchPlans = () => {
@@ -21,6 +26,18 @@ export const fetchPlans = () => {
             console.log(e)
             dispatch(setLoadingAction(false))
             toast.error('Error in fetching')
+        }
+    }
+}
+
+export const saveSubscriptionPayment = (id) => {
+    return async (dispatch) => {
+        try {
+            await saveSubscription({session_id: id})
+            toast('Successfully Subscribed')
+            history.push('/home')
+        } catch (e) {
+            toast.error('Something went wrong')
         }
     }
 }

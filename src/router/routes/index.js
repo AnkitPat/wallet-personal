@@ -144,6 +144,11 @@ const Routes = [
     path: '/error',
     component: lazy(() => import('../../views/Error')),
     layout: 'BlankLayout'
+  },
+  {
+    path: '/membership/success',
+    exact: true,
+    component: lazy(() => import('../../views/membership/success'))
   }
 ]
 
