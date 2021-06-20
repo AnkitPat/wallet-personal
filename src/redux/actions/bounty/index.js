@@ -3,7 +3,7 @@ import { toast } from "react-toastify"
 import { history } from "../../../utility/Utils"
 import { saveBountiesAction, saveBountyAction, saveMyBountiesAction, saveProjectsAction, saveSocialMediumsAction, saveSubmissionsAction, setButtonLoadingAction, setLoadingAction } from "./actions"
 
-function fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRange) {
+function fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRange, searchTerm) {
     let url = 'bounty'
 
     if (selectedSocialMedium && selectedSocialMedium !== '') {
@@ -12,6 +12,11 @@ function fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRan
         url = `${url}?socialMedium=`
     }
 
+
+    if (searchTerm && searchTerm !== '') {
+        url = `${url}&text=${searchTerm}`
+    }
+    
     if (selectedPriceRange && selectedPriceRange !== '') {
         url = `${url}&${selectedPriceRange}`
     }
@@ -99,11 +104,11 @@ export const editBounty = data => {
 }
 
 // ** fetch bounty list
-export const fetchBounties = (selectedProjects = [], selectedSocialMedium = '', selectedPriceRange = '') => {
+export const fetchBounties = (selectedProjects = [], selectedSocialMedium = '', selectedPriceRange = '', searchTerm = '') => {
     return async (dispatch) => {
         try {
             dispatch(setLoadingAction(true))
-            const response = await fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRange)
+            const response = await fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRange, searchTerm)
             if (response && response.data) {
                 dispatch(saveBountiesAction(response.data))
             }

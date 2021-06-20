@@ -57,8 +57,8 @@ const Sidebar = props => {
 
 
   useEffect(() => {
-    dispatch(fetchBounties(selectedProjects, selectedSocialMedium, selectedPriceRange))
-  }, [selectedProjects, selectedSocialMedium, selectedPriceRange])
+    dispatch(fetchBounties(selectedProjects, selectedSocialMedium, selectedPriceRange, props.searchTerm))
+  }, [selectedProjects, selectedSocialMedium, selectedPriceRange, props.searchTerm])
 
   return (
     <div className='sidebar-detached sidebar-left mt-3'>
