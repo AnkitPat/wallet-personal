@@ -52,7 +52,7 @@ const Routes = [
   {
     path: '/authenticator',
     exact: true,
-    component: lazy(() => import('../../views/Authenticator/index1')),
+    component: lazy(() => import('../../views/Authenticator')),
     layout: 'BlankLayout'
   },
   {

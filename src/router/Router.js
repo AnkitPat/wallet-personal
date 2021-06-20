@@ -196,8 +196,6 @@ const Router = () => {
             exact
             path='/'
             render={() => {
-              console.log(userDetails, twoFactorSuccess)
-              console.log(isUserLoggedIn(), isTwoFactorAuthenticated(userDetails, twoFactorSuccess))
               return isUserLoggedIn() ? isTwoFactorAuthenticated(userDetails, twoFactorSuccess) ? <Redirect to={DefaultRoute} /> : <Redirect to="/authenticator"/> : <Redirect to='/login' />
             }}
           /> */}
