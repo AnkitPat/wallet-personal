@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Form, FormGroup, Row, Col, Button, Input, CardTitle, CardText, Label } from 'reactstrap'
+import { Form, FormGroup, Row, Col, Button, Input, CardTitle, CardText, Label, CustomInput } from 'reactstrap'
 import InputPasswordToggle from '@components/input-password-toggle'
 import * as Yup from 'yup'
 import { history } from '../../utility/Utils'
@@ -14,11 +14,13 @@ import speakeasy from 'speakeasy'
 import QRCode from 'qrcode'
 import { verifyTwoFactorAuth } from '../../redux/actions/auth'
 import { DisableTwoFactorPopup } from './components/DisableTwoFactorPopup'
+import { setTwoFactorAction } from '../../redux/actions/auth/actions'
 
 const AuthenticatorTabContent = () => {
 
   const dispatch = useDispatch()
   const [dataQR, setDataQr] = useState('')
+  const [enableTwoFactor, setTwoFactorEnable] = useState(false)
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false)
   const [secret, setSecret] = useState({})
 
@@ -28,7 +30,7 @@ const AuthenticatorTabContent = () => {
   const twoFactorAuthentationMeta = useSelector(state => state.auth.userDetails.twoFactorAuthenticationMetaData)
   useEffect(() => {
     if (twoFactorAuthentationMeta === null) {
-      const secret = speakeasy.generateSecret({ name: 'https://potentiam.io' })
+      const secret = speakeasy.generateSecret({ name: process.env.TWO_FACTOR_NAME })
       setSecret(secret)
     } else if (twoFactorAuthentationMeta !== undefined) {
       setSecret(JSON.parse(twoFactorAuthentationMeta))
@@ -66,41 +68,50 @@ const AuthenticatorTabContent = () => {
   }
 
 
+  console.log(enableTwoFactor)
   return (
     <Row className="d-flex">
       <Col sm='12'>
         <CardTitle tag='h2' className='font-weight-bold mb-1'>
           2FA Authenticator 🔒
         </CardTitle>
-        {!hasTwoFactorAuthentication ? <> <CardText className='mb-2'>
-          Scan QR code 2FA apps.
-        </CardText>
-          <img
-            src={dataQR}
-          />
+        {!hasTwoFactorAuthentication ? <>
+          <CustomInput type="switch" id="exampleCustomSwitch" className="my-2" name="customSwitch" label="Do you want enable Two factor authentication?" onChange={(e) => {
+            setTwoFactorEnable(!enableTwoFactor)
+          }} />
 
-          <Form className='auth-forgot-password-form mt-2' onSubmit={handleSubmit(onSubmit)}>
-            <FormGroup>
-              <Label className='form-label' for='login-email'>
-                After scanning QR, Please enter Secret Code
-              </Label>
-              <input
-                name="token"
-                type="number" pattern="[0-9]*"
-                                autoFocus
-                placeholder="Enter secret code"
-                className={`form-control ${errors.token ? 'is-invalid' : ''}`}
-                {...register('token')}
-              />
-              <small className='text-danger'>
-                {errors.token && errors.token.message}
-              </small>
-            </FormGroup>
-            <Button.Ripple type="submit" color='primary' block>
-              {loading ? <ProgressLoader /> : 'Verify'}
-            </Button.Ripple>
-          </Form>
-        </> : <>
+          {enableTwoFactor ? <>
+            <CardText className='mb-2'>
+              Scan QR code 2FA apps.
+            </CardText>
+            <img
+              src={dataQR}
+            />
+
+            <Form className='auth-forgot-password-form mt-2' onSubmit={handleSubmit(onSubmit)}>
+              <FormGroup>
+                <Label className='form-label' for='login-email'>
+                  After scanning QR, Please enter Secret Code
+                </Label>
+                <input
+                  name="token"
+                  type="number" pattern="[0-9]*"
+                  autoFocus
+                  placeholder="Enter secret code"
+                  className={`form-control ${errors.token ? 'is-invalid' : ''}`}
+                  {...register('token')}
+                />
+                <small className='text-danger'>
+                  {errors.token && errors.token.message}
+                </small>
+              </FormGroup>
+              <Button.Ripple type="submit" color='primary' block>
+                {loading ? <ProgressLoader /> : 'Verify'}
+              </Button.Ripple>
+            </Form>
+
+          </> : <></>}
+        </>  : <>
           <CardText className='mb-2'>
             You have already secured account with 2-Factor authenticator
           </CardText>
