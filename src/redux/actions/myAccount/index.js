@@ -4,6 +4,8 @@ import { toast } from "react-toastify"
 import { history } from "../../../utility/Utils"
 import { handleUserInformation } from '../auth'
 import { setLoadingAction } from '../auth/actions'
+import { setLoadingAction as loadingAction } from '../myAccount/actions'
+import { saveReferredUserAction } from './actions'
 
 function updateAvatar(data) {
     const base64 = data
@@ -25,6 +27,11 @@ function updateUserDetailsApi(data) {
 function changePasswordAPI(data) {
     return axios.post('auth/changePassword', data)
   }
+
+
+function fetchReferredUsersAPI() {
+    return axios.get('users/referred')
+}
 
 // ** Handle User Login
 export const handleUserInformationUpdate = action => {
@@ -72,3 +79,20 @@ export const handleChangePassword = data => {
     }
 }
 
+// Get referred users
+export const fetchReferredUsers = () => {
+    return (async (dispatch) => {
+        try {
+            dispatch(loadingAction(true))
+            const response = await fetchReferredUsersAPI()
+            if (response && response.data) {
+                dispatch(saveReferredUserAction(response.data))
+            }
+            dispatch(loadingAction(false))
+        } catch (e) {
+            console.log(e)
+            toast.error('Failed to fetch referred users')
+            dispatch(loadingAction(false))
+        }
+    })
+}

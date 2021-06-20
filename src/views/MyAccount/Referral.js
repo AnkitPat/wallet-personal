@@ -8,11 +8,13 @@ import {
 } from "react-share"
 import { toast } from 'react-toastify'
 import { Button, Card, CardBody, CardTitle, Col, Row } from 'reactstrap'
+import ReferredUsers from './components/ReferredUsers'
 
 const Referral = () => {
     const referralCode = useSelector(state => state.auth.userDetails.referralCode)
 
-    const shareableUrl = `${window.location.origin}/register?referralLink=${referralCode}`
+    const shareableUrl = `${window.location.origin}/register?referrer=${referralCode}`
+   
     return (
         <div>
             <Row className="d-flex justify-content-center">
@@ -65,8 +67,10 @@ const Referral = () => {
                         </CardBody>
                     </Card>
 
+
                 </Col>
             </Row>
+            <ReferredUsers />
         </div>
     )
 }
