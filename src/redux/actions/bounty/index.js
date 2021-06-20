@@ -5,16 +5,17 @@ import { saveBountiesAction, saveBountyAction, saveMyBountiesAction, saveProject
 
 function fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRange, searchTerm) {
     let url = 'bounty'
-
-    if (selectedSocialMedium && selectedSocialMedium !== '') {
-        url = `${url}?socialMedium=${selectedSocialMedium}`
-    } else {
-        url = `${url}?socialMedium=`
-    }
-
+    
 
     if (searchTerm && searchTerm !== '') {
         url = `${url}&text=${searchTerm}`
+    } else {
+        url = `${url}?text=`
+    }
+
+
+    if (selectedSocialMedium && selectedSocialMedium !== '') {
+        url = `${url}?socialMedium=${selectedSocialMedium}`
     }
     
     if (selectedPriceRange && selectedPriceRange !== '') {
