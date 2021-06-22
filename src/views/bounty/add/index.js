@@ -1,6 +1,6 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import Breadcrumbs from '@components/breadcrumbs'
-import {EditorState, ContentState, convertFromHTML} from 'draft-js'
+import { EditorState, ContentState, convertFromHTML } from 'draft-js'
 import {
     Row,
     Col,
@@ -13,19 +13,19 @@ import {
     Input
 } from 'reactstrap'
 import * as Yup from 'yup'
-import {yupResolver} from '@hookform/resolvers/yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 import '@styles/react/libs/editor/editor.scss'
 import '@styles/base/plugins/forms/form-quill-editor.scss'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/base/pages/page-blog.scss'
 import "react-datepicker/dist/react-datepicker.css"
-import {Controller, useForm} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import DatePicker from 'react-datepicker'
 import WYSIWYGEditor from './components/Htmleditor/Editor'
-import {useDispatch, useSelector} from 'react-redux'
-import {addBounty, editBounty, fetchProjectsAndSocialMediums} from '../../../redux/actions/bounty'
-import {ProgressLoader} from '../../../layouts/ProgressLoader'
-import {Link, useLocation} from "react-router-dom"
+import { useDispatch, useSelector } from 'react-redux'
+import { addBounty, editBounty, fetchProjectsAndSocialMediums } from '../../../redux/actions/bounty'
+import { ProgressLoader } from '../../../layouts/ProgressLoader'
+import { Link, useLocation } from "react-router-dom"
 
 const BlogEdit = () => {
     const dispatch = useDispatch()
@@ -42,13 +42,23 @@ const BlogEdit = () => {
         projectId: Yup.string()
             .required('Project is required'),
         socialMediumId: Yup.string()
-            .required('Social Mediums is required').transform(value => (value === '' ? undefined : value))
+            .required('Social Mediums is required').transform(value => (value === '' ? undefined : value)),
+        tiers: Yup.array().of(
+            Yup.object().shape({
+                followersCount: Yup.number().typeError('You must specify a number')
+                    .min(0, 'Min value 0.')
+                    .max(99, 'Max value 99').required("Followers Count is required"),
+                stake: Yup.number().typeError('You must specify a number')
+                    .min(0, 'Min value 0.')
+                    .max(99, 'Max value 99').required("Stake is required")
+            })
+        )
     })
 
     const {
         register,
         handleSubmit,
-        formState: {errors},
+        formState: { errors },
         control,
         getValues,
         setValue,
@@ -67,6 +77,8 @@ const BlogEdit = () => {
     })
     const location = useLocation()
 
+    const [counter, setCounter] = useState(1)
+    const [indexes, setIndexes] = useState([0])
     const onSubmit = values => {
         if (location && location.data) {
             dispatch(editBounty(values))
@@ -83,7 +95,7 @@ const BlogEdit = () => {
     const [editorDataState, setEditorDataState] = useState(EditorState.createWithContent(contentDataState))
     useEffect(() => {
         if (location && location.data) {
-            reset({...location.data, deadline: new Date(location.data.deadline)})
+            reset({ ...location.data, deadline: new Date(location.data.deadline) })
 
             const contentDataState =
                 ContentState.createFromBlockArray(convertFromHTML(getValues().description))
@@ -95,6 +107,17 @@ const BlogEdit = () => {
     useEffect(() => {
         dispatch(fetchProjectsAndSocialMediums())
     }, [])
+
+
+    const addTier = () => {
+        setIndexes(prevIndexes => [...prevIndexes, counter])
+        setCounter(prevCounter => prevCounter + 1)
+    }
+
+    const removeTier = index => {
+        setIndexes(prevIndexes => [...prevIndexes.filter(item => item !== index)])
+        setCounter(prevCounter => prevCounter - 1)
+    }
 
     return (
         <div className='blog-edit-wrapper'>
@@ -149,7 +172,7 @@ const BlogEdit = () => {
                                                 dateFormat={'dd/MM/yyyy'}
                                                 name="deadline"
                                                 control={control}
-                                                render={({onChange, value}) => (
+                                                render={({ onChange, value }) => (
                                                     <DatePicker
                                                         popperPlacement="top-start"
                                                         popperModifiers={{
@@ -162,7 +185,7 @@ const BlogEdit = () => {
                                                         }}
                                                         className={`form-control ${errors.deadline ? 'is-invalid' : ''}`}
                                                         selected={getValues().deadline}
-                                                        style={{flex: 1}}
+                                                        style={{ flex: 1 }}
                                                         onChange={(value) => {
                                                             setValue('deadline', value)
                                                             if (value !== undefined) {
@@ -198,7 +221,7 @@ const BlogEdit = () => {
                                                 <option value={''}>{'Select Project'}</option>
 
                                                 {projects.map(project =>
-                                                    <option value={project.id}>{project.title}</option>
+                                                    <option key={project.title} value={project.id}>{project.title}</option>
                                                 )}
 
                                             </Input>
@@ -230,7 +253,7 @@ const BlogEdit = () => {
                                             >
                                                 <option value={''}>{'Select Social medium'}</option>
                                                 {socialMediums.map(social =>
-                                                    <option value={social.id}>{social.title}</option>
+                                                    <option key={social.title} value={social.id}>{social.title}</option>
                                                 )}
 
                                             </Input>
@@ -257,13 +280,58 @@ const BlogEdit = () => {
                                         </FormGroup>
                                     </Col>
                                 </Row>
+                                <Label>Tiers</Label>
+                                {indexes.map(index => {
+                                    const fieldName = `tiers[${index}]`
+                                    return (
+                                        <Row key={index.toString()} className="my-1">
+
+                                            <Col md='5'>
+                                                <input
+                                                    name={`${fieldName}.followersCount`}
+                                                    type="number"
+                                                    placeholder="Enter Followers Count"
+                                                    className={`form-control ${errors.tiers && errors.tiers[index] && errors.tiers[index].followersCount ? 'is-invalid' : ''}`}
+                                                    {...register(`${fieldName}.followersCount`)}
+                                                />
+
+                                                <small className='text-danger'>
+                                                    {errors.tiers && errors.tiers[index] && errors.tiers[index].followersCount && errors.tiers[index].followersCount.message}
+                                                </small>
+                                            </Col>
+                                            <Col md='5'>
+
+                                                <input
+                                                    name={`${fieldName}.stake`}
+                                                    type="number"
+                                                    placeholder="Enter Stake"
+                                                    className={`form-control ${errors.tiers && errors.tiers[index] && errors.tiers[index].stake ? 'is-invalid' : ''}`}
+                                                    {...register(`${fieldName}.stake`)}
+                                                />
+
+                                                <small className='text-danger'>
+                                                    {errors.tiers && errors.tiers[index] && errors.tiers[index].stake && errors.tiers[index].stake.message}
+                                                </small>
+                                            </Col>
+                                            <Col>
+                                                {indexes.length > 1 ? <button className="btn btn-danger" type="button" onClick={() => removeTier(index)}>
+                                                    Remove
+                                                </button> : <> </>}
+                                            </Col>
+                                        </Row>
+                                    )
+                                })}
+
+                                <Button.Ripple color='primary' outline onClick={() => addTier()}>
+                                    Add Tier
+                                </Button.Ripple>
                                 <Row>
                                     <Col>
                                         <Label>Description</Label>
                                         <Controller
                                             name="description"
                                             control={control}
-                                            render={({onChange, value}) => (
+                                            render={({ onChange, value }) => (
                                                 <WYSIWYGEditor
                                                     editorDataState={editorDataState}
                                                     onChange={(value) => {
@@ -283,7 +351,7 @@ const BlogEdit = () => {
                                 <Row>
                                     <Col className='mt-50'>
                                         <Button.Ripple type="submit" color='primary' className='mr-1'>
-                                            {loading ? <ProgressLoader/> : 'Save Changes'}
+                                            {loading ? <ProgressLoader /> : 'Save Changes'}
                                         </Button.Ripple>
                                         <Link to={`/bounties`}>
                                             <Button.Ripple color='secondary' outline>
