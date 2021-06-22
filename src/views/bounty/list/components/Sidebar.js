@@ -10,7 +10,7 @@ import { Card, CardBody, Row, Col, CustomInput, Button } from 'reactstrap'
 
 // ** Styles
 import '@styles/react/libs/noui-slider/noui-slider.scss'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchBounties, fetchProjectsAndSocialMediums } from '../../../../redux/actions/bounty'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -23,27 +23,28 @@ const Sidebar = props => {
     },
     {
       id: '0-10',
-      label: '<=$10',
+      label: '<=10',
       value: 'priceMin=2&priceMax=10'
     },
     {
       id: '10-100',
-      label: '$10-$100',
+      label: '10-100',
       value: 'priceMin=10&priceMax=100'
     },
     {
       id: '100-500',
-      label: '$100-$500',
+      label: '100-500',
       value: 'priceMin=100&priceMax=500'
     },
     {
       id: '500-5000',
-      label: '>=$500',
+      label: '>=500',
       value: 'priceMin=500&priceMax=5000'
 
     }
   ], [])
   const dispatch = useDispatch()
+  const [forceReset, setForceReset] = useState(0)
   const [selectedSocialMedium, setSelectedSocialMedium] = useState('')
   const [selectedPriceRange, setSelectedPriceRange] = useState('')
   const [selectedProjects, setSelectedProjects] = useState([])
@@ -61,7 +62,7 @@ const Sidebar = props => {
   }, [selectedProjects, selectedSocialMedium, selectedPriceRange, props.searchTerm])
 
   return (
-    <div className='sidebar-detached sidebar-left mt-3'>
+    <div className='sidebar-detached sidebar-left mt-3' key={forceReset.toString()}>
       <div className='sidebar'>
         <div
           className={classnames('sidebar-shop')}
@@ -128,7 +129,13 @@ const Sidebar = props => {
               </div>
 
               <div id='clear-filters'>
-                <Button.Ripple color='primary' block>
+                <Button.Ripple color='primary' block onClick={() => {
+                  setSelectedPriceRange('')
+                  setSelectedProjects([])
+                  setSelectedSocialMedium('')
+                  setForceReset(Math.random())
+                  
+                }}>
                   Clear All Filters
                 </Button.Ripple>
               </div>

@@ -38,7 +38,7 @@ const BountyList = () => {
                                     {bounty.title}
                                 </Link>
                                 <div className='my-1'><small>
-                                    Amount: {bounty.amount}
+                                    Rewards: {bounty.amount}
                                 </small>
                                 </div>
 
@@ -108,12 +108,13 @@ const BountyList = () => {
             <Sidebar
                 searchTerm={searchTerm}
             />
+            <div className="d-flex flex-column">
             <Breadcrumbs
                 breadCrumbTitle='Bounty Tasks'
                 breadCrumbParent='Tasks'
                 breadCrumbActive='List'
             />
-            <div className='content-right pl-2'>
+            <div className='pl-2'>
                 <div className='content-wrapper'>
                     <div className='content-body'>
 
@@ -123,6 +124,7 @@ const BountyList = () => {
                         )}
                     </div>
                 </div>
+            </div>
             </div>
         </Fragment>
     )
