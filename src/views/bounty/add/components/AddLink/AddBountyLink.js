@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, FormGroup, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { Button, FormGroup, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import * as Yup from 'yup'
 import { submitBounty } from '../../../../../redux/actions/bounty'
 
@@ -10,7 +10,8 @@ export const AddBountyLink = ({ selectedBounty, showConfirmationPopup, setShowCo
 
     const dispatch = useDispatch()
     const validationSchema = Yup.object().shape({
-        link: Yup.string().url('Invalid Link').required('Link is required')
+        link: Yup.string().url('Invalid Link').required('Link is required'),
+        bountyTiersId: Yup.string().required('Tier is Required')
     })
     const {
         register,
@@ -30,7 +31,8 @@ export const AddBountyLink = ({ selectedBounty, showConfirmationPopup, setShowCo
         dispatch(submitBounty({
             bountyTaskId: selectedBounty.id,
             userId,
-            result: values.link
+            result: values.link,
+            ...values
         }))
     }
     return (
@@ -48,6 +50,26 @@ export const AddBountyLink = ({ selectedBounty, showConfirmationPopup, setShowCo
                 <ModalBody>
 
 
+                    <FormGroup className="d-flex flex-column" >
+                        <label htmlFor="link">Select Tier</label>
+                        <select
+                            name={`bountyTiersId`}
+                            className={`form-control ${errors.bountyTiersId ? 'is-invalid' : ''}`}
+                            {...register('bountyTiersId')}
+                       
+                       >
+                            <option value="" disabled selected>Select Tier</option>
+                            {selectedBounty && selectedBounty.bountyTiers.map(tier => (
+                                <option key={tier.id} value={tier.id}>
+                                    {tier.reward}
+                                </option>
+                            ))}
+                        </select>
+                        
+                        <div className="invalid-feedback">
+                            {errors.bountyTiersId && errors.bountyTiersId.message}
+                        </div>
+                    </FormGroup>
                     <FormGroup className="d-flex flex-column" >
                         <label htmlFor="link">Bounty Link</label>
                         <input
