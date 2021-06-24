@@ -10,7 +10,8 @@ import {
     Label,
     FormGroup,
     Button,
-    Input
+    Input,
+    CustomInput
 } from 'reactstrap'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -31,6 +32,7 @@ const BlogEdit = () => {
     const dispatch = useDispatch()
 
 
+    const [multipleSubmission, setMultipleSubmission] = useState(false)
     const loading = useSelector(state => state.bounty.buttonLoading)
     const projects = useSelector(state => state.bounty.projects)
     const socialMediums = useSelector(state => state.bounty.socialMediums)
@@ -41,7 +43,7 @@ const BlogEdit = () => {
         ContentState.createFromBlockArray(convertFromHTML(''))
     const [editorDataState, setEditorDataState] = useState(EditorState.createWithContent(contentDataState))
     const params = useParams()
-    
+
     const validationSchema = Yup.object().shape({
         title: Yup.string().required('Title is required'),
         description: Yup.string()
@@ -104,6 +106,7 @@ const BlogEdit = () => {
         if (params && params.id && bounty) {
             setCounter(0)
             setIndexes([])
+            setMultipleSubmission(bounty.multipleSubmission)
             const clonedBounty = Object.assign({}, bounty)
             clonedBounty.tiers = clonedBounty.bountyTiers.map((item, index) => {
                 setCounter(index + 1)
@@ -289,6 +292,15 @@ const BlogEdit = () => {
                                                 </small>
                                             </FormGroup>
                                         </Col>
+                                        <Col>
+                                            <CustomInput type="switch" id="exampleCustomSwitch" defaultChecked={getValues().multipleSubmission} className="my-2" name="multipleSubmission"
+                                                label="Allow Multiple Submission" onChange={(e) => {
+                                                    setValue('multipleSubmission', !multipleSubmission)
+                                                    setMultipleSubmission(!multipleSubmission)
+                                                }} />
+
+                                        </Col>
+
                                     </Row>
                                     <Row>
                                         <Col>

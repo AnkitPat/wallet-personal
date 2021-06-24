@@ -100,14 +100,14 @@ const BountyDetails = () => {
                                                     </Alert>
                                                 </>
                                                 }
-                                                {bounty.userBounty && bounty.userBounty.verified &&
+                                                {!bounty.multipleSubmission && bounty.userBounty && bounty.userBounty.verified &&
                                                 <Alert color='info'>
                                                     <div className='alert-body'>
                                                         Task successfully completed
                                                     </div>
                                                 </Alert>
                                                 }
-                                                {!bounty.userBounty &&
+                                                {(!bounty.userBounty || bounty.multipleSubmission) &&
                                                 <Button.Ripple
                                                     type="submit"
                                                     color='primary'

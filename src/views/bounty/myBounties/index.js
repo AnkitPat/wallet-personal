@@ -33,8 +33,8 @@ const MyBounties = () => {
             }
         },
         {
-            selector: 'bountyTask.amount',
-            name: 'Amount',
+            selector: 'bountyTiers.reward',
+            name: 'Reward',
             style: {
                 width: '20%'
             },

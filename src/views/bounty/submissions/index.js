@@ -32,18 +32,18 @@ const Submissions = () => {
             }
         },
         {
-            selector: 'bountyTask.amount',
-            name: 'Amount',
+            selector: 'result',
+            name: 'Submitted Link',
             style: {
-                width: '10%'
+                width: '20%'
             },
             headerStyle: {
-                width: '10%'
+                width: '20%'
             }
         },
         {
-            selector: 'result',
-            name: 'Submitted Link',
+            selector: 'bountyTiers.reward',
+            name: 'Reward',
             style: {
                 width: '20%'
             },
