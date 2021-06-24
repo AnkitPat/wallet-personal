@@ -77,7 +77,7 @@ export const addBounty = data => {
             await addBountyAPI(data)
             toast.success("Bounty added successfully!!")
             dispatch(setButtonLoadingAction(false))
-            history.goBack()
+            history.replace('/bounties')
         } catch (e) {
             console.log(e)
             dispatch(setButtonLoadingAction(false))
@@ -95,7 +95,7 @@ export const editBounty = data => {
             await editBountyAPI(data)
             toast.success("Bounty Edited successfully!!")
             dispatch(setButtonLoadingAction(false))
-            history.goBack()
+            history.replace('/bounties')
         } catch (e) {
             console.log(e)
             dispatch(setButtonLoadingAction(false))
@@ -161,12 +161,10 @@ export const submitBounty = (data) => {
 export const fetchProjectsAndSocialMediums = () => {
     return async (dispatch) => {
         try {
-            dispatch(setLoadingAction(true))
             let response = await fetchProjectsAPI()
             if (response && response.data) dispatch(saveProjectsAction(response.data))
             response = await fetchSocialMediumsAPI()
             if (response && response.data) dispatch(saveSocialMediumsAction(response.data))
-            dispatch(setLoadingAction(false))
         } catch (e) {
             console.log(e)
             dispatch(setLoadingAction(false))

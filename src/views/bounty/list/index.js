@@ -59,8 +59,7 @@ const BountyList = () => {
                                     Read More
                                 </Link>
                                 {role === 'administrator' ? <Link className='font-weight-bold' to={{
-                                    pathname: `/bounties/edit/${bounty.id}`,
-                                    data: bounty
+                                    pathname: `/bounties/edit/${bounty.id}`
                                 }}>
                                     Edit
                                 </Link> : <></>}

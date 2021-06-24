@@ -123,10 +123,10 @@ const BountyDetails = () => {
                                         </CardBody>
                                     </Card>
                                 </Col>
-                                <AddBountyLink
+                                {showConfirmationPopup ? <AddBountyLink
                                     showConfirmationPopup={showConfirmationPopup}
                                     setShowConfirmationPopup={setShowConfirmationPopup}
-                                    selectedBounty={selectedBounty}/>
+                                    selectedBounty={selectedBounty}/> : <></>}
                             </Row>
                         )}
                     </div>
