@@ -57,24 +57,29 @@ const BountyDetails = () => {
                                             <CardTitle tag='h4'>{bounty.title}</CardTitle>
                                             <hr/>
                                             <div className="card-app-design">
-                                            <div className='design-planning-wrapper mb-2 py-75'>
-                                                <div className='design-planning'>
-                                                    <CardText className='mb-25'>Due Date</CardText>
-                                                    <h6 className='mb-0'>{bounty.deadline && moment(bounty.deadline).format('MMMM Do, YYYY')}</h6>
-                                                </div>
-                                                <div className='design-planning'>
-                                                    <CardText className='mb-25'>Reward</CardText>
-                                                    <h6 className='mb-0'>{bounty.amount}</h6>
-                                                </div>
-                                                <div className='design-planning'>
-                                                    <CardText className='mb-25'>Project</CardText>
-                                                    <h6 className='mb-0'>{bounty.project.title}</h6>
-                                                </div>
-                                                <div className='design-planning'>
-                                                    <CardText className='mb-25'>Category</CardText>
-                                                    <h6 className='mb-0'>{bounty.socialMedium.title}</h6>
+                                                <div className='design-planning-wrapper mb-2 py-75'>
+                                                    <div className='design-planning'>
+                                                        <CardText className='mb-25'>Due Date</CardText>
+                                                        <h6 className='mb-0'>{bounty.deadline && moment(bounty.deadline).format('MMMM Do, YYYY')}</h6>
+                                                    </div>
+                                                    <div className='design-planning'>
+                                                        <CardText className='mb-25'>Budget</CardText>
+                                                        <h6 className='mb-0'>{bounty.amount}</h6>
+                                                    </div>
+                                                    <div className='design-planning'>
+                                                        <CardText className='mb-25'>Project</CardText>
+                                                        <h6 className='mb-0'>{bounty.project.title}</h6>
+                                                    </div>
+                                                    <div className='design-planning'>
+                                                        <CardText className='mb-25'>Category</CardText>
+                                                        <h6 className='mb-0'>{bounty.socialMedium.title}</h6>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div>
+                                                {bounty.bountyTiers.map((item, index) => (
+                                                    <p>Tier {++index}: {item.followerCount}+ friends: {item.reward} stakes</p>
+                                                ))}
                                             </div>
                                             <div
                                                 dangerouslySetInnerHTML={{
@@ -100,14 +105,14 @@ const BountyDetails = () => {
                                                     </Alert>
                                                 </>
                                                 }
-                                                {bounty.userBounty && bounty.userBounty.verified &&
+                                                {!bounty.multipleSubmission && bounty.userBounty && bounty.userBounty.verified &&
                                                 <Alert color='info'>
                                                     <div className='alert-body'>
                                                         Task successfully completed
                                                     </div>
                                                 </Alert>
                                                 }
-                                                {!bounty.userBounty &&
+                                                {(!bounty.userBounty || bounty.multipleSubmission) &&
                                                 <Button.Ripple
                                                     type="submit"
                                                     color='primary'

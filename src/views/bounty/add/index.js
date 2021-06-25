@@ -10,7 +10,8 @@ import {
     Label,
     FormGroup,
     Button,
-    Input
+    Input,
+    CustomInput
 } from 'reactstrap'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -29,8 +30,6 @@ import { Link, useLocation, useParams } from "react-router-dom"
 
 const BlogEdit = () => {
     const dispatch = useDispatch()
-
-
     const loading = useSelector(state => state.bounty.buttonLoading)
     const projects = useSelector(state => state.bounty.projects)
     const socialMediums = useSelector(state => state.bounty.socialMediums)
@@ -41,7 +40,7 @@ const BlogEdit = () => {
         ContentState.createFromBlockArray(convertFromHTML(''))
     const [editorDataState, setEditorDataState] = useState(EditorState.createWithContent(contentDataState))
     const params = useParams()
-    
+
     const validationSchema = Yup.object().shape({
         title: Yup.string().required('Title is required'),
         description: Yup.string()
@@ -93,6 +92,8 @@ const BlogEdit = () => {
     const [counter, setCounter] = useState(1)
     const [indexes, setIndexes] = useState([0])
     const onSubmit = values => {
+        console.log(values)
+        values.multipleSubmission = values.multipleSubmission === "on"
         if (params && params.id) {
             dispatch(editBounty(values))
         } else {
@@ -149,9 +150,9 @@ const BlogEdit = () => {
         <div className='blog-edit-wrapper'>
             {pageLoading ? <ProgressLoader size='lg' /> : <>
                 <Breadcrumbs
-                    breadCrumbTitle={(location && location.data) ? 'Blog edit' : 'Blog Add'}
+                    breadCrumbTitle={(location && location.data) ? 'Bounty edit' : 'Bounty Add'}
                     breadCrumbParent='Pages'
-                    breadCrumbParent2='Blog'
+                    breadCrumbParent2='Bounty'
                     breadCrumbActive={(location && location.data) ? 'Edit' : 'Add'}
                 />
                 <Row>
@@ -177,7 +178,7 @@ const BlogEdit = () => {
                                         </Col>
                                         <Col md='6'>
                                             <FormGroup className="d-flex flex-column">
-                                                <label htmlFor="price">Amount</label>
+                                                <label htmlFor="price">Budget</label>
                                                 <input
                                                     name="amount"
                                                     type="number"
@@ -289,6 +290,22 @@ const BlogEdit = () => {
                                                 </small>
                                             </FormGroup>
                                         </Col>
+                                        <Col>
+                                            <Controller
+                                                control={control}
+                                                name="multipleSubmission"
+                                                render={({ field }) => (
+                                                    <CustomInput
+                                                        type="switch"
+                                                        {...field}
+                                                        id="exampleCustomSwitch"
+                                                        className="my-2"
+                                                        label="Allow Multiple Submission"
+                                                    />
+                                                )}
+                                            />
+                                        </Col>
+
                                     </Row>
                                     <Row>
                                         <Col>
@@ -341,9 +358,9 @@ const BlogEdit = () => {
                                                     </small>
                                                 </Col>
                                                 <Col>
-                                                    {indexes.length > 1 ? <button className="btn btn-danger" type="button" onClick={() => removeTier(index)}>
+                                                    {indexes.length > 1 && <button className="btn btn-danger" type="button" onClick={() => removeTier(index)}>
                                                         Remove
-                                                    </button> : <> </>}
+                                                    </button>}
                                                 </Col>
                                             </Row>
                                         )
