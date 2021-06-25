@@ -83,7 +83,8 @@ const BlogEdit = () => {
             shortDescription: '',
             deadline: '',
             projectId: '',
-            socialMediumId: ''
+            socialMediumId: '',
+            multipleSubmission: false
         }
 
     })
@@ -150,10 +151,10 @@ const BlogEdit = () => {
         <div className='blog-edit-wrapper'>
             {pageLoading ? <ProgressLoader size='lg' /> : <>
                 <Breadcrumbs
-                    breadCrumbTitle={(location && location.data) ? 'Bounty edit' : 'Bounty Add'}
+                    breadCrumbTitle={(params && params.id) ? 'Bounty edit' : 'Bounty Add'}
                     breadCrumbParent='Pages'
                     breadCrumbParent2='Bounty'
-                    breadCrumbActive={(location && location.data) ? 'Edit' : 'Add'}
+                    breadCrumbActive={(params && params.id) ? 'Edit' : 'Add'}
                 />
                 <Row>
                     <Col sm='12'>
