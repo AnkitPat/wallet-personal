@@ -6,7 +6,7 @@ import { Button, Media, Label, Row, Col, Input, FormGroup, Form } from 'reactstr
 import classNames from 'classnames'
 import defaultImage from '../../assets/images/avatars/12.png'
 import { history } from '../../utility/Utils'
-import { handleUserInformationUpdate } from '../../redux/actions/myAccount'
+import { fetchCountries, handleUserInformationUpdate } from '../../redux/actions/myAccount'
 import { useDispatch, useSelector } from 'react-redux'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
 
@@ -30,7 +30,9 @@ const GeneralTabs = ({ data }) => {
     email: Yup.string()
       .required('Email is required')
       .email('Email is invalid'),
-    phone: Yup.string().required('Phone is required')
+    phone: Yup.string().required('Phone is required'),
+    age: Yup.number().min(10, 'Minimum age should be 10').max(100, 'Maximum age should be 100').required('Age is required').nullable().transform(value => (isNaN(value) ? undefined : value))
+
 
   })
 
@@ -39,7 +41,9 @@ const GeneralTabs = ({ data }) => {
     formState: { errors },
     getValues,
     setValue,
+    register,
     control,
+    clearErrors,
     reset
   } = useForm({
     resolver: yupResolver(validationSchema)
@@ -56,7 +60,12 @@ const GeneralTabs = ({ data }) => {
     }))
   }
 
+  useEffect(() => {
+    dispatch(fetchCountries())
+  }, [])
+
   const loading = useSelector(state => state.auth.loading)
+  const countries = useSelector(state => state.myaccount.countries)
   return (
     <Fragment>
       <Media>
@@ -83,7 +92,7 @@ const GeneralTabs = ({ data }) => {
             <FormGroup>
               <Label className='form-label' for='register-username'>
                 Username
-                </Label>
+              </Label>
               <Controller
                 control={control}
                 id='name'
@@ -112,7 +121,7 @@ const GeneralTabs = ({ data }) => {
             <FormGroup>
               <Label className='form-label' for='register-email'>
                 Email
-                </Label>
+              </Label>
               <Controller
                 control={control}
                 id='email'
@@ -141,7 +150,7 @@ const GeneralTabs = ({ data }) => {
             <FormGroup>
               <Label className='form-label' for='register-phone'>
                 Phone
-                </Label>
+              </Label>
               <Controller
                 control={control}
                 id='phone'
@@ -168,7 +177,50 @@ const GeneralTabs = ({ data }) => {
             </FormGroup>
           </Col>
           <Col sm='6'>
+            <FormGroup className='mb-2'>
+              <Label for='blog-edit-status'>Countries</Label>
+              <Input
+                {...register('countryId')}
 
+                type='select'
+                name="countryId"
+                id='blog-edit-status'
+                value={getValues().countryId}
+                onChange={e => {
+                  setValue('countryId', e.target.value)
+                  if (e.target.value !== '') {
+                    clearErrors('countryId')
+                  }
+                }}
+
+              >
+                <option value={''}>{'Select Country'}</option>
+
+                {countries && countries.map(country =>
+                  <option key={country.name} value={country.id}>{country.name}</option>
+                )}
+
+              </Input>
+              <small className='text-danger'>
+                {errors.countryId && errors.countryId.message}
+              </small>
+            </FormGroup>
+          </Col>
+          <Col sm='6'>
+            <FormGroup className='mb-2'>
+              <Label for='blog-edit-status'>Age</Label>
+              <input
+                name="age"
+                type="number"
+                placeholder="Enter age"
+                className={`form-control ${errors.age ? 'is-invalid' : ''}`}
+                {...register('age')}
+              />
+
+              <small className='text-danger'>
+                {errors.age && errors.age.message}
+              </small>
+            </FormGroup>
           </Col>
 
           <Col className='mt-2' sm='12'>
