@@ -35,6 +35,7 @@ const BlogEdit = () => {
     const socialMediums = useSelector(state => state.bounty.socialMediums)
     const bounty = useSelector(state => state.bounty.bounty)
     const pageLoading = useSelector(state => state.bounty.loading)
+    const [multipleSubmission, setMultipleSubmission] = useState(false)
 
     const contentDataState =
         ContentState.createFromBlockArray(convertFromHTML(''))
@@ -83,7 +84,8 @@ const BlogEdit = () => {
             shortDescription: '',
             deadline: '',
             projectId: '',
-            socialMediumId: ''
+            socialMediumId: '',
+            multipleSubmission: false
         }
 
     })
@@ -92,8 +94,6 @@ const BlogEdit = () => {
     const [counter, setCounter] = useState(1)
     const [indexes, setIndexes] = useState([0])
     const onSubmit = values => {
-        console.log(values)
-        values.multipleSubmission = values.multipleSubmission === "on"
         if (params && params.id) {
             dispatch(editBounty(values))
         } else {
@@ -106,6 +106,7 @@ const BlogEdit = () => {
             setCounter(0)
             setIndexes([])
             const clonedBounty = Object.assign({}, bounty)
+            if (clonedBounty.multipleSubmission) setMultipleSubmission(true)
             clonedBounty.tiers = clonedBounty.bountyTiers.map((item, index) => {
                 setCounter(index + 1)
                 setIndexes(prevIndexes => [...prevIndexes, index])
@@ -150,10 +151,10 @@ const BlogEdit = () => {
         <div className='blog-edit-wrapper'>
             {pageLoading ? <ProgressLoader size='lg' /> : <>
                 <Breadcrumbs
-                    breadCrumbTitle={(location && location.data) ? 'Bounty edit' : 'Bounty Add'}
+                    breadCrumbTitle={(params && params.id) ? 'Bounty edit' : 'Bounty Add'}
                     breadCrumbParent='Pages'
                     breadCrumbParent2='Bounty'
-                    breadCrumbActive={(location && location.data) ? 'Edit' : 'Add'}
+                    breadCrumbActive={(params && params.id) ? 'Edit' : 'Add'}
                 />
                 <Row>
                     <Col sm='12'>
@@ -291,19 +292,11 @@ const BlogEdit = () => {
                                             </FormGroup>
                                         </Col>
                                         <Col>
-                                            <Controller
-                                                control={control}
-                                                name="multipleSubmission"
-                                                render={({ field }) => (
-                                                    <CustomInput
-                                                        type="switch"
-                                                        {...field}
-                                                        id="exampleCustomSwitch"
-                                                        className="my-2"
-                                                        label="Allow Multiple Submission"
-                                                    />
-                                                )}
-                                            />
+                                            <CustomInput type="switch" id="exampleCustomSwitch" defaultChecked={getValues().multipleSubmission} className="my-2" name="multipleSubmission"
+                                                label="Allow Multiple Submission" onChange={(e) => {
+                                                    setValue('multipleSubmission', !multipleSubmission)
+                                                    setMultipleSubmission(!multipleSubmission)
+                                                }} />
                                         </Col>
 
                                     </Row>
