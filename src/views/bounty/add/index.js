@@ -30,7 +30,6 @@ import { Link, useLocation, useParams } from "react-router-dom"
 
 const BlogEdit = () => {
     const dispatch = useDispatch()
-    const [multipleSubmission, setMultipleSubmission] = useState(false)
     const loading = useSelector(state => state.bounty.buttonLoading)
     const projects = useSelector(state => state.bounty.projects)
     const socialMediums = useSelector(state => state.bounty.socialMediums)
@@ -93,6 +92,8 @@ const BlogEdit = () => {
     const [counter, setCounter] = useState(1)
     const [indexes, setIndexes] = useState([0])
     const onSubmit = values => {
+        console.log(values)
+        values.multipleSubmission = values.multipleSubmission === "on"
         if (params && params.id) {
             dispatch(editBounty(values))
         } else {
@@ -104,7 +105,6 @@ const BlogEdit = () => {
         if (params && params.id && bounty) {
             setCounter(0)
             setIndexes([])
-            setMultipleSubmission(bounty.multipleSubmission)
             const clonedBounty = Object.assign({}, bounty)
             clonedBounty.tiers = clonedBounty.bountyTiers.map((item, index) => {
                 setCounter(index + 1)
@@ -150,9 +150,9 @@ const BlogEdit = () => {
         <div className='blog-edit-wrapper'>
             {pageLoading ? <ProgressLoader size='lg' /> : <>
                 <Breadcrumbs
-                    breadCrumbTitle={(location && location.data) ? 'Blog edit' : 'Blog Add'}
+                    breadCrumbTitle={(location && location.data) ? 'Bounty edit' : 'Bounty Add'}
                     breadCrumbParent='Pages'
-                    breadCrumbParent2='Blog'
+                    breadCrumbParent2='Bounty'
                     breadCrumbActive={(location && location.data) ? 'Edit' : 'Add'}
                 />
                 <Row>
@@ -291,12 +291,19 @@ const BlogEdit = () => {
                                             </FormGroup>
                                         </Col>
                                         <Col>
-                                            <CustomInput type="switch" id="exampleCustomSwitch" defaultChecked={getValues().multipleSubmission} className="my-2" name="multipleSubmission"
-                                                label="Allow Multiple Submission" onChange={(e) => {
-                                                    setValue('multipleSubmission', !multipleSubmission)
-                                                    setMultipleSubmission(!multipleSubmission)
-                                                }} />
-
+                                            <Controller
+                                                control={control}
+                                                name="multipleSubmission"
+                                                render={({ field }) => (
+                                                    <CustomInput
+                                                        type="switch"
+                                                        {...field}
+                                                        id="exampleCustomSwitch"
+                                                        className="my-2"
+                                                        label="Allow Multiple Submission"
+                                                    />
+                                                )}
+                                            />
                                         </Col>
 
                                     </Row>
@@ -351,9 +358,9 @@ const BlogEdit = () => {
                                                     </small>
                                                 </Col>
                                                 <Col>
-                                                    {indexes.length > 1 ? <button className="btn btn-danger" type="button" onClick={() => removeTier(index)}>
+                                                    {indexes.length > 1 && <button className="btn btn-danger" type="button" onClick={() => removeTier(index)}>
                                                         Remove
-                                                    </button> : <> </>}
+                                                    </button>}
                                                 </Col>
                                             </Row>
                                         )
