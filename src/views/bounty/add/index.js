@@ -30,8 +30,6 @@ import { Link, useLocation, useParams } from "react-router-dom"
 
 const BlogEdit = () => {
     const dispatch = useDispatch()
-
-
     const [multipleSubmission, setMultipleSubmission] = useState(false)
     const loading = useSelector(state => state.bounty.buttonLoading)
     const projects = useSelector(state => state.bounty.projects)
@@ -180,7 +178,7 @@ const BlogEdit = () => {
                                         </Col>
                                         <Col md='6'>
                                             <FormGroup className="d-flex flex-column">
-                                                <label htmlFor="price">Amount</label>
+                                                <label htmlFor="price">Budget</label>
                                                 <input
                                                     name="amount"
                                                     type="number"
