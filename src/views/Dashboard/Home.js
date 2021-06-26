@@ -1,13 +1,15 @@
 import '@styles/base/pages/dashboard-ecommerce.scss'
 import '@styles/react/libs/charts/apex-charts.scss'
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import {Copy} from 'react-feather'
-import {batch, useDispatch, useSelector} from 'react-redux'
-import {toast} from 'react-toastify'
-import {Card, CardBody, CardSubtitle, Col, Row} from 'reactstrap'
+import { Copy } from 'react-feather'
+import { batch, useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { Card, CardBody, CardSubtitle, Col, Row } from 'reactstrap'
 import CardTitle from 'reactstrap/lib/CardTitle'
-import {fetchTokenInfo} from '../../redux/actions/dashboard'
+import { fetchMyBounties } from '../../redux/actions/bounty'
+import { fetchTokenInfo } from '../../redux/actions/dashboard'
+import BountyStatCard from './components/BountyStatCard'
 import StatsCard from './components/StatsCard'
 import UserStats from "./components/UserStats"
 
@@ -16,6 +18,7 @@ const Home = () => {
     useEffect(() => {
         batch(() => {
             dispatch(fetchTokenInfo())
+            dispatch(fetchMyBounties())
         })
     }, [])
 
@@ -184,6 +187,9 @@ const Home = () => {
                             </Row>
                         </CardBody>
                     </Card>
+                </Col>
+                <Col xl='5' md='4' xs='12'>
+                    <BountyStatCard />
                 </Col>
             </Row> </>}
         </div>
