@@ -59,8 +59,6 @@ const AuthenticatorTabContent = () => {
         reset({})
     }
 
-
-    console.log(enableTwoFactor)
     return (
         <Row className="d-flex">
             <Col sm='12'>

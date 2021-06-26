@@ -1,5 +1,5 @@
 import { Nav, NavItem, NavLink } from 'reactstrap'
-import { User, Lock, Tool } from 'react-feather'
+import { User, Lock, Tool, Link } from 'react-feather'
 
 const Tabs = ({ activeTab, toggleTab }) => {
   return (
@@ -18,6 +18,12 @@ const Tabs = ({ activeTab, toggleTab }) => {
       </NavItem>
       <NavItem>
         <NavLink active={activeTab === '3'} onClick={() => toggleTab('3')}>
+          <Link size={18} className='mr-1' />
+          <span className='font-weight-bold'>Social Links</span>
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink active={activeTab === '4'} onClick={() => toggleTab('4')}>
           <Tool size={18} className='mr-1' />
           <span className='font-weight-bold'>Security</span>
         </NavLink>
