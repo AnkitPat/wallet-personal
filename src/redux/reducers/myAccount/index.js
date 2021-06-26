@@ -1,10 +1,11 @@
 import produce from 'immer'
-import { SAVE_REFERRED_USERS, SET_LOADING } from '../../actions/myAccount/actions'
+import { SAVE_COUNTRIES, SAVE_REFERRED_USERS, SET_LOADING } from '../../actions/myAccount/actions'
 
 // **  Initial State
 const initialState = {
     referredUsers: [],
-    loading: false
+    loading: false,
+    countries: []
 }
 
 /* eslint-disable default-case, no-param-reassign */
@@ -20,6 +21,9 @@ const myAccountReducer = (state = initialState, action) =>
                 draft.loading = action.flag
                 break
 
+            case SAVE_COUNTRIES:
+                draft.countries = action.countries
+                break
 
         }
     })

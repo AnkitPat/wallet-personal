@@ -4,7 +4,7 @@ import { toast } from "react-toastify"
 import { history } from "../../../utility/Utils"
 import { handleUserInformation } from '../auth'
 import { setLoadingAction } from '../auth/actions'
-import { setLoadingAction as loadingAction } from '../myAccount/actions'
+import { saveCountriesAction, setLoadingAction as loadingAction } from '../myAccount/actions'
 import { saveReferredUserAction } from './actions'
 
 function updateAvatar(data) {
@@ -31,6 +31,10 @@ function changePasswordAPI(data) {
 
 function fetchReferredUsersAPI() {
     return axios.get('users/referred')
+}
+
+function fetchCountiesAPI() {
+    return axios.get('users/countries')
 }
 
 // ** Handle User Login
@@ -93,6 +97,21 @@ export const fetchReferredUsers = () => {
             console.log(e)
             toast.error('Failed to fetch referred users')
             dispatch(loadingAction(false))
+        }
+    })
+}
+
+// Fetch countries
+export const fetchCountries = () => {
+    return (async (dispatch) => {
+        try {
+            const response = await fetchCountiesAPI()
+            if (response && response.data) {
+                dispatch(saveCountriesAction(response.data))
+            }
+        } catch (e) {
+            console.log(e)
+            toast.error('Failed to fetch  countries')
         }
     })
 }
