@@ -43,6 +43,17 @@ const MyBounties = () => {
             }
         },
         {
+            selector: 'createdDate',
+            format: row => moment(row.createdDate).format('MMMM Do YYYY'),
+            name: 'Submitted Date',
+            style: {
+                width: '20%'
+            },
+            headerStyle: {
+                width: '20%'
+            }
+        },
+        {
             selector: 'result',
             name: 'Submitted Link',
             style: {

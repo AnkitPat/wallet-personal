@@ -16,6 +16,7 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import Logo from '@src/assets/images/icons/logo.png'
+import LogoLight from '@src/assets/images/icons/logo-light.png'
 import { ProgressLoader } from '../layouts/ProgressLoader'
 
 const Login = props => {
@@ -43,6 +44,7 @@ const Login = props => {
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
 
+
   const onSubmit = data => {
     dispatch(handleLogin(data))
   }
@@ -54,9 +56,8 @@ const Login = props => {
       <Row className='auth-inner m-0'>
         <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
           <span className='brand-logo'>
-            <img src={Logo} width="100" height="100" />
+            <img src={skin === 'dark' ? Logo : LogoLight} width="100" height="100" />
           </span>
-          <h2 className='brand-text text-primary ml-1'>Potentiam</h2>
         </Link>
         <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
           <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
