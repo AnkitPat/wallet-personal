@@ -24,7 +24,9 @@ function PtmWithdrawal() {
 
     const tokenInfo = useSelector(state => state.dashboard.tokenInfo)
     const userCredits = useSelector(state => state.auth.userDetails.credit)
+    const userDetails = useSelector(state => state.auth.userDetails)
     const loading = useSelector(state => state.withdrawal.loading)
+    const transferFee = userDetails.subscription ? userDetails.subscription.transferFee : 20
 
     const validationSchema = Yup.object().shape({
         amount: Yup.number('Amount is required')
@@ -103,6 +105,11 @@ function PtmWithdrawal() {
                         </CardTitle>
                         <Form className='auth-register-form mt-2' onSubmit={handleSubmit(onSubmit)}>
                             <FormGroup>
+                                <FormGroup>
+                                    <Label className='form-label' for='register-phone'>
+                                        Total Credits: {userCredits}
+                                    </Label>
+                                </FormGroup>
                                 <Label className='form-label' for='register-phone'>
                                     Credit
                                 </Label>
@@ -143,7 +150,7 @@ function PtmWithdrawal() {
                             </FormGroup>
                             <FormGroup>
                                 <Label className='form-label' for='register-phone'>
-                                    Transfer Fee: 20%
+                                    Transfer Fee: {transferFee}%
                                 </Label>
                             </FormGroup>
                             <FormGroup>
@@ -154,7 +161,7 @@ function PtmWithdrawal() {
                                     className={`form-control bg-transparent text-black `}
                                     size="lg"
                                     name="amount"
-                                    value={exclusiveAmount * 0.8}
+                                    value={exclusiveAmount * ((100 - transferFee) / 100)}
                                     id="credit"
                                     readOnly
                                 />
@@ -167,7 +174,7 @@ function PtmWithdrawal() {
                                     className={`form-control bg-transparent text-black `}
                                     size="lg"
                                     name="amount"
-                                    value={ptmAmount * 0.8}
+                                    value={ptmAmount * ((100 - transferFee) / 100)}
                                     id="credit"
                                     readOnly
                                 />
