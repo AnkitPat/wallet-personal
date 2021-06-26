@@ -1,14 +1,12 @@
-import { useState, Fragment, useEffect } from 'react'
-import { isObjEmpty } from '@utils'
-import Avatar from '@components/avatar'
-import { Link, User } from 'react-feather'
-import { Form, Label, Input, Button, Row, Col, FormGroup } from 'reactstrap'
-import * as Yup from 'yup'
-import { useDispatch, useSelector } from 'react-redux'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useEffect } from 'react'
+import { Link } from 'react-feather'
 import { useForm } from 'react-hook-form'
-import { handleUserInformationUpdate } from '../../redux/actions/myAccount'
+import { useDispatch, useSelector } from 'react-redux'
+import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap'
+import * as Yup from 'yup'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
+import { handleUserInformationUpdate } from '../../redux/actions/myAccount'
 import { history } from '../../utility/Utils'
 
 const SocialTabContent = ({ data }) => {
@@ -32,9 +30,6 @@ const SocialTabContent = ({ data }) => {
         register,
         handleSubmit,
         reset,
-        control,
-        getValues,
-        setValue,
         formState: { errors }
     } = useForm({
         resolver: yupResolver(validationSchema)
