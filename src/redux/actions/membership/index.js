@@ -3,7 +3,6 @@ import {toast} from "react-toastify"
 import {savePlansActions, setLoadingAction} from "./actions"
 import { history } from "../../../utility/Utils"
 
-
 function fetchPlansAPI() {
     return axios.get('subscriptions')
 }

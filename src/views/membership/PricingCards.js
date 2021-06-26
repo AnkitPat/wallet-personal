@@ -3,32 +3,31 @@ import {Row, Col, Card, CardBody, Button} from 'reactstrap'
 import {loadStripe} from "@stripe/stripe-js"
 import axios from "axios"
 import {toast} from "react-toastify"
+import {useSelector} from "react-redux"
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY)
 
 const PricingCards = ({plans, duration}) => {
+    const userData = useSelector(state => state.auth.userDetails)
+
     const handleClick = async event => {
-        // Get Stripe.js instance
         const stripe = await stripePromise
-
-        // Call your backend to create the Checkout Session
-        const response = await axios.post(
-            '/subscriptions/create-checkout-session',
-            {
-                id: event
+        if (userData.subscriptionId) {
+            const response = await axios.get('/subscriptions/create-customer-portal-session')
+            window.location.replace(response.data.url)
+        } else {
+            const response = await axios.post(
+                '/subscriptions/create-checkout-session',
+                {
+                    id: event
+                }
+            )
+            const result = await stripe.redirectToCheckout({
+                sessionId: response.data.id
+            })
+            if (result.error) {
+                toast.error('Something went wrong, please try again')
             }
-        )
-
-        // When the customer clicks on the button, redirect them to Checkout.
-        const result = await stripe.redirectToCheckout({
-            sessionId: response.data.id
-        })
-
-        if (result.error) {
-            // If `redirectToCheckout` fails due to a browser or network
-            // error, display the localized error message to your customer
-            // using `result.error.message`.
-            toast.error('Something went wrong, please try again')
         }
     }
 
@@ -61,12 +60,12 @@ const PricingCards = ({plans, duration}) => {
                             </div>
                             <div dangerouslySetInnerHTML={{__html: item.description}}/>
                             <Button.Ripple
-                                color={item.title === 'Basic' ? 'success' : 'primary'}
-                                outline={item.title !== 'Standard'}
+                                color={userData.subscriptionId === item.id ? 'success' : 'primary'}
                                 block
+                                disabled={userData.subscriptionId === item.id}
                                 onClick={() => handleClick(item.id)}
                             >
-                                {item.title === 'Basic' ? 'Your current plan' : 'Upgrade'}
+                                {userData.subscriptionId === item.id ? 'Your current plan' : 'Buy'}
                             </Button.Ripple>
                         </CardBody>
                     </Card>
