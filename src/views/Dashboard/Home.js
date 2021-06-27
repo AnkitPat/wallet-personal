@@ -36,9 +36,9 @@ const Home = () => {
             </Row>
             {tokenInfo && Object.keys(tokenInfo).length > 0 && <> <Row className='match-height'>
                 <Col xl='6' md='4' xs='12'>
-                    <Col>
+                    <div>
                         <BountyStatCard />
-                    </Col>
+                    </div>
                 </Col>
 
                 <Col xl='6' md='4' xs='12'>
