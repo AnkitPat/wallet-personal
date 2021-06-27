@@ -23,7 +23,7 @@ const UserDropdown = () => {
       <DropdownToggle href='/' tag='a' className='nav-link dropdown-user-link' onClick={e => e.preventDefault()}>
         <div className='user-nav d-sm-flex d-none'>
           <span className='user-name font-weight-bold'>{(userDetails && userDetails['name'])}</span>
-          <span className='user-status'>{(userDetails && userDetails.subscription && userDetails.subscription.title)}</span>
+          <span className='user-status'>{(userDetails && userDetails.subscription ? userDetails.subscription.title : 'regular')}</span>
         </div>
         {
           userDetails && userDetails.avatar ? <Avatar img={userDetails.avatar} imgHeight='40' imgWidth='40' status='online' /> : <Avatar color='primary' initials content={userName} />
