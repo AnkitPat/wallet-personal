@@ -28,40 +28,17 @@ const Home = () => {
         <div id='dashboard-ecommerce'>
             <Row className="match-height">
                 <Col xl='8' md='6' xs='12'>
-                    <StatsCard cols={{xl: '3', sm: '6'}} loader={loader} tokenInfo={tokenInfo}/>
+                    <StatsCard cols={{ xl: '3', sm: '6' }} loader={loader} tokenInfo={tokenInfo} />
                 </Col>
-              <Col xl='4' md='6' xs='12'>
-                <UserStats />
-              </Col>
+                <Col xl='4' md='6' xs='12'>
+                    <UserStats />
+                </Col>
             </Row>
             {tokenInfo && Object.keys(tokenInfo).length > 0 && <> <Row className='match-height'>
                 <Col xl='6' md='4' xs='12'>
-                    <Card className="p-2">
-                        <CardTitle className="font-weight-bold">Contract Information</CardTitle>
-                        <CardSubtitle>
-                            <CopyToClipboard text={'0x7c32DB0645A259FaE61353c1f891151A2e7f8c1e'}
-                                             onCopy={() => toast.success("Copied!!")}>
-                                <>
-                                    <span>0x7c32DB0645A259FaE61353c1f891151A2e7f8c1e</span>
-                                    {' '}
-                                    <Copy className="cursor-pointer" size="20" onClick={() => {
-                                        navigator.clipboard.writeText('0x7c32DB0645A259FaE61353c1f891151A2e7f8c1e')
-                                        toast.success("Copied!!")
-                                    }}/>
-                                </>
-                            </CopyToClipboard>
-                        </CardSubtitle>
-                        <CardBody>
-                            <Row>
-                                <Col className="font-weight-bold">
-                                    Creator:
-                                </Col>
-                                <Col>
-                                    {tokenInfo.owner}
-                                </Col>
-                            </Row>
-                        </CardBody>
-                    </Card>
+                    <Col>
+                        <BountyStatCard />
+                    </Col>
                 </Col>
 
                 <Col xl='6' md='4' xs='12'>
@@ -187,9 +164,6 @@ const Home = () => {
                             </Row>
                         </CardBody>
                     </Card>
-                </Col>
-                <Col xl='5' md='4' xs='12'>
-                    <BountyStatCard />
                 </Col>
             </Row> </>}
         </div>
