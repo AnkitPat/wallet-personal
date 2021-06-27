@@ -49,10 +49,12 @@ const PricingCards = ({plans, duration}) => {
                                     <sup className='font-medium-1 font-weight-bold text-primary mr-25'>$</sup>
                                     <span
                                         className={`pricing-${item.title.toLowerCase()}-value font-weight-bolder text-primary`}>
-                    {item.price / 100}
-                  </span>
+                                        {item.price / 100}
+                                    </span>
+                                    {item.duration !== 0 &&
                                     <span
                                         className='pricing-duration text-body font-medium-1 font-weight-bold ml-25'>/month</span>
+                                    }
                                 </div>
                                 {/*{item.title !== 'Basic' && duration === 'yearly' ? (*/}
                                 {/*  <small className='annual-pricing text-muted'>USD {yearlyPrice} / year</small>*/}
@@ -62,7 +64,7 @@ const PricingCards = ({plans, duration}) => {
                             <Button.Ripple
                                 color={userData.subscriptionId === item.id ? 'success' : 'primary'}
                                 block
-                                disabled={userData.subscriptionId === item.id}
+                                disabled={userData.subscriptionId === item.id || userData.subscriptionId === 3}
                                 onClick={() => handleClick(item.id)}
                             >
                                 {userData.subscriptionId === item.id ? 'Your current plan' : 'Buy'}
