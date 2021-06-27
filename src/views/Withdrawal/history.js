@@ -8,8 +8,7 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { Text } from 'recharts'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
 
-const WithdrawalHistory = (
-    { }) => {
+const WithdrawalHistory = () => {
 
     const dispatch = useDispatch()
     useEffect(() => {

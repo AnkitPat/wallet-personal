@@ -68,8 +68,8 @@ function PtmWithdrawal() {
             ...values,
             fees: transferFee,
             exclusiveAmount: values.amount,
-            amount: values.amount * 0.8,
-            token: Number((ptmAmount * 0.8).toFixed(2))
+            amount: values.amount - (values.amount * (transferFee / 100)),
+            token: Number((ptmAmount - (values.amount * (transferFee / 100))).toFixed(2))
         }))
     }
 

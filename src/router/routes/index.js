@@ -116,11 +116,6 @@ const Routes = [
     component: lazy(() => import('../../views/Withdrawal'))
   },
   {
-    path: '/withdrawal/history',
-    exact: true,
-    component: lazy(() => import('../../views/Withdrawal/history'))
-  },
-  {
     path: '/withdrawal/all',
     exact: true,
     component: lazy(() => import('../../views/Withdrawal/allWithdrawal'))

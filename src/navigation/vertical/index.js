@@ -97,12 +97,6 @@ const adminItems = [
                 title: 'Add Credits',
                 icon: <Circle size={12}/>,
                 navLink: '/wallet'
-            },
-            {
-                id: 'creditHistory',
-                title: 'History',
-                icon: <Circle size={12}/>,
-                navLink: '/wallet/history'
             }
         ]
     },

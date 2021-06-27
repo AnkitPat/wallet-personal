@@ -29,7 +29,7 @@ export const transferCredits = (data) => {
             dispatch(setLoadingAction(true))
             await transferCreditsAPI(data)
             toast.success("Withdrawal request placed successfully")
-            history.push('/wallet/history')
+            history.push('/wallet/transactions')
             dispatch(setLoadingAction(false))
         } catch (e) {
             dispatch(setLoadingAction(false))

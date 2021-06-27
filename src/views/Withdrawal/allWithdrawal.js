@@ -7,12 +7,11 @@ import { approveWithdrawal, fetchAllWithdrawalRequests, fetchWithdrawalHistories
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { Text } from 'recharts'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
-import { Check, XCircle } from 'react-feather'
-import { Button } from 'reactstrap'
+import {Check, X} from 'react-feather'
+import {Badge, UncontrolledTooltip} from 'reactstrap'
 import { WithdrawalReject } from './components/WithdrawalReject/WithdrawalReject'
 
-const AllWithdrawals = (
-    { }) => {
+const AllWithdrawals = () => {
 
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false)
   const [selectedWithdrawal, setSelectedWithdrawal] = useState({})
@@ -34,90 +33,59 @@ const AllWithdrawals = (
             selector: 'user.name',
             name: 'User',
             cell: row => <div className="text-primary">{row.user.name} <br/> <small className="text-secondary">{row.user.email}</small></div>,
-            style: {
-                width: '20%'
-            },
-            headerStyle: {
-                width: '20%'
-            }
+            width: '300px'
         },
         {
             selector: 'amount',
             name: 'Amount',
-            style: {
-                width: '20%'
-            },
-            headerStyle: {
-                width: '20%'
-            }
+            width: '100px'
         },
         {
             selector: 'token',
             name: 'PTM Token',
-            style: {
-                width: '20%',
-                textAlign: 'center'
-            },
-            headerStyle: {
-                width: '20%',
-                textAlign: 'center'
-
-            }
+            width: '150px'
         },
         {
             selector: 'exclusiveAmount',
             name: 'Exclusive Amount',
-            style: {
-                width: '20%',
-                textAlign: 'center'
-            },
-            headerStyle: {
-                width: '20%',
-                textAlign: 'center'
-
-            }
+            width: '150px'
+        },
+        {
+            selector: 'user.credit',
+            name: 'Balance',
+            width: '150px'
         },
         {
             selector: 'orderStatus.title',
             name: 'Status',
-            style: {
-                width: '30%',
-                textAlign: 'center'
-
-            },
-            headerStyle: {
-                width: '30%',
-                textAlign: 'center'
-
-            }
+            width: '150px'
         },
-       
+
         {
             name: 'Actions',
             cell: row => {
                 if (row.orderStatusId === 1) return <div>Created</div>
-                else if (row.orderStatusId === 2) return <div>Confirmed</div>
-                else if (row.orderStatusId === 3) return <div>Failed</div>
+                else if (row.orderStatusId === 2) return <Badge color='success'>Confirmed</Badge>
+                else if (row.orderStatusId === 3) return <Badge color='warning'>Failed</Badge>
                 else if (row.orderStatusId === 4) return <div>Refunded</div>
-                else if (row.orderStatusId === 6) return <div>Rejected: ({row.rejectReason})</div>
-                else if (row.orderStatusId === 5) return <div className="d-flex flex-wrap">
-                    <Button.Ripple color='primary' onClick={() => dispatch(approveWithdrawal(row.id))}>
-                        <Check size='15' />
-                    </Button.Ripple>
-                    <Button.Ripple color='danger' className="ml-2" onClick={() => {
+                else if (row.orderStatusId === 6) return <Badge color='danger'>Rejected: ({row.rejectReason})</Badge>
+                else if (row.orderStatusId === 5) return <div className='column-action d-flex align-items-center'>
+                    <span className="cursor-pointer" onClick={() => dispatch(approveWithdrawal(row.id))}>
+                        <Check size={17} id={`send-tooltip-${row.id}`}/>
+                        <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
+                            Accept
+                        </UncontrolledTooltip>
+                    </span>
+                    <span className="cursor-pointer" onClick={() => {
                         setSelectedWithdrawal(row)
                         setShowConfirmationPopup(true)
-                     }}>
-                        <XCircle size='15' color="white" />
-                    </Button.Ripple>
+                    }}>
+                        <X size={17} className='mx-1' id={`pw-tooltip-${row.id}`}/>
+                        <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>
+                            Reject
+                        </UncontrolledTooltip>
+                    </span>
                 </div>
-
-            },
-            style: {
-                width: '20%'
-            },
-            headerStyle: {
-                width: '20%'
             }
         }
     ]
