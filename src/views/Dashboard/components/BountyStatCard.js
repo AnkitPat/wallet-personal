@@ -1,9 +1,7 @@
 import ReactApexChart from 'react-apexcharts'
-// import Chart from 'react-apexcharts'
 import { HelpCircle } from 'react-feather'
 import { useSelector } from 'react-redux'
-import { Card, CardTitle, CardText, CardBody, Row, Col, CardHeader, CardSubtitle } from 'reactstrap'
-import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
+import { Card, CardBody, CardHeader, CardSubtitle, CardText, CardTitle, Col, Row } from 'reactstrap'
 import { getRewards } from './selectors'
 
 const BountyStatCard = ({ }) => {
