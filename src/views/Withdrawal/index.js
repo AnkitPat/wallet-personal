@@ -66,7 +66,7 @@ function PtmWithdrawal() {
     const onSubmit = values => {
         dispatch(transferCredits({
             ...values,
-            fees: 20,
+            fees: transferFee,
             exclusiveAmount: values.amount,
             amount: values.amount * 0.8,
             token: Number((ptmAmount * 0.8).toFixed(2))
