@@ -2,7 +2,7 @@ import ReactApexChart from 'react-apexcharts'
 // import Chart from 'react-apexcharts'
 import { HelpCircle } from 'react-feather'
 import { useSelector } from 'react-redux'
-import { Card, CardTitle, CardText, CardBody, Row, Col, CardHeader } from 'reactstrap'
+import { Card, CardTitle, CardText, CardBody, Row, Col, CardHeader, CardSubtitle } from 'reactstrap'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
 import { getRewards } from './selectors'
 
@@ -10,7 +10,7 @@ const BountyStatCard = ({ }) => {
     const pendingBountiesReward = useSelector(state => getRewards('pending', state, 'verified'))
     const completedBountiesReward = useSelector(state => getRewards('verified', state, 'verified'))
     const claimedBountiesReward = useSelector(state => getRewards(true, state, 'claimed'))
-
+    const myBounties = useSelector(state => state.bounty.myBounties)
     const series = [completedBountiesReward, claimedBountiesReward, pendingBountiesReward]
     const options1 = {
         chart: {
@@ -59,27 +59,28 @@ const BountyStatCard = ({ }) => {
         },
         responsive: [
             {
-            breakpoint: 480,
-            options: {
-                chart: {
-                    width: 200
-                },
-                legend: {
-                    position: 'bottom'
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
                 }
             }
-        }
-    ]
+        ]
     }
 
-
-    console.log(Number(((completedBountiesReward / (completedBountiesReward + claimedBountiesReward + pendingBountiesReward)) * 100).toFixed(2)), Number(((claimedBountiesReward / (completedBountiesReward + claimedBountiesReward + pendingBountiesReward)) * 100).toFixed(2)), Number(((pendingBountiesReward / (completedBountiesReward + claimedBountiesReward + pendingBountiesReward)) * 100).toFixed(2)))
     return (
         <Card>
             <CardHeader>
                 <CardTitle tag='h4'>Earnings</CardTitle>
                 <HelpCircle size={18} className='text-muted cursor-pointer' />
             </CardHeader>
+            {myBounties && myBounties.length === 0 ? <div className="mx-2">
+                <CardSubtitle className='text-danger'>Data will be shown once you complete any bounty!!</CardSubtitle>
+            </div> : <></>}
             <CardBody >
                 <div className='recharts-wrapper'>
 
