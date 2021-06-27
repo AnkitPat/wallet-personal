@@ -19,8 +19,8 @@ function approveWithdrawalAPI(id) {
     return axios.post('withdrawal/approve', { id })
 }
 
-function rejectWithdrawalAPI(id, rejectReason) {
-    return axios.post('withdrawal/decline', { id, rejectReason })
+function rejectWithdrawalAPI(body) {
+    return axios.post('withdrawal/decline', body)
 }
 // ** Transfer credit to PTM
 export const transferCredits = (data) => {
@@ -92,11 +92,11 @@ export const approveWithdrawal = (id) => {
 }
 
 // ** fetch history list
-export const rejectWithdrawal = (id, reason) => {
+export const rejectWithdrawal = (body) => {
     return async (dispatch) => {
         try {
             dispatch(setLoadingAction(true))
-            const response = await rejectWithdrawalAPI(id, reason)
+            const response = await rejectWithdrawalAPI(body)
             dispatch(fetchAllWithdrawalRequests())
             toast.success('Rejected request')
             dispatch(setLoadingAction(false))
