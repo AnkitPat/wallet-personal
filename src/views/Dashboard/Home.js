@@ -1,10 +1,7 @@
 import '@styles/base/pages/dashboard-ecommerce.scss'
 import '@styles/react/libs/charts/apex-charts.scss'
 import { useEffect } from 'react'
-import CopyToClipboard from 'react-copy-to-clipboard'
-import { Copy } from 'react-feather'
 import { batch, useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
 import { Card, CardBody, CardSubtitle, Col, Row } from 'reactstrap'
 import CardTitle from 'reactstrap/lib/CardTitle'
 import { fetchMyBounties } from '../../redux/actions/bounty'
@@ -36,9 +33,9 @@ const Home = () => {
             </Row>
             {tokenInfo && Object.keys(tokenInfo).length > 0 && <> <Row className='match-height'>
                 <Col xl='6' md='4' xs='12'>
-                    <Col>
+                    <div>
                         <BountyStatCard />
-                    </Col>
+                    </div>
                 </Col>
 
                 <Col xl='6' md='4' xs='12'>

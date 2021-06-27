@@ -1,7 +1,9 @@
-import Chart from 'react-apexcharts'
+import ReactApexChart from 'react-apexcharts'
+// import Chart from 'react-apexcharts'
 import { HelpCircle } from 'react-feather'
 import { useSelector } from 'react-redux'
 import { Card, CardTitle, CardText, CardBody, Row, Col, CardHeader } from 'reactstrap'
+import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
 import { getRewards } from './selectors'
 
 const BountyStatCard = ({ }) => {
@@ -9,100 +11,81 @@ const BountyStatCard = ({ }) => {
     const completedBountiesReward = useSelector(state => getRewards('verified', state, 'verified'))
     const claimedBountiesReward = useSelector(state => getRewards(true, state, 'claimed'))
 
-    const options = {
+    const series = [completedBountiesReward, claimedBountiesReward, pendingBountiesReward]
+    const options1 = {
         chart: {
-          toolbar: {
-            show: false
-          }
-        },
-        dataLabels: {
-          enabled: false
+            type: 'donut'
         },
         legend: { show: false },
         comparedResult: [2, -3, 8],
         labels: ['Completed', 'Claimed', 'Pending'],
-                stroke: { width: 0 },
+        stroke: { width: 0 },
         colors: ['#28c76f66', '#28c76f33', '#F2BA58'],
         grid: {
-          padding: {
-            right: -20,
-            bottom: -8,
-            left: -20
-          }
+            padding: {
+                right: -20,
+                bottom: -8,
+                left: -20
+            }
         },
         plotOptions: {
-          pie: {
-            startAngle: -10,
-            donut: {
-              labels: {
-                show: true,
-                name: {
-                  offsetY: 15
-                },
-                value: {
-                    offsetY: -15,
-                    formatter(val) {
-                        return `${parseInt(val)}`
-                    }
-                },
-                total: {
-                    show: true,
-                    offsetY: 15,
-                    label: 'Completed',
-                    formatter(w) {
-                        if (claimedBountiesReward && completedBountiesReward && pendingBountiesReward) {
-                            return `${((completedBountiesReward / (completedBountiesReward + claimedBountiesReward + pendingBountiesReward)) * 100).toFixed(2)}%`
+            pie: {
+                donut: {
+                    labels: {
+                        show: true,
+                        name: {
+                            offsetY: 15
+                        },
+                        value: {
+                            offsetY: -15,
+                            formatter(val) {
+                                return `${parseInt(val)}`
+                            }
+                        },
+                        total: {
+                            show: true,
+                            offsetY: 15,
+                            label: 'Completed',
+                            formatter(w) {
+                                if (claimedBountiesReward && completedBountiesReward && pendingBountiesReward) {
+                                    return `${((completedBountiesReward / (completedBountiesReward + claimedBountiesReward + pendingBountiesReward)) * 100).toFixed(2)}%`
+                                }
+                                return '0%'
+                            }
                         }
-                        return '0%'
                     }
                 }
-              }
             }
-          }
         },
         responsive: [
-          {
-            breakpoint: 1325,
+            {
+            breakpoint: 480,
             options: {
-              chart: {
-                height: 100
-              }
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
             }
-          },
-          {
-            breakpoint: 1200,
-            options: {
-              chart: {
-                height: 120
-              }
-            }
-          },
-          {
-            breakpoint: 1065,
-            options: {
-              chart: {
-                height: 100
-              }
-            }
-          },
-          {
-            breakpoint: 992,
-            options: {
-              chart: {
-                height: 120
-              }
-            }
-          }
-        ]
-      }
+        }
+    ]
+    }
+
+
+    console.log(Number(((completedBountiesReward / (completedBountiesReward + claimedBountiesReward + pendingBountiesReward)) * 100).toFixed(2)), Number(((claimedBountiesReward / (completedBountiesReward + claimedBountiesReward + pendingBountiesReward)) * 100).toFixed(2)), Number(((pendingBountiesReward / (completedBountiesReward + claimedBountiesReward + pendingBountiesReward)) * 100).toFixed(2)))
     return (
         <Card>
             <CardHeader>
                 <CardTitle tag='h4'>Earnings</CardTitle>
                 <HelpCircle size={18} className='text-muted cursor-pointer' />
             </CardHeader>
-            <CardBody className='p-0 mb-3'>
-                <Chart options={options} series={[completedBountiesReward, claimedBountiesReward, pendingBountiesReward]} type='donut' height={250} />
+            <CardBody >
+                <div className='recharts-wrapper'>
+
+                    <ReactApexChart options={options1} series={series} type="donut" />
+
+                </div>
             </CardBody>
             <Row className='border-top text-center mx-0'>
                 <Col xs='4' className='border-right py-1'>
