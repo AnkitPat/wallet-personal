@@ -62,7 +62,7 @@ const PasswordTabContent = () => {
                   <Input
                     defaultValue={getValues().currentPassword}
                     onChange={e => setValue('currentPassword', e.target.value)}
-                    type='password' id='register-username' placeholder='Old Password'
+                    type='password' id='register-currentpassword' placeholder='Old Password'
                     className={classNames({ 'is-invalid': errors['currentPassword'] })}
                     name="currentPassword"
                   />
@@ -87,7 +87,7 @@ const PasswordTabContent = () => {
                   <Input
                     defaultValue={getValues().newPassword}
                     onChange={e => setValue('newPassword', e.target.value)}
-                    type='password' id='register-username' placeholder='New Password'
+                    type='password' id='register-newpassword' placeholder='New Password'
                     className={classNames({ 'is-invalid': errors['newPassword'] })}
                     name="newPassword"
                   />
@@ -110,7 +110,7 @@ const PasswordTabContent = () => {
                   <Input
                     defaultValue={getValues().confirmPassword}
                     onChange={e => setValue('confirmPassword', e.target.value)}
-                    type='password' id='register-username' placeholder='Confirm Password'
+                    type='password' id='register-confirmpassword' placeholder='Confirm Password'
                     className={classNames({ 'is-invalid': errors['confirmPassword'] })}
                     name="confirmPassword"
                   />

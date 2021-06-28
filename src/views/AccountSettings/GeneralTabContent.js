@@ -134,7 +134,7 @@ const GeneralTabs = ({ data }) => {
                     <Input
                       defaultValue={getValues().email}
                       onChange={e => setValue('email', e.target.value)}
-                      type='text' id='register-username' placeholder='johndoe'
+                      type='text' id='register-email' placeholder='johndoe'
                       className={classNames({ 'is-invalid': errors['email'] })}
                       name="email"
                     />
@@ -163,7 +163,7 @@ const GeneralTabs = ({ data }) => {
                     <Input
                       defaultValue={getValues().phone}
                       onChange={e => setValue('phone', e.target.value)}
-                      type='number' id='register-username' placeholder='123123123'
+                      type='number' id='register-phone' placeholder='123123123'
                       className={classNames({ 'is-invalid': errors['phone'] })}
                       name="phone"
 
