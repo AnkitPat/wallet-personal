@@ -88,7 +88,6 @@ const Home = () => {
                                     Volume:
                                 </Col>
                                 <Col>
-                                    {'need to find'}
                                     <small className="d-flex flex-row">
                                         24h:
                                         <div
@@ -120,7 +119,7 @@ const Home = () => {
                                     Market Cap:
                                 </Col>
                                 <Col>
-                                    Need to add
+                                   $ {((tokenInfo.totalSupply / 1000000000000000000) * tokenInfo.price.rate)}
                                 </Col>
                             </Row>
 
@@ -138,7 +137,7 @@ const Home = () => {
                                     Owner:
                                 </Col>
                                 <Col>
-                                    {tokenInfo.owner}
+                                    {tokenInfo.address}
                                 </Col>
                             </Row>
 

@@ -1,4 +1,4 @@
-import { Card, CardBody, CardText, Button } from 'reactstrap'
+import { Card, CardBody, CardText, Button, CardTitle } from 'reactstrap'
 import medal from '@src/assets/images/illustration/badge.svg'
 import { useSelector } from 'react-redux'
 import { useMemo } from 'react'
@@ -16,13 +16,13 @@ const UserStats = () => {
     return (
         <Card className='card-congratulations-medal'>
             <CardBody>
-                <h2>Your Credits</h2>
-                <h4 className='mb-75 mt-2 pt-50'>
+            <CardTitle tag='h4'>Statistics</CardTitle>
+                <h5 className='mb-75 mt-2 pt-50'>
                     Credits:  ${userCredits > 1000 ? `${(userCredits / 1000)}k` : userCredits}
-                </h4>
-                <h4 className='mt-1 pt-50'>
+                </h5>
+                <h5 className='mt-1 pt-50'>
                     PTM Token:  {convertCredits}
-                </h4>
+                </h5>
                 <img className='congratulation-medal' src={medal} alt='Medal Pic' />
             </CardBody>
         </Card>
