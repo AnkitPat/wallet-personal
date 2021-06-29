@@ -111,7 +111,7 @@ const MyBounties = () => {
                     </Badge>
                 }
 
-                return <Button.Ripple color='primary' onClick={() => dispatch(claimMyBounty(row.id))}>Claim Reward</Button.Ripple>
+                return <Button.Ripple color='primary' size='sm' onClick={() => dispatch(claimMyBounty(row.id))}>Claim Reward</Button.Ripple>
             },
             style: {
                 width: '20%'
