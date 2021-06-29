@@ -1,4 +1,4 @@
-import {Home, DollarSign, Award, Users, Circle, LogOut} from 'react-feather'
+import {Home, DollarSign, Award, Users, Circle, LogOut, CreditCard} from 'react-feather'
 
 const regularItems = [
     {
@@ -30,7 +30,7 @@ const regularItems = [
     {
         id: 'userWallet',
         title: 'Manager',
-        icon: <DollarSign size={20}/>,
+        icon: <CreditCard size={20}/>,
         children: [
             {
                 id: 'addCredits',
@@ -90,7 +90,7 @@ const adminItems = [
     {
         id: 'userWallet',
         title: 'Manager',
-        icon: <DollarSign size={20}/>,
+        icon: <CreditCard size={20}/>,
         children: [
             {
                 id: 'addCredits',

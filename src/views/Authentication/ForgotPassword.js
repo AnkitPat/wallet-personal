@@ -99,7 +99,7 @@ const Verification = () => {
                 <Label className='form-label' for='register-username'>
                   Enter email
                 </Label>
-                <Input type='email' id='register-username' placeholder='Enter email' autoFocus
+                <Input type='email' id='register-forgotemail' placeholder='Enter email' autoFocus
                   className={classNames({ 'is-invalid': errors['email'] })}
                   {...register('email')}
 

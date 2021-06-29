@@ -14,29 +14,36 @@ const SocialTabContent = ({ data }) => {
     const loading = useSelector(state => state.auth.loading)
     const userDetails = useSelector(state => state.auth.userDetails)
 
-    const validationSchema = Yup.object().shape({
-        facebook: Yup.string().url('Enter valid url')
-            .required('Enter facebook url').nullable(),
-        twitter: Yup.string().url('Enter valid url')
-            .required('Enter twitter url').nullable(),
-        instagram: Yup.string().url('Enter valid url')
-            .required('Enter instagram url').nullable(),
-            linkedIn: Yup.string().url('Enter valid url')
-            .required('Enter linkedin url').nullable(),
-        youtube: Yup.string().url('Enter valid url')
-            .required('Enter youtube url').nullable()
-    })
+    // const validationSchema = 
     const {
         register,
         handleSubmit,
         reset,
-        formState: { errors }
+        formState: { errors },
+        clearErrors,
+        setError
     } = useForm({
-        resolver: yupResolver(validationSchema)
+        resolver: yupResolver(Yup.object().shape({
+            facebook: Yup.string().url('Enter valid url')
+                .nullable(),
+            twitter: Yup.string().url('Enter valid url')
+                .nullable(),
+            instagram: Yup.string().url('Enter valid url')
+                .nullable(),
+            linkedIn: Yup.string().url('Enter valid url')
+                .nullable(),
+            youtube: Yup.string().url('Enter valid url')
+                .nullable()
+        }).test('yourTestCondition', "You must have added atleast one social link", function (value) {
+            const haveAtleastOneValue = !!(value.facebook || value.twitter || value.instagram || value.linkedIn || value.youtube)
+            if (haveAtleastOneValue) {
+                clearErrors()
+            }
+            return haveAtleastOneValue
+        }))
     })
 
     const onSubmit = data => {
-        console.log(data, userDetails)
         dispatch(handleUserInformationUpdate({
             data
         }))
@@ -131,10 +138,13 @@ const SocialTabContent = ({ data }) => {
                         </small>
                     </FormGroup>
                 </Col>
-
+                <Col sm='6'></Col>
+                <small className='text-danger ml-2'>
+                    {errors[''] && errors[''].message}
+                </small>
                 <Col className='mt-1' sm='12'>
                     <Button.Ripple type="submit" className='mr-1' color='primary'>
-                       {loading ? <ProgressLoader/> : 'Save changes' }
+                        {loading ? <ProgressLoader /> : 'Save changes'}
                     </Button.Ripple>
                     <Button.Ripple color='secondary' outline onClick={() => history.goBack()}>
                         Cancel
