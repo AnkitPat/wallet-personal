@@ -18,6 +18,7 @@ import themeConfig from '@configs/themeConfig'
 // ** Custom Components
 import Customizer from '@components/customizer'
 import NavbarComponent from './components/navbar'
+import FooterComponent from './components/footer'
 import SidebarComponent from './components/menu/vertical-menu'
 
 // ** Custom Hooks
@@ -33,7 +34,7 @@ import '@styles/base/core/menu/menu-types/vertical-overlay-menu.scss'
 
 const VerticalLayout = props => {
   // ** Props
-  const { children, navbar, menu, routerProps, currentActiveItem } = props
+  const { children, navbar, menu, routerProps, footer, currentActiveItem } = props
 
   // ** Hooks
   const [skin, setSkin] = useSkin()
@@ -120,8 +121,7 @@ const VerticalLayout = props => {
   return (
     <div
       className={classnames(
-        `wrapper vertical-layout ${navbarWrapperClasses[navbarType] || 'navbar-floating'} ${
-          footerClasses[footerType] || 'footer-static'
+        `wrapper vertical-layout ${navbarWrapperClasses[navbarType] || 'navbar-floating'} ${footerClasses[footerType] || 'footer-static'
         }`,
         {
           // Modern Menu
@@ -200,7 +200,13 @@ const VerticalLayout = props => {
         />
       ) : null}
 
-
+      <footer
+        className={classnames(`footer footer-light ${footerClasses[footerType] || 'footer-static'}`, {
+          'd-none': footerType === 'hidden'
+        })}
+      >
+        {footer ? footer : <FooterComponent footerType={footerType} footerClasses={footerClasses} />}
+      </footer>
       {themeConfig.layout.scrollTop === true ? (
         <div className='scroll-to-top'>
           <ScrollToTop showUnder={300} style={{ bottom: '5%' }}>

@@ -4,9 +4,11 @@ import { useEffect } from 'react'
 import { batch, useDispatch, useSelector } from 'react-redux'
 import { Card, CardBody, CardSubtitle, Col, Row } from 'reactstrap'
 import CardTitle from 'reactstrap/lib/CardTitle'
+import { ProgressLoader } from '../../layouts/ProgressLoader'
 import { fetchMyBounties } from '../../redux/actions/bounty'
 import { fetchTokenInfo } from '../../redux/actions/dashboard'
 import BountyStatCard from './components/BountyStatCard'
+import CardCongratulations from './components/CardCongratulation'
 import StatsCard from './components/StatsCard'
 import UserStats from "./components/UserStats"
 
@@ -25,13 +27,14 @@ const Home = () => {
         <div id='dashboard-ecommerce'>
             <Row className="match-height">
                 <Col xl='8' md='6' xs='12'>
-                    <StatsCard cols={{ xl: '3', sm: '6' }} loader={loader} tokenInfo={tokenInfo} />
+                    {/* <StatsCard cols={{ xl: '3', sm: '6' }} loader={loader} tokenInfo={tokenInfo} /> */}
+                    <CardCongratulations />
                 </Col>
                 <Col xl='4' md='6' xs='12'>
                     <UserStats />
                 </Col>
             </Row>
-            {tokenInfo && Object.keys(tokenInfo).length > 0 && <> <Row className='match-height'>
+            {tokenInfo && Object.keys(tokenInfo).length > 0 ? <> <Row className='match-height'>
                 <Col xl='6' md='4' xs='12'>
                     <div>
                         <BountyStatCard />
@@ -119,7 +122,7 @@ const Home = () => {
                                     Market Cap:
                                 </Col>
                                 <Col>
-                                   $ {((tokenInfo.totalSupply / 1000000000000000000) * tokenInfo.price.rate)}
+                                    $ {((tokenInfo.totalSupply / 1000000000000000000) * tokenInfo.price.rate)}
                                 </Col>
                             </Row>
 
@@ -134,7 +137,7 @@ const Home = () => {
 
                             <Row className="my-1">
                                 <Col className="font-weight-bold">
-                                    Owner:
+                                    Contract:
                                 </Col>
                                 <Col>
                                     {tokenInfo.address}
@@ -161,7 +164,8 @@ const Home = () => {
                         </CardBody>
                     </Card>
                 </Col>
-            </Row> </>}
+            </Row> </> : <>            {loader ? <ProgressLoader size="lg" /> : <></>}
+            </>}
         </div>
     )
 }

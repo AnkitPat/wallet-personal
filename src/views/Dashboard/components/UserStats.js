@@ -16,7 +16,7 @@ const UserStats = () => {
     return (
         <Card className='card-congratulations-medal'>
             <CardBody>
-            <CardTitle tag='h4'>Statistics</CardTitle>
+            <CardTitle tag='h4'>Balance</CardTitle>
                 <h5 className='mb-75 mt-2 pt-50'>
                     Credits:  ${userCredits > 1000 ? `${(userCredits / 1000)}k` : userCredits}
                 </h5>

@@ -42,7 +42,7 @@ const Login = props => {
     resolver: yupResolver(validationSchema)
   })
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
-    source = require(`@src/assets/images/pages/${illustration}`).default
+    source = require(`@src/assets/images/logo/logo_gif.gif`).default
 
 
   const onSubmit = data => {
@@ -59,10 +59,8 @@ const Login = props => {
             <img src={skin === 'dark' ? Logo : LogoLight} width="100" height="100" />
           </span>
         </Link>
-        <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
-          <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
-            <img className='img-fluid' src={source} alt='Login V2' />
-          </div>
+        <Col className='d-flex px-0 py-0' >
+            <img className="d-flex" style={{width: '100%'}} src={source} alt='Login V2' />
         </Col>
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>

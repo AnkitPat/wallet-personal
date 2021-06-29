@@ -1,7 +1,7 @@
 import ReactApexChart from 'react-apexcharts'
 import { HelpCircle } from 'react-feather'
 import { useSelector } from 'react-redux'
-import { Card, CardBody, CardHeader, CardSubtitle, CardText, CardTitle, Col, PopoverBody, Row, UncontrolledPopover } from 'reactstrap'
+import { Card, CardBody, CardHeader, CardSubtitle, CardText, CardTitle, Col, PopoverBody, Row, UncontrolledPopover, UncontrolledTooltip } from 'reactstrap'
 import { getRewards } from './selectors'
 
 const BountyStatCard = ({ }) => {
@@ -72,12 +72,13 @@ const BountyStatCard = ({ }) => {
 
     return (
         <Card>
-            <UncontrolledPopover trigger="focus" placement="bottom" target="PopoverFocus">
-                <PopoverBody>Discover ways to earn by visiting the bounty page.</PopoverBody>
-            </UncontrolledPopover>
+            
+            <UncontrolledTooltip placement='top' target='UnControlledExample'>
+            Discover ways to earn by visiting the bounty page.
+                            </UncontrolledTooltip>
             <CardHeader>
                 <CardTitle tag='h4'>Earnings</CardTitle>
-                <HelpCircle size={18} id="PopoverFocus" className='text-muted cursor-pointer' />
+                <HelpCircle size={18} id="UnControlledExample" className='text-muted cursor-pointer' />
             </CardHeader>
             {myBounties && myBounties.length === 0 ? <div className="mx-2">
                 <CardSubtitle className='text-danger'>Data will be shown once you complete any bounty!!</CardSubtitle>
