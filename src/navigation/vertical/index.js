@@ -1,4 +1,4 @@
-import {Home, DollarSign, Award, Users, Circle, LogOut, CreditCard} from 'react-feather'
+import {Home, DollarSign, Award, Users, Circle, LogOut, CreditCard, Gift} from 'react-feather'
 
 const regularItems = [
     {
@@ -11,7 +11,7 @@ const regularItems = [
     {
         id: 'bounties',
         title: 'Bounties',
-        icon: <Award size={20}/>,
+        icon: <Gift size={20}/>,
         children: [
             {
                 id: 'listBounties',
@@ -65,7 +65,7 @@ const adminItems = [
     {
         id: 'bounties',
         title: 'Bounties',
-        icon: <Award size={20}/>,
+        icon: <Gift size={20}/>,
         children: [
             {
                 id: 'bountyList',
