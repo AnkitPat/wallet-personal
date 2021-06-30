@@ -80,7 +80,7 @@ const UserWallet = () => {
                     <Card className='mb-0'>
                         <CardBody>
                             <Link className='brand-logo' to='/wallet' onClick={e => e.preventDefault()}>
-                                <img src={logo} width={100} alt="logo"/>
+                                <img src={logo} height={100} width={100} alt="logo"/>
                             </Link>
                             <CardTitle tag='h4' className='mb-1'>
                                 Add Credits to your account

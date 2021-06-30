@@ -60,7 +60,7 @@ const Login = props => {
           </span>
         </Link>
         <Col className='d-flex px-0 py-0' >
-            <img className="d-flex" style={{width: '100%'}} src={source} alt='Login V2' />
+            <img className="d-flex" height='100%' src={source} alt='Login V2' />
         </Col>
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
