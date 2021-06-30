@@ -56,7 +56,7 @@ const Login = props => {
       <Row className='auth-inner m-0'>
         <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
           <span className='brand-logo'>
-            <img src={skin === 'dark' ? Logo : LogoLight} width="100" height="100" />
+            <img src={Logo} width="100" height="100" />
           </span>
         </Link>
         <Col className='d-flex px-0 py-0' >

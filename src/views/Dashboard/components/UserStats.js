@@ -23,7 +23,6 @@ const UserStats = () => {
                 <h5 className='mt-1 pt-50'>
                     PTM Token:  {convertCredits}
                 </h5>
-                <img className='congratulation-medal' src={medal} alt='Medal Pic' />
             </CardBody>
         </Card>
     )
