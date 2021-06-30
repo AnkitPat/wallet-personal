@@ -8,9 +8,10 @@ import classNames from 'classnames'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { handleForgotPassword, handleRegister, handleVerification } from '../../redux/actions/auth'
 import logo from '@src/assets/images/icons/logo-light.png'
+import { ProgressLoader } from '../../layouts/ProgressLoader'
 
 const Verification = () => {
 
@@ -33,6 +34,7 @@ const Verification = () => {
   const onSubmit = data => {
      dispatch(handleForgotPassword(data))
   }
+  const loading = useSelector(state => state.auth.loading)
 
   return (
     <div className='auth-wrapper auth-v1 px-2'>
@@ -40,7 +42,7 @@ const Verification = () => {
         <Card className='mb-0'>
           <CardBody>
             <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
-              <img src={logo} width={100} alt="logo"/>
+              <img src={logo} height={100} width={100} alt="logo"/>
             </Link>
             <CardTitle tag='h4' className='mb-1'>
               Reset Password
@@ -64,7 +66,7 @@ const Verification = () => {
 
 
               <Button.Ripple color='primary' block type="submit">
-                Reset Password
+                {loading ? <ProgressLoader/> : 'Reset Password'}
               </Button.Ripple>
             </Form>
             <div className="mt-3">

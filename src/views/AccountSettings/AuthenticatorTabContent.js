@@ -95,7 +95,7 @@ const AuthenticatorTabContent = () => {
                                     {errors.token && errors.token.message}
                                 </small>
                             </FormGroup>
-                            <Button.Ripple type="submit" color='primary' block>
+                            <Button.Ripple type="submit" color='primary'>
                                 {loading ? <ProgressLoader/> : 'Verify'}
                             </Button.Ripple>
                         </Form>

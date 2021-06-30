@@ -67,10 +67,15 @@ export const handleRegister = data => {
 // ** Handle Forgot Password
 export const handleForgotPassword = data => {
     return dispatch => {
+        dispatch(setLoadingAction(true))
+
         return axios.post(`auth/forgotPassword`, data).then(response => {
             history.push('/login')
             toast.success("Email sent to reset password!!")
+            dispatch(setLoadingAction(false))
+
         }).catch(error => {
+            dispatch(setLoadingAction(false))
             toast.error(error.response.data.message)
         })
     }
@@ -79,11 +84,17 @@ export const handleForgotPassword = data => {
 // ** Handle User Verification
 export const handleVerification = data => {
     return dispatch => {
+        dispatch(setLoadingAction(true))
+        
         return axios.post(`auth/verifyCode`, data).then(response => {
             history.push('/login')
             toast.success('Account verified successfully!!')
+        dispatch(setLoadingAction(false))
+
         }).catch(error => {
             toast.error(error.response.data.message)
+        dispatch(setLoadingAction(false))
+
         })
     }
 }

@@ -61,7 +61,7 @@ const Register = () => {
         <Card className='mb-0'>
           <CardBody>
             <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
-              <img src={logo} width={100} alt="logo"/>
+              <img src={logo} height={100} width={100} alt="logo"/>
             </Link>
             <CardTitle tag='h4' className='mb-1'>
               Create your account

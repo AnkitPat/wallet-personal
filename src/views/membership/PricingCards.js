@@ -1,13 +1,14 @@
 import classnames from 'classnames'
-import {Row, Col, Card, CardBody, Button} from 'reactstrap'
-import {loadStripe} from "@stripe/stripe-js"
+import { Row, Col, Card, CardBody, Button } from 'reactstrap'
+import { loadStripe } from "@stripe/stripe-js"
 import axios from "axios"
-import {toast} from "react-toastify"
-import {useSelector} from "react-redux"
+import { toast } from "react-toastify"
+import { useSelector } from "react-redux"
+import { Link } from 'react-router-dom'
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY)
 
-const PricingCards = ({plans, duration}) => {
+const PricingCards = ({ plans, duration }) => {
     const userData = useSelector(state => state.auth.userDetails)
 
     const handleClick = async event => {
@@ -46,29 +47,32 @@ const PricingCards = ({plans, duration}) => {
                             {/*<CardText>{item.subtitle}</CardText>*/}
                             <div className='annual-plan'>
                                 <div className='plan-price mt-2'>
-                                    <sup className='font-medium-1 font-weight-bold text-primary mr-25'>$</sup>
-                                    <span
-                                        className={`pricing-${item.title.toLowerCase()}-value font-weight-bolder text-primary`}>
-                                        {item.price / 100}
-                                    </span>
+                                    {item.id !== 3 ? <><sup className='font-medium-1 font-weight-bold text-primary mr-25'>$</sup>
+                                        <span
+                                            className={`pricing-${item.title.toLowerCase()}-value font-weight-bolder text-primary`}>
+                                            {item.price / 100}
+                                        </span></> : <><div
+                                            className={`font-weight-bold text-primary h3 mx-1`}>
+                                            Lifetime Membership
+                                        </div></>}
                                     {item.duration !== 0 &&
-                                    <span
-                                        className='pricing-duration text-body font-medium-1 font-weight-bold ml-25'>/month</span>
+                                        <span
+                                            className='pricing-duration text-body font-medium-1 font-weight-bold ml-25'>/month</span>
                                     }
                                 </div>
                                 {/*{item.title !== 'Basic' && duration === 'yearly' ? (*/}
                                 {/*  <small className='annual-pricing text-muted'>USD {yearlyPrice} / year</small>*/}
                                 {/*) : null}*/}
                             </div>
-                            <div dangerouslySetInnerHTML={{__html: item.description}}/>
-                            <Button.Ripple
+                            <div dangerouslySetInnerHTML={{ __html: item.description }} />
+                            {item.id !== 3 ? <Button.Ripple
                                 color={userData.subscriptionId === item.id ? 'success' : 'primary'}
                                 block
                                 disabled={userData.subscriptionId === item.id || userData.subscriptionId === 3}
                                 onClick={() => handleClick(item.id)}
                             >
                                 {userData.subscriptionId === item.id ? 'Your current plan' : 'Buy'}
-                            </Button.Ripple>
+                            </Button.Ripple> : <a class="btn btn-primary btn-block" href="mailto:customer.support@potentiam.io" role="button">Link</a>}
                         </CardBody>
                     </Card>
                 </Col>
@@ -78,7 +82,7 @@ const PricingCards = ({plans, duration}) => {
 
     return (
         <Row className='pricing-card'>
-            <Col className='mx-auto' sm={{offset: 2, size: 10}} lg={{offset: 2, size: 10}} md='12'>
+            <Col className='mx-auto' sm={{ offset: 2, size: 10 }} lg={{ offset: 2, size: 10 }} md='12'>
                 <Row>{renderPricingCards()}</Row>
             </Col>
         </Row>
