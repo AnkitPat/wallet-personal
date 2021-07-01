@@ -26,7 +26,7 @@ function PtmWithdrawal() {
     const userCredits = useSelector(state => state.auth.userDetails.credit)
     const userDetails = useSelector(state => state.auth.userDetails)
     const loading = useSelector(state => state.withdrawal.loading)
-    const transferFee = userDetails.subscription ? userDetails.subscription.transferFee : 20
+    const transferFee = userDetails.subscription ? userDetails.subscription.transferFee : 30
 
     const validationSchema = Yup.object().shape({
         amount: Yup.number('Amount is required')
@@ -57,6 +57,7 @@ function PtmWithdrawal() {
         dispatch(fetchTokenInfo())
     }, [])
 
+
     const changeCreditToPTM = credit => {
         if (tokenInfo && tokenInfo.price) {
             setPTMAmount(+credit / tokenInfo.price.rate)
@@ -85,6 +86,17 @@ function PtmWithdrawal() {
         window.ethereum.on("networkChanged", ([networkId]) => {
             setAddress('')
         })
+    }
+
+    const onValueChange = e => {
+        if (e.target.value) {
+            if (e.target.value > 20 && e.target.value < userCredits) {
+                clearErrors('amount', null)
+            }
+            setExclusiveAmount(e.target.value)
+            changeCreditToPTM(e.target.value)
+            setValue(e.target.value)
+        }
     }
 
     if (window.ethereum === undefined) {
@@ -122,14 +134,7 @@ function PtmWithdrawal() {
                                     id="credit"
                                     placeholder="Enter Amount"
                                     {...register('amount')}
-                                    onChange={e => {
-                                        if (e.target.value > 10 && e.target.value < userCredits) {
-                                            clearErrors('amount', null)
-                                        }
-                                        setExclusiveAmount(e.target.value)
-                                        changeCreditToPTM(e.target.value)
-                                        setValue(e.target.value)
-                                    }}
+                                    onChange={e => onValueChange(e)}
                                 />
                                 <small className='text-danger'>
                                     {errors.amount && errors.amount.message}
