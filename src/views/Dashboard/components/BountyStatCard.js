@@ -60,7 +60,8 @@ const BountyStatCard = ({ }) => {
                 breakpoint: 480,
                 options: {
                     chart: {
-                        width: 200
+                        width: 200,
+                        height: 200
                     },
                     legend: {
                         position: 'bottom'
@@ -72,7 +73,7 @@ const BountyStatCard = ({ }) => {
 
     return (
         <Card>
-            
+
             <UncontrolledTooltip placement='top' target='UnControlledExample'>
             Discover ways to earn by visiting the bounty page.
                             </UncontrolledTooltip>
