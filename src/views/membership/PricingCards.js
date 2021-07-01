@@ -72,7 +72,7 @@ const PricingCards = ({ plans, duration }) => {
                                 onClick={() => handleClick(item.id)}
                             >
                                 {userData.subscriptionId === item.id ? 'Your current plan' : 'Buy'}
-                            </Button.Ripple> : <a class="btn btn-primary btn-block" href="mailto:customer.support@potentiam.io" role="button">Link</a>}
+                            </Button.Ripple> : <a class="btn btn-primary btn-block" href="mailto:customer.support@potentiam.io" role="button">Contact Us</a>}
                         </CardBody>
                     </Card>
                 </Col>
