@@ -11,6 +11,7 @@ import { handleContentWidth, handleMenuCollapsed, handleMenuHidden } from '@stor
 // ** Styles
 import 'animate.css/animate.css'
 import {handleUserInformation} from "../../../../redux/actions/auth"
+import tawkTo from 'tawkto-react'
 
 const LayoutWrapper = props => {
   // ** Props
@@ -21,6 +22,7 @@ const LayoutWrapper = props => {
   const store = useSelector(state => state)
   const navbarStore = store.navbar
   const contentWidth = store.layout.contentWidth
+  const userDetails = useSelector(state => state.auth.userDetails)
 
   //** Vars
   const Tag = layout === 'HorizontalLayout' && !appLayout ? 'div' : Fragment
@@ -56,6 +58,12 @@ const LayoutWrapper = props => {
     }
     return () => cleanUp()
   }, [])
+
+  useEffect(() => {
+    if (userDetails.subscriptionId) {
+      tawkTo(process.env.REACT_APP_TAWK_PROPERTY, process.env.REACT_APP_TAWK_KEY)
+    }
+  }, [userDetails])
 
   return (
     <div

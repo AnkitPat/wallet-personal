@@ -51,10 +51,10 @@ const PricingCards = ({ plans, duration }) => {
                                         <span
                                             className={`pricing-${item.title.toLowerCase()}-value font-weight-bolder text-primary`}>
                                             {item.price / 100}
-                                        </span></> : <><span
+                                        </span></> : <><div
                                             className={`font-weight-bolder text-primary h3 mx-1`}>
                                             Lifetime Membership
-                                        </span></>}
+                                        </div></>}
                                     {item.duration !== 0 &&
                                         <span
                                             className='pricing-duration text-body font-medium-1 font-weight-bold ml-25'>/month</span>

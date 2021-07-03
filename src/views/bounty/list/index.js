@@ -2,12 +2,12 @@ import Breadcrumbs from '@components/breadcrumbs'
 import '@styles/base/pages/page-blog.scss'
 import moment from 'moment'
 import {Fragment, useCallback, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {
     Card,
     CardBody,
-    CardTitle, Col, Input, InputGroup, InputGroupAddon, InputGroupText, Label, Row
+    CardTitle, Col, Input, InputGroup, InputGroupAddon, InputGroupText, Row
 } from 'reactstrap'
 import {ProgressLoader} from '../../../layouts/ProgressLoader'
 import {searchEnhancer} from '../../../utility/Utils'
@@ -16,9 +16,6 @@ import {Search} from "react-feather"
 import '@styles/base/pages/app-ecommerce.scss'
 
 const BountyList = () => {
-
-    const dispatch = useDispatch()
-
     const bounties = useSelector(state => state.bounty.bounties)
     const [searchTerm, setSearchTerm] = useState('')
 
