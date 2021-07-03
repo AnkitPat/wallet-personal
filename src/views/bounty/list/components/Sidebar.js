@@ -62,7 +62,7 @@ const Sidebar = props => {
   }, [selectedProjects, selectedSocialMedium, selectedPriceRange, props.searchTerm])
 
   return (
-    <div className='sidebar-detached sidebar-left mt-3' key={forceReset.toString()}>
+    <div className='sidebar-detached sidebar-left' key={forceReset.toString()}>
       <div className='sidebar'>
         <div
           className={classnames('sidebar-shop')}
@@ -134,7 +134,7 @@ const Sidebar = props => {
                   setSelectedProjects([])
                   setSelectedSocialMedium('')
                   setForceReset(Math.random())
-                  
+
                 }}>
                   Clear All Filters
                 </Button.Ripple>
