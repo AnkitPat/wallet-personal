@@ -6,11 +6,14 @@ import { NavLink } from 'react-router-dom'
 import { Disc, X, Circle } from 'react-feather'
 
 // ** Config
-import themeConfig from '@configs/themeConfig'
+import logo from '@src/assets/images/icons/logo-light.png'
+import logoLight from '@src/assets/images/icons/logo.png'
 
 const VerticalMenuHeader = props => {
   // ** Props
   const { menuCollapsed, setMenuCollapsed, setMenuVisibility, setGroupOpen, menuHover } = props
+  const item = window.localStorage.getItem('skin')
+  const potentiamLogo = JSON.parse(item) !== 'dark' ? logo : logoLight
 
   // ** Reset open group
   useEffect(() => {
@@ -46,7 +49,7 @@ const VerticalMenuHeader = props => {
         <li className='nav-item mr-auto'>
           <NavLink to='/' className='navbar-brand'>
             <span className='brand-logo'>
-              <img src={themeConfig.app.appLogoImage} alt='logo' />
+              <img src={potentiamLogo} alt='logo' />
             </span>
           </NavLink>
         </li>
