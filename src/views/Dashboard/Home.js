@@ -43,7 +43,7 @@ const Home = () => {
 
                 <Col xl='6' md='4' xs='12'>
                     <Card className="p-2">
-                        <CardTitle className="font-weight-bold">Token Potentiam Information</CardTitle>
+                        <CardTitle className="font-weight-bold">Potentiam Token  Information</CardTitle>
                         <CardSubtitle>
                             <div className="d-flex justify-content-between">
                                 <a href="https://www.potentiam.io">https://www.potentiam.io</a>
@@ -55,42 +55,42 @@ const Home = () => {
                         <CardBody>
 
                             <Row>
-                                <Col className="font-weight-bold">
+                                <div className="font-weight-bold col-3">
                                     Symbol:
-                                </Col>
-                                <Col>
+                                </div>
+                                <div className="col-9">
                                     {tokenInfo.symbol}
-                                </Col>
+                                </div>
                             </Row>
 
                             <Row className="my-1">
-                                <Col className="font-weight-bold">
+                                <div className="font-weight-bold col-3">
                                     Price:
-                                </Col>
-                                <Col>
+                                </div>
+                                <div className="col-9">
                                     {tokenInfo.price.rate}
                                     <small className="d-flex flex-row ">
                                         24h:
-                                        <div
+                                        <span
                                             className={`mr-1 ${tokenInfo.price.diff > 0 ? 'text-success' : 'text-danger'}`}>{parseFloat(tokenInfo.price.diff).toFixed(2)}%
-                                        </div>
+                                        </span>
                                         7d:
-                                        <div
+                                        <span
                                             className={`mr-1 ${tokenInfo.price.diff7d > 0 ? 'text-success' : 'text-danger'}`}>{parseFloat(tokenInfo.price.diff7d).toFixed(2)}%
-                                        </div>
+                                        </span>
                                         30d:
-                                        <div
+                                        <span
                                             className={`mr-1 ${tokenInfo.price.diff30d > 0 ? 'text-success' : 'text-danger'}`}>{parseFloat(tokenInfo.price.diff30d).toFixed(2)}%
-                                        </div>
+                                        </span>
                                     </small>
-                                </Col>
+                                </div>
                             </Row>
 
                             <Row className="my-1">
-                                <Col className="font-weight-bold">
+                                <div className="font-weight-bold col-3">
                                     Volume:
-                                </Col>
-                                <Col>
+                                </div>
+                                <div className="col-9">
                                     <small className="d-flex flex-row">
                                         24h:
                                         <div
@@ -105,61 +105,61 @@ const Home = () => {
                                             className={`mr-1 ${tokenInfo.price.volDiff30 > 0 ? 'text-success' : 'text-danger'}`}>{parseFloat(tokenInfo.price.volDiff30).toFixed(2)}%
                                         </div>
                                     </small>
-                                </Col>
+                                </div>
                             </Row>
 
                             <Row className="my-1">
-                                <Col className="font-weight-bold">
+                                <div className="font-weight-bold col-3">
                                     Total Supply:
-                                </Col>
-                                <Col>
+                                </div>
+                                <div className="col-9">
                                     $ {(tokenInfo.totalSupply / 1000000000000000000)}
-                                </Col>
+                                </div>
                             </Row>
 
                             <Row className="my-1">
-                                <Col className="font-weight-bold">
+                                <div className="font-weight-bold col-3">
                                     Market Cap:
-                                </Col>
-                                <Col>
+                                </div>
+                                <div className="col-9">
                                     $ {((tokenInfo.totalSupply / 1000000000000000000) * tokenInfo.price.rate)}
-                                </Col>
+                                </div>
                             </Row>
 
                             <Row className="my-1">
-                                <Col className="font-weight-bold">
+                                <div className="font-weight-bold col-3">
                                     Decimals:
-                                </Col>
-                                <Col>
+                                </div>
+                                <div className="col-9">
                                     {tokenInfo.decimals}
-                                </Col>
+                                </div>
                             </Row>
 
                             <Row className="my-1">
-                                <Col className="font-weight-bold">
+                                <div className="font-weight-bold col-3">
                                     Contract:
-                                </Col>
-                                <Col>
+                                </div>
+                                <div className="col-9">
                                     {tokenInfo.address}
-                                </Col>
+                                </div>
                             </Row>
 
                             <Row className="my-1">
-                                <Col className="font-weight-bold">
+                                <div className="font-weight-bold col-3">
                                     Transfers:
-                                </Col>
-                                <Col>
+                                </div>
+                                <div className="col-9">
                                     {tokenInfo.transfersCount}
-                                </Col>
+                                </div>
                             </Row>
 
                             <Row className="my-1">
-                                <Col className="font-weight-bold">
+                                <div className="font-weight-bold col-3">
                                     Holders:
-                                </Col>
-                                <Col>
+                                </div>
+                                <div className="col-9">
                                     {tokenInfo.holdersCount}
-                                </Col>
+                                </div>
                             </Row>
                         </CardBody>
                     </Card>
