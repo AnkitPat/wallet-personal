@@ -11,12 +11,15 @@ import {Button, Card, CardBody, CardTitle, Form, FormGroup, Label} from 'reactst
 import * as Yup from 'yup'
 import {ProgressLoader} from '../../layouts/ProgressLoader'
 import logo from '@src/assets/images/icons/logo-light.png'
+import logoLight from '@src/assets/images/icons/logo.png'
+import {useSkin} from '../../utility/hooks/useSkin'
 
 const stripePromise = loadStripe('pk_test_KcTV8d4CSSGpMfe4PIKvUeFI00hDyI8a1d')
 
 const UserWallet = () => {
-
+    const [skin, setSkin] = useSkin()
     const dispatch = useDispatch()
+    const potentiamLogo = skin !== 'dark' ? logo : logoLight
     const [dollarAmount, setDollarAmount] = useState(0)
 
 
@@ -80,7 +83,7 @@ const UserWallet = () => {
                     <Card className='mb-0'>
                         <CardBody>
                             <Link className='brand-logo' to='/wallet' onClick={e => e.preventDefault()}>
-                                <img src={logo} height={100} width={100} alt="logo"/>
+                                <img src={potentiamLogo} height={100} width={100} alt="logo"/>
                             </Link>
                             <CardTitle tag='h4' className='mb-1'>
                                 Add Credits to your account
