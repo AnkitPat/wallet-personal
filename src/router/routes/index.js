@@ -144,6 +144,16 @@ const Routes = [
     path: '/membership/success',
     exact: true,
     component: lazy(() => import('../../views/membership/success'))
+  },
+  {
+    path: '/projects',
+    exact: true,
+    component: lazy(() => import('../../views/Projects/list'))
+  },
+  {
+    path: '/projects/add',
+    exact: true,
+    component: lazy(() => import('../../views/Projects/add'))
   }
 ]
 

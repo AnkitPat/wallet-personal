@@ -2,7 +2,7 @@
 import { Fragment, useState, useRef, useEffect } from 'react'
 
 // ** Vertical Menu Items Array
-import {regularItems, adminItems} from '@src/navigation/vertical'
+import {regularItems, adminItems, projectManagerItems} from '@src/navigation/vertical'
 
 // ** Third Party Components
 import classnames from 'classnames'
@@ -76,7 +76,7 @@ const Sidebar = props => {
             >
               <ul className='navigation navigation-main'>
                 <VerticalNavMenuItems
-                  items={role === 'regular' ? regularItems : adminItems}
+                  items={role === 'regular' ? projectManagerItems : adminItems}
                   groupActive={groupActive}
                   setGroupActive={setGroupActive}
                   activeItem={activeItem}

@@ -114,6 +114,29 @@ const adminItems = [
     }
 ]
 
+const projectManagerItems = [
+  
+    {
+        id: 'projects',
+        title: 'Projects',
+        icon: <Gift size={20}/>,
+        children: [
+            {
+                id: 'bountyList',
+                title: 'List',
+                icon: <Circle size={12}/>,
+                navLink: '/projects'
+            },
+            {
+                id: 'addBounty',
+                title: 'Add',
+                icon: <Circle size={12}/>,
+                navLink: '/projects/add'
+            }
+        ]
+    }
+]
+
 export {
-    adminItems, regularItems
+    adminItems, regularItems, projectManagerItems
 }

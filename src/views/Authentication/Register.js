@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import InputPasswordToggle from '@components/input-password-toggle'
 import { Card, CardBody, CardTitle, CardText, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
@@ -61,13 +61,28 @@ const Register = () => {
         <Card className='mb-0'>
           <CardBody>
             <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
-              <img src={logo} height={100} width={100} alt="logo"/>
+              <img src={logo} height={100} width={100} alt="logo" />
             </Link>
             <CardTitle tag='h4' className='mb-1'>
               Create your account
             </CardTitle>
 
             <Form className='auth-register-form mt-2' onSubmit={handleSubmit(onSubmit)}>
+              <FormGroup tag="fieldset" className="d-flex flex-row">
+                <legend>Radio Buttons</legend>
+                <FormGroup check className="mx-2">
+                  <Label check>
+                    <Input type="radio" name="type"  {...register('type')} onChange={(e) => setValue('type', 'regular')}/>{' '}
+                    Regular
+                  </Label>
+                </FormGroup>
+                <FormGroup check className="mx-2">
+                  <Label check>
+                    <Input type="radio" name="type"  {...register('type')} onChange={(e) => setValue('type', 'host')} />{' '}
+                    Host
+                  </Label>
+                </FormGroup>
+              </FormGroup>
               <FormGroup>
                 <Label className='form-label' for='register-name'>
                   Name
