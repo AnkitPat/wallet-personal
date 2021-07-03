@@ -105,7 +105,9 @@ const BountyList = () => {
                 <div className='content-body'>
                     <CustomHeader/>
                     {loading ? (<div className="mt-4"><ProgressLoader size="lg"/></div>) : (
-                        bounties.length > 0 ? <div className="grid-view">{renderRenderList()}</div> : <Row className="mx-3"><h2>No Entries Found</h2></Row>
+                        bounties.length > 0 ? <div className="grid-view">{renderRenderList()}</div> : <div className='d-flex justify-content-center mt-2'>
+                            <p>No Results</p>
+                        </div>
                     )}
                 </div>
             </div>
