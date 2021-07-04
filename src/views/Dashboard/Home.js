@@ -68,7 +68,7 @@ const Home = () => {
                                     Price:
                                 </div>
                                 <div className="col-9">
-                                    {tokenInfo.price.rate}
+                                    ${tokenInfo.price.rate}
                                     <small className="d-flex flex-row ">
                                         24h:
                                         <span
@@ -113,7 +113,7 @@ const Home = () => {
                                     Total Supply:
                                 </div>
                                 <div className="col-9">
-                                    $ {(tokenInfo.totalSupply / 1000000000000000000)}
+                                    {(tokenInfo.totalSupply / 1000000000000000000)}
                                 </div>
                             </Row>
 
@@ -122,7 +122,7 @@ const Home = () => {
                                     Market Cap:
                                 </div>
                                 <div className="col-9">
-                                    $ {((tokenInfo.totalSupply / 1000000000000000000) * tokenInfo.price.rate)}
+                                    ${((tokenInfo.totalSupply / 1000000000000000000) * tokenInfo.price.rate)}
                                 </div>
                             </Row>
 
