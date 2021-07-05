@@ -13,6 +13,7 @@ import '@styles/react/libs/noui-slider/noui-slider.scss'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchBounties, fetchProjectsAndSocialMediums } from '../../../../redux/actions/bounty'
 import { useDispatch, useSelector } from 'react-redux'
+import { saveFiltersAction } from '../../../../redux/actions/bounty/actions'
 
 const Sidebar = props => {
   const priceRanges = useMemo(() => [
@@ -45,7 +46,7 @@ const Sidebar = props => {
   ], [])
   const dispatch = useDispatch()
   const [forceReset, setForceReset] = useState(0)
-  const [selectedSocialMedium, setSelectedSocialMedium] = useState('')
+  const [selectedSocialMedium, setSelectedSocialMedium] = useState(undefined)
   const [selectedPriceRange, setSelectedPriceRange] = useState('')
   const [selectedProjects, setSelectedProjects] = useState([])
 
@@ -59,6 +60,7 @@ const Sidebar = props => {
 
   useEffect(() => {
     dispatch(fetchBounties(selectedProjects, selectedSocialMedium, selectedPriceRange, props.searchTerm))
+   dispatch(saveFiltersAction([...selectedProjects.map(project => project.title), selectedSocialMedium !== undefined ?  socialMediums?.find(medium => medium.id === selectedSocialMedium)?.title : undefined])) 
   }, [selectedProjects, selectedSocialMedium, selectedPriceRange, props.searchTerm])
 
   return (

@@ -1,13 +1,14 @@
 import moment from 'moment'
-import React, {useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
-import {useDispatch, useSelector} from 'react-redux'
-import {Badge, Button, UncontrolledTooltip} from 'reactstrap'
-import {ProgressLoader} from '../../../layouts/ProgressLoader'
-import {claimMyBounty, fetchMyBounties} from '../../../redux/actions/bounty'
+import { useDispatch, useSelector } from 'react-redux'
+import { Badge, Button, ButtonGroup, UncontrolledTooltip } from 'reactstrap'
+import { ProgressLoader } from '../../../layouts/ProgressLoader'
+import { claimMyBounty, fetchMyBounties } from '../../../redux/actions/bounty'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-import {Text} from 'recharts'
-import {Info} from "react-feather"
+import { Text } from 'recharts'
+import { Info } from "react-feather"
+import { getClaimedBountyInfo, getPendingBountyInfo } from './selector'
 
 const MyBounties = () => {
 
@@ -17,7 +18,9 @@ const MyBounties = () => {
     }, [])
 
 
-    const myBounties = useSelector(state => state.bounty.myBounties)
+    const [active, setActive] = useState('pending')
+    const pendingBounties = useSelector(state => getPendingBountyInfo(state))
+    const claimedBounties = useSelector(state => getClaimedBountyInfo(state))
     const loading = useSelector(state => state.bounty.loading)
     const buttonLoading = useSelector(state => state.bounty.buttonLoading)
 
@@ -96,7 +99,7 @@ const MyBounties = () => {
                             <Badge color='light-success' className="mr-1" pill>
                                 Verified
                             </Badge>
-                            <Info size={15} id="UnControlledExample"/>
+                            <Info size={15} id="UnControlledExample" />
                             <UncontrolledTooltip placement='top' target='UnControlledExample'>
                                 Your task is successfully verified. Once deadline is over, you will be able to claim
                                 your reward.
@@ -124,16 +127,26 @@ const MyBounties = () => {
 
     return (
         <div>
-            {loading ? <ProgressLoader size='lg'/> : <div className="mt-4">
+            {loading ? <ProgressLoader size='lg' /> : <div className="mt-4">
                 <div className="mb-2"><Text className="h1 text-primary">My Bounties</Text></div>
+                <ButtonGroup className='mt-md-0 mt-1'>
+                    <Button active={active === 'pending'} color='primary' outline onClick={() => setActive('pending')}>
+                        Pending
+                    </Button>
+                    <Button active={active === 'claimed'} color='primary' outline onClick={() => setActive('claimed')}>
+                        Claimed
+                    </Button>
+
+                </ButtonGroup>
                 <DataTable
                     noHeader
 
                     title="My Bounties"
                     columns={columns}
                     className='react-dataTable'
-                    data={myBounties || []}
+                    data={active === 'pending' ? pendingBounties?.bounties : claimedBounties?.bounties || []}
                 />
+                <div className="h5 mt-2">Total Rewards: {active === 'pending' ? pendingBounties?.total : claimedBounties?.total}</div>
             </div>}
         </div>
     )
