@@ -136,6 +136,16 @@ const Routes = [
     component: lazy(() => import('../../views/AllUsers'))
   },
   {
+    path: '/blog',
+    exact: true,
+    component: lazy(() => import('../../views/blog/list'))
+  },
+  {
+    path: '/blog/detail/:id',
+    exact: true,
+    component: lazy(() => import('../../views/blog/details'))
+  },
+  {
     path: '/error',
     component: lazy(() => import('../../views/Error')),
     layout: 'BlankLayout'
