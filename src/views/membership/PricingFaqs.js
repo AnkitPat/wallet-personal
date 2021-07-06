@@ -28,10 +28,7 @@ const PricingFaqs = ({data}) => {
         <div className='pricing-faq'>
             <h3 className='text-center'>FAQ's</h3>
             <p style={{maxWidth: 820, margin: '0 auto'}}>
-                There are four membership plans, including the regular membership free plan, available to everyone.
-                However, we offer three other paid membership plans offering a variety of benefits in the Potentiam
-                wallet. See the available membership plans by clicking your profile image on the top right-hand corner
-                of the account home page.
+              There are four membership plans, including the regular membership free plan, available to everyone.
             </p>
             <Row className='my-2'>
                 <Col className='mx-auto' sm='12' lg={{size: 10, offset: 2}}>
