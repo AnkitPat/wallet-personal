@@ -55,7 +55,7 @@ const regularItems = [
     {
         id: 'faq',
         title: 'FAQ',
-        icon: <Circle size={12}/>,
+        icon: <HelpCircle size={12}/>,
         navLink: '/faq'
     }
 ]

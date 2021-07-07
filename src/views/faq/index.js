@@ -6,6 +6,7 @@ import FaqContact from './FaqContact'
 import Breadcrumbs from '@components/breadcrumbs'
 
 import '@styles/base/pages/page-faq.scss'
+import bliiink from '@src/assets/images/banner/FB_Cover.jpg'
 
 const data = {
 
@@ -116,6 +117,13 @@ const data = {
 const Faq = () => {
     return (
         <Fragment>
+            <div className="row">
+                <div className="col">
+                    <a href="https://bliiink.co.uk/" target="_blank">
+                        <img alt="bliiink banner" className="img-fluid mb-3" src={bliiink}/>
+                    </a>
+                </div>
+            </div>
             <Faqs data={data}/>
             <FaqContact/>
         </Fragment>
