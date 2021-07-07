@@ -136,6 +136,11 @@ const Routes = [
     component: lazy(() => import('../../views/AllUsers'))
   },
   {
+    path: '/faq',
+    exact: true,
+    component: lazy(() => import('../../views/faq'))
+  },
+  {
     path: '/error',
     component: lazy(() => import('../../views/Error')),
     layout: 'BlankLayout'

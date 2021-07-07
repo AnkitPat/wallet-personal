@@ -1,4 +1,4 @@
-import {Home, DollarSign, Award, Users, Circle, LogOut, CreditCard, Gift} from 'react-feather'
+import {Home, DollarSign, Award, Users, Circle, LogOut, CreditCard, Gift, HelpCircle} from 'react-feather'
 
 const regularItems = [
     {
@@ -51,6 +51,12 @@ const regularItems = [
                 navLink: '/withdrawal'
             }
         ]
+    },
+    {
+        id: 'faq',
+        title: 'FAQ',
+        icon: <Circle size={12}/>,
+        navLink: '/faq'
     }
 ]
 
@@ -111,6 +117,12 @@ const adminItems = [
         title: 'Withdrawal Requests',
         icon: <LogOut size={20}/>,
         navLink: '/withdrawal/all'
+    },
+    {
+        id: 'faq',
+        title: 'FAQ',
+        icon: <HelpCircle size={12}/>,
+        navLink: '/faq'
     }
 ]
 
