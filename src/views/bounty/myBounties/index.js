@@ -129,7 +129,7 @@ const MyBounties = () => {
         <div>
             {loading ? <ProgressLoader size='lg' /> : <div className="mt-4">
                 <div className="mb-2"><Text className="h1 text-primary">My Bounties</Text></div>
-                <ButtonGroup className='mt-md-0 mt-1'>
+                <ButtonGroup className='mt-md-0 my-2'>
                     <Button active={active === 'pending'} color='primary' outline onClick={() => setActive('pending')}>
                         Pending
                     </Button>
