@@ -7,6 +7,7 @@ export const SAVE_PROJECTS = 'wallet/bounty/SAVE_PROJECTS'
 export const SAVE_SOCIAL_MEDIUMS = 'wallet/bounty/SAVE_SOCIAL_MEDIUMS'
 export const SAVE_MY_BOUNTIES = 'wallet/bounty/SAVE_MY_BOUNTIES'
 export const SAVE_SUBMISSIONS = 'wallet/bounty/SAVE_SUBMISSIONS'
+export const SAVE_FILTERS = 'wallet/bounty/SAVE_FILTERS'
 
 export const saveBountiesAction = (bounties) => {
     return {
@@ -68,5 +69,12 @@ export const saveSubmissionsAction = (submissions) => {
     return {
         type: SAVE_SUBMISSIONS,
         submissions
+    }
+}
+
+export const saveFiltersAction = (filters) => {
+    return {
+        type: SAVE_FILTERS,
+        filters
     }
 }

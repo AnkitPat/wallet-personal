@@ -21,6 +21,7 @@ const BountyList = () => {
 
     const loading = useSelector(state => state.bounty.loading)
     const role = useSelector(state => state.auth.userRole)
+    const filters = useSelector(state => state.bounty.bountyFilters)
 
     const renderRenderList = () => {
         return bounties.map((bounty, index) => {
@@ -101,6 +102,10 @@ const BountyList = () => {
             <div className='content-detached content-right ecommerce-application'>
                 <div className='content-body'>
                     <CustomHeader/>
+                    <div className="mt-2">
+                        <div className="h2">{filters.join(', ')}</div>
+                       {bounties.length > 0 && <div>Campaigns: {bounties.length}</div>}
+                    </div>
                     {loading ? (<div className="mt-4"><ProgressLoader size="lg"/></div>) : (
                         bounties.length > 0 ? <div className="grid-view">{renderRenderList()}</div> : <div className='d-flex justify-content-center mt-2'>
                             <p>No Results</p>

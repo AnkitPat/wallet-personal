@@ -1,5 +1,5 @@
 import produce from 'immer'
-import { SAVE_BOUNTIES, SAVE_BOUNTY_DETAIL, SAVE_MY_BOUNTIES, SAVE_PROJECTS, SAVE_SOCIAL_MEDIUMS, SAVE_SUBMISSIONS, SET_BUTTON_LOADING, SET_LOADING } from '../../actions/bounty/actions'
+import { SAVE_BOUNTIES, SAVE_BOUNTY_DETAIL, SAVE_FILTERS, SAVE_MY_BOUNTIES, SAVE_PROJECTS, SAVE_SOCIAL_MEDIUMS, SAVE_SUBMISSIONS, SET_BUTTON_LOADING, SET_LOADING } from '../../actions/bounty/actions'
 
 // **  Initial State
 const initialState = {
@@ -10,7 +10,8 @@ const initialState = {
     projects: [],
     socialMediums: [],
     myBounties: [],
-    submissions: []
+    submissions: [],
+    bountyFilters: []
 }
 
 /* eslint-disable default-case, no-param-reassign */
@@ -50,6 +51,8 @@ const bountyReducer = (state = initialState, action) =>
             case SAVE_SUBMISSIONS:
                 draft.submissions = action.submissions
                 break
+            case SAVE_FILTERS:
+                draft.bountyFilters = action.filters.filter(filter => filter !== undefined)
         }
     })
 
