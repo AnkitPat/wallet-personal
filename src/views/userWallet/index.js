@@ -14,7 +14,7 @@ import logo from '@src/assets/images/icons/logo-light.png'
 import logoLight from '@src/assets/images/icons/logo.png'
 import {useSkin} from '../../utility/hooks/useSkin'
 
-const stripePromise = loadStripe('pk_test_KcTV8d4CSSGpMfe4PIKvUeFI00hDyI8a1d')
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY)
 
 const UserWallet = () => {
     const [skin, setSkin] = useSkin()
