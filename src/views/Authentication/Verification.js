@@ -42,10 +42,10 @@ const Verification = () => {
                         <Link className='brand-logo' to='/'>
                             <img src={potentiamLogo} height={100} width={100} alt="logo"/>
                         </Link>
-                        <CardTitle tag='h6' className='mb-1'>
-                            Enter the verification code here to verify your account and continue the registration
-                            process.
-                        </CardTitle>
+                        <h5>A verification code has been sent to your email account. Please also check your spam
+                            box.</h5>
+                        <p className="font-small-3 card-text">Enter the verification code here to verify your
+                            account and continue the registration process.</p>
                         <Form className='auth-register-form mt-2' onSubmit={handleSubmit(onSubmit)}>
                             <FormGroup>
                                 <Label className='form-label' for='register-username'>
