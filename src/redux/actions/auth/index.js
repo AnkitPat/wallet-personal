@@ -81,6 +81,20 @@ export const handleForgotPassword = data => {
     }
 }
 
+export const handleResetPassword = data => {
+    return dispatch => {
+        dispatch(setLoadingAction(true))
+        return axios.post(`auth/resetPassword`, data).then(response => {
+            history.push('/login')
+            toast.success("Your password has been changed successfully.")
+            dispatch(setLoadingAction(false))
+        }).catch(error => {
+            dispatch(setLoadingAction(false))
+            toast.error(error.response.data.message)
+        })
+    }
+}
+
 // ** Handle User Verification
 export const handleVerification = data => {
     return dispatch => {
