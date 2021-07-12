@@ -16,6 +16,7 @@ import {
 import * as Yup from 'yup'
 import {ProgressLoader} from '../../layouts/ProgressLoader'
 import {addProject, editProject, getProject} from "../../redux/actions/projects"
+import defaultImage from '../../assets/images/avatars/12.png'
 
 const ProjectForm = () => {
     const dispatch = useDispatch()
@@ -68,19 +69,21 @@ const ProjectForm = () => {
     useEffect(() => {
         if (params && params.id) {
             dispatch(getProject(params.id))
+        } else {
+            reset({})
         }
     }, [params])
 
     useEffect(() => {
-        if (project) {
+        if (project && params && params.id) {
             reset(project)
             setAvatar(project.logo)
         }
-    }, [project])
+    }, [project, params])
 
     const onSubmit = values => {
         if (params && params.id) {
-            dispatch(editProject(values))
+            dispatch(editProject({...values, avatar: avatar !== project.logo ? avatar : ''}))
         } else {
             dispatch(addProject({...values, avatar}))
         }
@@ -120,6 +123,7 @@ const ProjectForm = () => {
                                                        alt='Placeholder image' height='80' width='80'
                                                        onError={e => {
                                                            e.target.onerror = null
+                                                           e.target.src = defaultImage
                                                        }}/>
                                             </Media>
                                             <Media className='mt-75 ml-1' body>
@@ -129,7 +133,7 @@ const ProjectForm = () => {
                                                     <Input type='file' onChange={onChange} hidden accept='image/*'/>
                                                 </Button.Ripple>
                                                 <Button.Ripple color='secondary' size='sm' outline
-                                                               onClick={() => setAvatar(data.avatar ? data.avatar : '')}>
+                                                               onClick={() => setAvatar(project.logo ? project.logo : '')}>
                                                     Reset
                                                 </Button.Ripple>
                                                 <p>Allowed JPG, GIF or PNG. Max size of 800kB</p>

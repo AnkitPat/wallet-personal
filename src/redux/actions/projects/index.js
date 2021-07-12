@@ -57,6 +57,16 @@ export const addProject = data => {
 export const editProject = data => {
     return async (dispatch) => {
         try {
+            dispatch(setButtonLoadingAction(true))
+            if (data.avatar && data.avatar !== '') {
+                const response = await uploadProjectLogo(data.avatar, data.title)
+                data = {
+                    ...data,
+                    logoKey: response.data.imageKey,
+                    logo: response.data.location
+                }
+                delete data.avatar
+            }
             await editProjectAPI(data)
             toast.success("Project updated successfully!!")
             dispatch(setButtonLoadingAction(false))
