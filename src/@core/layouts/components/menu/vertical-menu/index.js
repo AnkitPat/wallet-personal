@@ -1,8 +1,8 @@
 // ** React Imports
-import { Fragment, useState, useRef, useEffect } from 'react'
+import {Fragment, useState, useRef, useEffect} from 'react'
 
 // ** Vertical Menu Items Array
-import {regularItems, adminItems} from '@src/navigation/vertical'
+import {regularItems, adminItems, projectManagerItems} from '@src/navigation/vertical'
 
 // ** Third Party Components
 import classnames from 'classnames'
@@ -21,6 +21,7 @@ const Sidebar = props => {
   const [groupOpen, setGroupOpen] = useState([])
   const [groupActive, setGroupActive] = useState([])
   const [activeItem, setActiveItem] = useState(null)
+  const [leftMenu, setLeftMenu] = useState(regularItems)
 
   // ** Menu Hover State
   const [menuHover, setMenuHover] = useState(false)
@@ -47,8 +48,22 @@ const Sidebar = props => {
       }
     }
   }
-
   const role = useSelector(state => state.auth.userRole)
+  useEffect(() => {
+    switch (role) {
+      case 'regular':
+        setLeftMenu(regularItems)
+        break
+      case 'host':
+        setLeftMenu(projectManagerItems)
+        break
+      case 'administrator':
+        setLeftMenu(adminItems)
+        break
+    }
+  }, [role])
+
+
   return (
     <Fragment>
       <div
@@ -76,7 +91,7 @@ const Sidebar = props => {
             >
               <ul className='navigation navigation-main'>
                 <VerticalNavMenuItems
-                  items={role === 'regular' ? regularItems : adminItems}
+                  items={leftMenu}
                   groupActive={groupActive}
                   setGroupActive={setGroupActive}
                   activeItem={activeItem}

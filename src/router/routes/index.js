@@ -34,24 +34,8 @@ const Routes = [
         }
     },
     {
-        path: '/host/register',
-        component: lazy(() => import('../../views/Authentication/HostRegister')),
-        layout: 'BlankLayout',
-        meta: {
-            authRoute: true
-        }
-    },
-    {
         path: '/verification',
         component: lazy(() => import('../../views/Authentication/Verification')),
-        layout: 'BlankLayout',
-        meta: {
-            authRoute: true
-        }
-    },
-    {
-        path: '/reset-password/:token',
-        component: lazy(() => import('../../views/Authentication/ResetPassword')),
         layout: 'BlankLayout',
         meta: {
             authRoute: true
@@ -175,6 +159,21 @@ const Routes = [
         path: '/membership/success',
         exact: true,
         component: lazy(() => import('../../views/membership/success'))
+    },
+    {
+        path: '/projects',
+        exact: true,
+        component: lazy(() => import('../../views/Projects/ProjectList'))
+    },
+    {
+        path: '/projects/add',
+        exact: true,
+        component: lazy(() => import('../../views/Projects/ProjectForm'))
+    },
+    {
+        path: '/projects/:id/edit',
+        exact: true,
+        component: lazy(() => import('../../views/Projects/ProjectForm'))
     }
 ]
 
