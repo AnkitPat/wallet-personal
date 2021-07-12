@@ -2,10 +2,7 @@
 import {useRTL} from '@hooks/useRTL'
 
 // ** Third Party Components
-import wNumb from 'wnumb'
 import classnames from 'classnames'
-import {Star} from 'react-feather'
-import Nouislider from 'nouislider-react'
 import {Card, CardBody, Row, Col, CustomInput, Button} from 'reactstrap'
 
 // ** Styles
