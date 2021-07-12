@@ -35,6 +35,7 @@ const BlogEdit = () => {
     const socialMediums = useSelector(state => state.bounty.socialMediums)
     const bounty = useSelector(state => state.bounty.bounty)
     const pageLoading = useSelector(state => state.bounty.loading)
+    const userCredits = useSelector(state => state.auth.userDetails.credit)
     const [multipleSubmission, setMultipleSubmission] = useState(false)
 
     const contentDataState =
@@ -51,7 +52,8 @@ const BlogEdit = () => {
         deadline: Yup.string().required('Deadline is required'),
         amount: Yup.number('Invalid Amount').required("Price is required")
             .nullable()
-            .transform(value => (isNaN(value) ? undefined : value)),
+            .transform(value => (isNaN(value) ? undefined : value))
+            .max(userCredits, 'Insufficient Balance'),
         projectId: Yup.string()
             .required('Project is required'),
         socialMediumId: Yup.string()
@@ -160,7 +162,9 @@ const BlogEdit = () => {
                     <Col sm='12'>
                         <Card>
                             <CardBody>
-
+                                <h5>
+                                    You need to have sufficient credits to create budget for your campaign. If not you can always <Link to={'/wallet'}>buy more.</Link>
+                                </h5>
                                 <Form className='mt-2' onSubmit={handleSubmit(onSubmit)}>
                                     <Row>
                                         <Col md='6'>
@@ -250,7 +254,7 @@ const BlogEdit = () => {
                                                     <option value={''}>{'Select Project'}</option>
 
                                                     {projects.map(project =>
-                                                        <option key={project.title} value={project.id}>{project.title}</option>
+                                                        <option key={`${project.id}-${project.title}`} value={project.id}>{project.title}</option>
                                                     )}
 
                                                 </Input>
@@ -282,7 +286,7 @@ const BlogEdit = () => {
                                                 >
                                                     <option value={''}>{'Select Social medium'}</option>
                                                     {socialMediums.map(social =>
-                                                        <option key={social.title} value={social.id}>{social.title}</option>
+                                                        <option key={`${social.id}-social`} value={social.id}>{social.title}</option>
                                                     )}
 
                                                 </Input>
@@ -321,7 +325,7 @@ const BlogEdit = () => {
                                     {indexes.map(index => {
                                         const fieldName = `tiers[${index}]`
                                         return (
-                                            <Row key={index.toString()} className="my-1">
+                                            <Row key={`${index.toString()}-tiers`} className="my-1">
 
                                                 <Col md='5'>
                                                     <input
