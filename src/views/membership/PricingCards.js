@@ -40,6 +40,7 @@ const PricingCards = ({ plans, duration }) => {
                         className={classnames('text-center', {
                             [`${item.title.toLowerCase()}-pricing`]: item.title
                         })}
+                        style={{minHeight: 805}}
                     >
                         <CardBody>
                             {/*<img className={imgClasses} src={item.img} alt='pricing svg' />*/}
@@ -52,7 +53,7 @@ const PricingCards = ({ plans, duration }) => {
                                             className={`pricing-${item.title.toLowerCase()}-value font-weight-bolder text-primary`}>
                                             {item.price / 100}
                                         </span></> : <><div
-                                            className={`font-weight-bold text-primary h3 mx-1`}>
+                                            className={`font-weight-bolder text-primary h3 mx-1 pb-1`}>
                                             Lifetime Membership
                                         </div></>}
                                     {item.duration !== 0 &&

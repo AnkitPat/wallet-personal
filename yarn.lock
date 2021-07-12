@@ -12843,7 +12843,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@17.0.1":
+"react@^16.13.1", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"
@@ -14765,6 +14765,11 @@
     "minizlib" "^2.1.1"
     "mkdirp" "^1.0.3"
     "yallist" "^4.0.0"
+
+"tawkto-react@^2.0.3":
+  "integrity" "sha512-KnTMAEA/DJNKlWNa4T7uB6+EzvgTXaEagJRGf7hPBTzMyGHARQQl4LRUi0rLPsss5dDW5ZigiORpmwHCRxk4VA=="
+  "resolved" "https://registry.npmjs.org/tawkto-react/-/tawkto-react-2.0.3.tgz"
+  "version" "2.0.3"
 
 "temp-dir@^1.0.0":
   "integrity" "sha1-CnwOom06Oa+n4OvqnB/AvE2qAR0="

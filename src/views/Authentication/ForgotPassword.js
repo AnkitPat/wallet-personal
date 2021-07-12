@@ -11,11 +11,14 @@ import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleForgotPassword, handleRegister, handleVerification } from '../../redux/actions/auth'
 import logo from '@src/assets/images/icons/logo-light.png'
+import logoLight from '@src/assets/images/icons/logo.png'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
+import {useSkin} from "../../utility/hooks/useSkin"
 
 const Verification = () => {
-
+  const [skin, setSkin] = useSkin()
   const dispatch = useDispatch()
+  const potentiamLogo = skin !== 'dark' ? logo : logoLight
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -42,7 +45,7 @@ const Verification = () => {
         <Card className='mb-0'>
           <CardBody>
             <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
-              <img src={logo} height={100} width={100} alt="logo"/>
+              <img src={potentiamLogo} height={100} width={100} alt="logo"/>
             </Link>
             <CardTitle tag='h4' className='mb-1'>
               Reset Password

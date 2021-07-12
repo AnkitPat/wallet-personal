@@ -71,9 +71,23 @@ export const handleForgotPassword = data => {
 
         return axios.post(`auth/forgotPassword`, data).then(response => {
             history.push('/login')
-            toast.success("Email sent to reset password!!")
+            toast.success("A verification code has been sent to your email account. Please also check your spam box. ")
             dispatch(setLoadingAction(false))
 
+        }).catch(error => {
+            dispatch(setLoadingAction(false))
+            toast.error(error.response.data.message)
+        })
+    }
+}
+
+export const handleResetPassword = data => {
+    return dispatch => {
+        dispatch(setLoadingAction(true))
+        return axios.post(`auth/resetPassword`, data).then(response => {
+            history.push('/login')
+            toast.success("Your password has been changed successfully.")
+            dispatch(setLoadingAction(false))
         }).catch(error => {
             dispatch(setLoadingAction(false))
             toast.error(error.response.data.message)
@@ -85,7 +99,7 @@ export const handleForgotPassword = data => {
 export const handleVerification = data => {
     return dispatch => {
         dispatch(setLoadingAction(true))
-        
+
         return axios.post(`auth/verifyCode`, data).then(response => {
             history.push('/login')
             toast.success('Account verified successfully!!')

@@ -5,7 +5,7 @@ import { saveBountiesAction, saveBountyAction, saveMyBountiesAction, saveProject
 
 function fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRange, searchTerm) {
     let url = 'bounty'
-    
+
 
     if (searchTerm && searchTerm !== '') {
         url = `${url}?text=${searchTerm}`
@@ -17,7 +17,7 @@ function fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRan
     if (selectedSocialMedium && selectedSocialMedium !== '') {
         url = `${url}&socialMedium=${selectedSocialMedium}`
     }
-    
+
     if (selectedPriceRange && selectedPriceRange !== '') {
         url = `${url}&${selectedPriceRange}`
     }
@@ -38,7 +38,7 @@ function submitBountyAPI(data) {
 
 
 function fetchProjectsAPI() {
-    return axios.get(`/bounty/projects`)
+    return axios.get(`/projects/filters`)
 }
 
 function fetchSocialMediumsAPI() {

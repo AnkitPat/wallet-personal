@@ -14,7 +14,7 @@ const CardCongratulations = () => {
         <img className='congratulations-img-right' src={decorationRight} alt='decor-right' />
         <div className="h2">🎉</div>
         <div className='text-center'>
-          <h1 className='mb-1 text-white'>Welcome To Potentiam {userDetails ? userDetails.name : ''},</h1>
+          <h2 className='mb-1 text-white'>Welcome To Potentiam {userDetails ? userDetails.name : ''},</h2>
           <CardText className='m-auto w-75'>
           Get Ready For The Upcoming Featured Projects On Potentiam
           </CardText>

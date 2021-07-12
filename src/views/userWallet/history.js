@@ -21,14 +21,19 @@ const WalletHistory = (
 
     const columns = [
         {
-            selector: 'amount',
-            name: 'Amount',
+            selector: 'credits',
+            name: 'Credits',
             style: {
                 width: '20%'
             },
             headerStyle: {
                 width: '20%'
             }
+        },
+        {
+            selector: 'amount',
+            name: 'Amount',
+            cell: row => <span>${row.amount || 0}</span>
         },
         {
             selector: 'currency',

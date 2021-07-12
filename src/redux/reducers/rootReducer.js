@@ -12,6 +12,7 @@ import dashboard from './dashboard'
 import membership from './membership'
 import withdrawal from './withdrawal'
 import myaccount from './myAccount'
+import projects from './projects'
 import { connectRouter } from 'connected-react-router'
 import { history } from '../../utility/Utils'
 
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   users,
   membership,
   withdrawal,
+  projects,
   myaccount
 })
 
