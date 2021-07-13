@@ -1,7 +1,17 @@
 import axios from "axios"
 import { toast } from "react-toastify"
 import { history } from "../../../utility/Utils"
-import { saveBountiesAction, saveBountyAction, saveMyBountiesAction, saveProjectsAction, saveSocialMediumsAction, saveSubmissionsAction, setButtonLoadingAction, setLoadingAction } from "./actions"
+import {
+    saveBountiesAction,
+    saveBountyAction,
+    saveMyBountiesAction,
+    saveMyProjectsAction,
+    saveProjectsAction,
+    saveSocialMediumsAction,
+    saveSubmissionsAction,
+    setButtonLoadingAction,
+    setLoadingAction
+} from "./actions"
 
 function fetchBountyAPI(selectedProjects, selectedSocialMedium, selectedPriceRange, searchTerm) {
     let url = 'bounty'
@@ -36,9 +46,12 @@ function submitBountyAPI(data) {
     return axios.post(`/bounty/submission`, data)
 }
 
-
 function fetchProjectsAPI() {
     return axios.get(`/projects/filters`)
+}
+
+function fetchMyProjectsAPI() {
+    return axios.get(`/bounty/projects`)
 }
 
 function fetchSocialMediumsAPI() {
@@ -169,6 +182,18 @@ export const fetchProjectsAndSocialMediums = () => {
             console.log(e)
             dispatch(setLoadingAction(false))
             toast.error('Error in fetching')
+        }
+    }
+}
+
+export const fetchMyProjects = () => {
+    return async (dispatch) => {
+        try {
+            const response = await fetchMyProjectsAPI()
+            dispatch(saveMyProjectsAction(response.data))
+        } catch (e) {
+            dispatch(setLoadingAction(false))
+            toast.error('Error in fetching projects')
         }
     }
 }

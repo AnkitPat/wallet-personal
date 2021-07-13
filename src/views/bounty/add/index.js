@@ -24,14 +24,20 @@ import { Controller, useForm } from 'react-hook-form'
 import DatePicker from 'react-datepicker'
 import WYSIWYGEditor from './components/Htmleditor/Editor'
 import { useDispatch, useSelector } from 'react-redux'
-import { addBounty, editBounty, fetchBountyDetails, fetchProjectsAndSocialMediums } from '../../../redux/actions/bounty'
+import {
+    addBounty,
+    editBounty,
+    fetchBountyDetails,
+    fetchMyProjects,
+    fetchProjectsAndSocialMediums
+} from '../../../redux/actions/bounty'
 import { ProgressLoader } from '../../../layouts/ProgressLoader'
 import { Link, useLocation, useParams } from "react-router-dom"
 
 const BlogEdit = () => {
     const dispatch = useDispatch()
     const loading = useSelector(state => state.bounty.buttonLoading)
-    const projects = useSelector(state => state.bounty.projects)
+    const projects = useSelector(state => state.bounty.myProjects)
     const socialMediums = useSelector(state => state.bounty.socialMediums)
     const bounty = useSelector(state => state.bounty.bounty)
     const pageLoading = useSelector(state => state.bounty.loading)
@@ -136,6 +142,10 @@ const BlogEdit = () => {
 
     useEffect(() => {
         dispatch(fetchProjectsAndSocialMediums())
+    }, [])
+
+    useEffect(() => {
+        dispatch(fetchMyProjects())
     }, [])
 
 
