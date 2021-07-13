@@ -12,7 +12,7 @@ import * as Yup from 'yup'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
 import { handleRegister } from '../../redux/actions/auth'
 
-const RegisterV2 = () => {
+const HostRegister = () => {
     const [referralCode, setReferralCode] = useState('')
     const [skin, setSkin] = useSkin()
     const {search} = useLocation()
@@ -157,4 +157,4 @@ const RegisterV2 = () => {
     )
 }
 
-export default RegisterV2
+export default HostRegister
