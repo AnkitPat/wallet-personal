@@ -11,11 +11,15 @@ import { Button, CardText, CardTitle, Col, Form, FormGroup, Input, Label, Row } 
 import * as Yup from 'yup'
 import { ProgressLoader } from '../../layouts/ProgressLoader'
 import { handleRegister } from '../../redux/actions/auth'
+import logo from '@src/assets/images/icons/logo-light.png'
+import logoLight from '@src/assets/images/icons/logo.png'
+
 
 const HostRegister = () => {
     const [referralCode, setReferralCode] = useState('')
     const [skin, setSkin] = useSkin()
     const {search} = useLocation()
+    const potentiamLogo = skin !== 'dark' ? logo : logoLight
 
     useEffect(() => {
         if (search) {
@@ -59,11 +63,13 @@ const HostRegister = () => {
     const illustration = skin === 'dark' ? 'register-v2-dark.svg' : 'register-v2.svg',
         source = require(`@src/assets/images/pages/${illustration}`).default
 
-  
+
     return (
         <div className='auth-wrapper auth-v2'>
             <Row className='auth-inner m-0'>
-
+                <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
+                    <img src={potentiamLogo} height={100} width={100} alt="logo"/>
+                </Link>
                 <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
                     <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
                         <img className='img-fluid' src={source} alt='Login V2' />
@@ -72,7 +78,7 @@ const HostRegister = () => {
                 <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
                     <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
                         <CardTitle tag='h4' className='mb-1'>
-                            Create your account
+                            Create a host account
                         </CardTitle>
 
                         <Form className='auth-register-form mt-2' onSubmit={handleSubmit(onSubmit)}>
@@ -149,7 +155,7 @@ const HostRegister = () => {
                             Already have an account?{' '}
                             <Link to="/login">Sign in here</Link>
                         </CardText>
-                       
+
                     </Col>
                 </Col>
             </Row>

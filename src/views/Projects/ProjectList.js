@@ -7,7 +7,11 @@ import {Text} from 'recharts'
 import {Edit2, Trash} from "react-feather"
 import {ProgressLoader} from '../../layouts/ProgressLoader'
 import {Link} from 'react-router-dom'
-import {fetchProjects} from "../../redux/actions/projects"
+import {deleteProject, deleteProjectAction, fetchProjects} from "../../redux/actions/projects"
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 const ProjectList = () => {
     const dispatch = useDispatch()
@@ -17,6 +21,25 @@ const ProjectList = () => {
 
     const projects = useSelector(state => state.projects.projects)
     const loading = useSelector(state => state.projects.loading)
+
+    const deleteProject = (id) => {
+        return MySwal.fire({
+            title: 'Are you sure you want to delete the project?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-outline-danger ml-1'
+            },
+            buttonsStyling: false
+        }).then(result => {
+            if (result.value) {
+                dispatch(deleteProjectAction(id))
+            }
+        })
+    }
 
     const columns = [
         {
@@ -95,7 +118,7 @@ const ProjectList = () => {
                             Edit
                         </UncontrolledTooltip>
                     </Link>
-                    <span className="cursor-pointer" onClick={() => dispatch(verifyBounty(row.id, false))}>
+                    <span className="cursor-pointer" onClick={() => deleteProject(row.id)}>
                         <Trash size={17} className='mx-1' id={`pw-tooltip-${row.id}`}/>
                         <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>
                             Delete
