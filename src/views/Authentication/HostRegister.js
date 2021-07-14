@@ -1,18 +1,19 @@
-import {useEffect, useState} from 'react'
-import {Link, useLocation} from 'react-router-dom'
 import InputPasswordToggle from '@components/input-password-toggle'
-import {Card, CardBody, CardTitle, CardText, Form, FormGroup, Label, Input, Button} from 'reactstrap'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useSkin } from '@hooks/useSkin'
 import '@styles/base/pages/page-auth.scss'
 import classNames from 'classnames'
-import {useForm} from 'react-hook-form'
-import {yupResolver} from '@hookform/resolvers/yup'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useLocation } from 'react-router-dom'
+import { Button, CardText, CardTitle, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap'
 import * as Yup from 'yup'
-import {useDispatch, useSelector} from 'react-redux'
-import {handleRegister} from '../../redux/actions/auth'
-import {ProgressLoader} from '../../layouts/ProgressLoader'
+import { ProgressLoader } from '../../layouts/ProgressLoader'
+import { handleRegister } from '../../redux/actions/auth'
 import logo from '@src/assets/images/icons/logo-light.png'
 import logoLight from '@src/assets/images/icons/logo.png'
-import {useSkin} from '../../utility/hooks/useSkin'
+
 
 const HostRegister = () => {
     const [referralCode, setReferralCode] = useState('')
@@ -58,16 +59,26 @@ const HostRegister = () => {
     const onSubmit = values => dispatch(handleRegister({...values, referralCode, roleId: 2}))
 
     const loading = useSelector(state => state.auth.loading)
+
+    const illustration = skin === 'dark' ? 'register-v2-dark.svg' : 'register-v2.svg',
+        source = require(`@src/assets/images/pages/${illustration}`).default
+
+
     return (
-        <div className='auth-wrapper auth-v1 px-2'>
-            <div className='auth-inner py-2'>
-                <Card className='mb-0'>
-                    <CardBody>
-                        <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
-                            <img src={potentiamLogo} height={100} width={100} alt="logo"/>
-                        </Link>
+        <div className='auth-wrapper auth-v2'>
+            <Row className='auth-inner m-0'>
+                <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
+                    <img src={potentiamLogo} height={100} width={100} alt="logo"/>
+                </Link>
+                <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
+                    <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
+                        <img className='img-fluid' src={source} alt='Login V2' />
+                    </div>
+                </Col>
+                <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
+                    <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
                         <CardTitle tag='h4' className='mb-1'>
-                            Create your account
+                            Create a host account
                         </CardTitle>
 
                         <Form className='auth-register-form mt-2' onSubmit={handleSubmit(onSubmit)}>
@@ -76,8 +87,8 @@ const HostRegister = () => {
                                     Name
                                 </Label>
                                 <Input type='text' id='register-name' placeholder='johndoe' autoFocus
-                                       className={classNames({'is-invalid': errors['name']})}
-                                       {...register('name')}
+                                    className={classNames({ 'is-invalid': errors['name'] })}
+                                    {...register('name')}
 
                                 />
                                 <small className='text-danger'>
@@ -89,8 +100,8 @@ const HostRegister = () => {
                                     Email
                                 </Label>
                                 <Input type='email' id='register-email' placeholder='john@example.com'
-                                       className={classNames({'is-invalid': errors['email']})}
-                                       {...register('email')}
+                                    className={classNames({ 'is-invalid': errors['email'] })}
+                                    {...register('email')}
 
                                 />
                                 <small className='text-danger'>
@@ -102,8 +113,8 @@ const HostRegister = () => {
                                     Phone
                                 </Label>
                                 <Input type='number' id='register-phone' placeholder='+4413456789'
-                                       className={classNames({'is-invalid': errors['phone']})}
-                                       {...register('phone')}
+                                    className={classNames({ 'is-invalid': errors['phone'] })}
+                                    {...register('phone')}
                                 />
                                 <small className='text-danger'>
                                     {errors.phone && errors.phone.message}
@@ -115,7 +126,7 @@ const HostRegister = () => {
                                 </Label>
                                 <InputPasswordToggle
                                     id='register-password'
-                                    className={classNames({'is-invalid': errors['password']})}
+                                    className={classNames({ 'is-invalid': errors['password'] })}
                                     {...register('password')}
                                 />
                                 <small className='text-danger'>
@@ -128,7 +139,7 @@ const HostRegister = () => {
                                 </Label>
                                 <InputPasswordToggle
                                     id='register-confirm-password'
-                                    className={classNames({'is-invalid': errors['confirmPassword']})}
+                                    className={classNames({ 'is-invalid': errors['confirmPassword'] })}
                                     {...register('confirmPassword')}
                                 />
                                 <small className='text-danger'>
@@ -136,7 +147,7 @@ const HostRegister = () => {
                                 </small>
                             </FormGroup>
 
-                            {loading ? <ProgressLoader/> : <Button.Ripple color='primary' block type="submit">
+                            {loading ? <ProgressLoader /> : <Button.Ripple color='primary' block type="submit">
                                 Sign up
                             </Button.Ripple>}
                         </Form>
@@ -144,9 +155,10 @@ const HostRegister = () => {
                             Already have an account?{' '}
                             <Link to="/login">Sign in here</Link>
                         </CardText>
-                    </CardBody>
-                </Card>
-            </div>
+
+                    </Col>
+                </Col>
+            </Row>
         </div>
     )
 }

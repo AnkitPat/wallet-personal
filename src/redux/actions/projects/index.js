@@ -19,6 +19,10 @@ function getProjectAPI(id) {
     return axios.get(`projects/${id}`)
 }
 
+function deleteProjectAPI(id) {
+    return axios.delete(`projects/${id}`)
+}
+
 function uploadProjectLogo(data, name) {
     const base64 = data
     return fetch(base64)
@@ -87,6 +91,18 @@ export const fetchProjects = () => {
         } catch (e) {
             dispatch(getProjectFail())
             toast.error('Error in getting projects')
+        }
+    }
+}
+
+export const deleteProjectAction = (id) => {
+    return async (dispatch) => {
+        try {
+            await deleteProjectAPI(id)
+            dispatch(fetchProjects())
+            toast.success('Project deleted successfully')
+        } catch (e) {
+            toast.error(e.response.data.message)
         }
     }
 }
