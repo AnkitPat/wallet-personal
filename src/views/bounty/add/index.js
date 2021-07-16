@@ -11,7 +11,7 @@ import {
     FormGroup,
     Button,
     Input,
-    CustomInput
+    CustomInput, UncontrolledTooltip
 } from 'reactstrap'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -33,6 +33,7 @@ import {
 } from '../../../redux/actions/bounty'
 import { ProgressLoader } from '../../../layouts/ProgressLoader'
 import { Link, useLocation, useParams } from "react-router-dom"
+import {HelpCircle} from "react-feather"
 
 const BlogEdit = () => {
     const dispatch = useDispatch()
@@ -193,7 +194,12 @@ const BlogEdit = () => {
                                         </Col>
                                         <Col md='6'>
                                             <FormGroup className="d-flex flex-column">
-                                                <label htmlFor="price">Budget</label>
+                                                <label htmlFor="price">
+                                                    Budget <HelpCircle size={18} id="UnControlledExample" className='text-muted cursor-pointer' />
+                                                </label>
+                                                <UncontrolledTooltip placement='top' target='UnControlledExample'>
+                                                    If you are not sure about the budget, contact us
+                                                </UncontrolledTooltip>
                                                 <input
                                                     name="amount"
                                                     type="number"

@@ -32,16 +32,16 @@ export const adminItems = [
         icon: <Gift size={20}/>,
         children: [
             {
-                id: 'bountyList',
-                title: 'List',
-                icon: <Circle size={12}/>,
-                navLink: '/bounties'
-            },
-            {
                 id: 'addBounty',
                 title: 'Add',
                 icon: <Circle size={12}/>,
                 navLink: '/bounties/add'
+            },
+            {
+                id: 'bountyList',
+                title: 'List',
+                icon: <Circle size={12}/>,
+                navLink: '/bounties'
             },
             {
                 id: 'bountySubmission',
