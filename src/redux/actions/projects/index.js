@@ -1,7 +1,14 @@
 import {toast} from "react-toastify"
 import {history} from "../../../utility/Utils"
 import axios from "axios"
-import {getProjectFail, getProjects, getProjectsSuccess, getProjectSuccess, setButtonLoadingAction} from "./actions"
+import {
+    getHostSuccess,
+    getProjectFail,
+    getProjects,
+    getProjectsSuccess,
+    getProjectSuccess,
+    setButtonLoadingAction
+} from "./actions"
 
 function addProjectAPI(data) {
     return axios.post('projects', data)
@@ -21,6 +28,10 @@ function getProjectAPI(id) {
 
 function deleteProjectAPI(id) {
     return axios.delete(`projects/${id}`)
+}
+
+function fetchHosts() {
+    return axios.get(`admin/host`)
 }
 
 function uploadProjectLogo(data, name) {
@@ -116,6 +127,17 @@ export const getProject = (id) => {
         } catch (e) {
             dispatch(getProjectFail())
             toast.error('Error in getting projects')
+        }
+    }
+}
+
+export const getHosts = () => {
+    return async (dispatch) => {
+        try {
+            const result = await fetchHosts()
+            dispatch(getHostSuccess(result.data))
+        } catch (e) {
+            toast.error('Error in getting hosts')
         }
     }
 }

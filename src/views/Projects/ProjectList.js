@@ -7,13 +7,14 @@ import {Text} from 'recharts'
 import {Edit2, Trash} from "react-feather"
 import {ProgressLoader} from '../../layouts/ProgressLoader'
 import {Link} from 'react-router-dom'
-import {deleteProject, deleteProjectAction, fetchProjects} from "../../redux/actions/projects"
+import {deleteProjectAction, fetchProjects} from "../../redux/actions/projects"
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 const MySwal = withReactContent(Swal)
 
 const ProjectList = () => {
+    const role = useSelector(state => state.auth.userRole)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchProjects())
@@ -106,28 +107,36 @@ const ProjectList = () => {
                     </UncontrolledTooltip>
                 </div>
             )
-        },
-        {
-            selector: 'bountyTask.updatedAt',
-            name: 'Action',
-            cell: row => (
-                <div className='column-action d-flex align-items-center'>
-                    <Link to={`/projects/${row.id}/edit`}>
-                        <Edit2 size={17} id={`send-tooltip-${row.id}`}/>
-                        <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
-                            Edit
-                        </UncontrolledTooltip>
-                    </Link>
-                    <span className="cursor-pointer" onClick={() => deleteProject(row.id)}>
+        }
+    ]
+
+    if (role === 'administrator') {
+        columns.push({
+            selector: 'user.name',
+            name: 'User'
+        })
+    }
+
+    columns.push({
+        selector: 'bountyTask.updatedAt',
+        name: 'Action',
+        cell: row => (
+            <div className='column-action d-flex align-items-center'>
+                <Link to={`/projects/${row.id}/edit`}>
+                    <Edit2 size={17} id={`send-tooltip-${row.id}`}/>
+                    <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
+                        Edit
+                    </UncontrolledTooltip>
+                </Link>
+                <span className="cursor-pointer" onClick={() => deleteProject(row.id)}>
                         <Trash size={17} className='mx-1' id={`pw-tooltip-${row.id}`}/>
                         <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>
                             Delete
                         </UncontrolledTooltip>
                     </span>
-                </div>
-            )
-        }
-    ]
+            </div>
+        )
+    })
 
     return (
         <div>

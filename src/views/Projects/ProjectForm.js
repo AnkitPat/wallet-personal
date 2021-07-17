@@ -11,17 +11,21 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Link, useParams} from "react-router-dom"
 import {
     Button, Card,
-    CardBody, Col, Form, FormGroup, Input, Label, Media, Row
+    CardBody, Col, Form, FormGroup, Input, Label, Media, Row, UncontrolledTooltip
 } from 'reactstrap'
 import * as Yup from 'yup'
 import {ProgressLoader} from '../../layouts/ProgressLoader'
-import {addProject, editProject, getProject} from "../../redux/actions/projects"
+import {addProject, editProject, getHosts, getProject} from "../../redux/actions/projects"
 import defaultImage from '../../assets/images/avatars/12.png'
+import {HelpCircle} from "react-feather"
 
 const ProjectForm = () => {
     const dispatch = useDispatch()
     const loading = useSelector(state => state.projects.buttonLoading)
     const project = useSelector(state => state.projects.project)
+    const role = useSelector(state => state.auth.userRole)
+    const hosts = useSelector(state => state.projects.hosts)
+
     const [avatar, setAvatar] = useState('')
     const params = useParams()
 
@@ -73,6 +77,12 @@ const ProjectForm = () => {
             reset({})
         }
     }, [params])
+
+    useEffect(() => {
+        if (role === 'administrator') {
+            dispatch(getHosts())
+        }
+    }, [role])
 
     useEffect(() => {
         if (project && params && params.id) {
@@ -157,7 +167,37 @@ const ProjectForm = () => {
                                         </FormGroup>
                                     </Col>
                                 </Row>
-
+                                {role === 'administrator' &&
+                                    <Row>
+                                        <Col sm='12'>
+                                            <label>Select User <HelpCircle size={18} id="UnControlledExample" className='text-muted cursor-pointer' /></label>
+                                            <UncontrolledTooltip placement='top' target='UnControlledExample'>
+                                                If you want to create a project for a host
+                                            </UncontrolledTooltip>
+                                            <Input
+                                                {...register('userId')}
+                                                type='select'
+                                                name="userId"
+                                                id='blog-edit-status'
+                                                value={getValues().userId}
+                                                onChange={e => {
+                                                    setValue('userId', e.target.value)
+                                                    if (e.target.value !== '') {
+                                                        clearErrors('userId')
+                                                    }
+                                                }}
+                                            >
+                                                <option value={''}>{'Select User'}</option>
+                                                {hosts.map(host =>
+                                                    <option key={`${host.id}-${host.name}`} value={host.id}>{host.name}</option>
+                                                )}
+                                            </Input>
+                                            <small className='text-danger'>
+                                                {errors.projectId && errors.projectId.message}
+                                            </small>
+                                        </Col>
+                                    </Row>
+                                }
                                 <Row>
                                     <Col sm='12'>
                                         <div className='d-flex align-items-center mb-2'>

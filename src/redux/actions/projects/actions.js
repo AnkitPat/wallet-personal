@@ -4,6 +4,7 @@ export const GET_PROJECT = 'wallet/project/GET_PROJECT'
 export const GET_PROJECTS_SUCCESS = 'wallet/project/GET_PROJECTS_SUCCESS'
 export const GET_PROJECTS_FAIL = 'wallet/project/GET_PROJECTS_FAIL'
 export const GET_PROJECT_SUCCESS = 'wallet/project/GET_PROJECT_SUCCESS'
+export const GET_HOST_SUCCESS = 'wallet/project/GET_HOST_SUCCESS'
 
 export const setButtonLoadingAction = (flag) => {
     return {
@@ -35,5 +36,12 @@ export const getProjectsSuccess = (list) => {
 export const getProjectFail = () => {
     return {
         type: GET_PROJECTS_FAIL
+    }
+}
+
+export const getHostSuccess = (data) => {
+    return {
+        type: GET_HOST_SUCCESS,
+        data
     }
 }

@@ -1,5 +1,6 @@
 import produce from 'immer'
 import {
+    GET_HOST_SUCCESS,
     GET_PROJECT_SUCCESS,
     GET_PROJECTS,
     GET_PROJECTS_FAIL,
@@ -12,7 +13,8 @@ const initialState = {
     projects: [],
     project: null,
     loading: false,
-    buttonLoading: false
+    buttonLoading: false,
+    hosts: []
 }
 
 /* eslint-disable default-case, no-param-reassign */
@@ -34,6 +36,9 @@ const projectReducer = (state = initialState, action) =>
                 break
             case GET_PROJECT_SUCCESS:
                 draft.project = action.data
+                break
+            case GET_HOST_SUCCESS:
+                draft.hosts = action.data
                 break
         }
     })

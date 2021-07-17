@@ -43,6 +43,7 @@ const BlogEdit = () => {
     const bounty = useSelector(state => state.bounty.bounty)
     const pageLoading = useSelector(state => state.bounty.loading)
     const userCredits = useSelector(state => state.auth.userDetails.credit)
+    const minimumBudget = useSelector(state => state.auth.userDetails.minimumBudget)
     const [multipleSubmission, setMultipleSubmission] = useState(false)
 
     const contentDataState =
@@ -60,6 +61,7 @@ const BlogEdit = () => {
         amount: Yup.number('Invalid Amount').required("Price is required")
             .nullable()
             .transform(value => (isNaN(value) ? undefined : value))
+            .min(minimumBudget, `Minimum budget is ${minimumBudget} credits`)
             .max(userCredits, 'Insufficient Balance'),
         projectId: Yup.string()
             .required('Project is required'),

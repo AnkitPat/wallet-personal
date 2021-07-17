@@ -13,13 +13,13 @@ export const projectManagerItems = [
         icon: <Briefcase size={20}/>,
         children: [
             {
-                id: 'bountyList',
+                id: 'host-projectList',
                 title: 'List',
                 icon: <Circle size={12}/>,
                 navLink: '/projects'
             },
             {
-                id: 'addProject',
+                id: 'host-addProject',
                 title: 'Add',
                 icon: <Circle size={12}/>,
                 navLink: '/projects/add'
@@ -32,19 +32,19 @@ export const projectManagerItems = [
         icon: <Gift size={20}/>,
         children: [
             {
-                id: 'addBounty',
+                id: 'host-addBounty',
                 title: 'Add',
                 icon: <Circle size={12}/>,
                 navLink: '/bounties/add'
             },
             {
-                id: 'bountyList',
+                id: 'host-bountyList',
                 title: 'List',
                 icon: <Circle size={12}/>,
                 navLink: '/bounties'
             },
             {
-                id: 'bountySubmission',
+                id: 'host-bountySubmission',
                 title: 'Submissions',
                 icon: <Circle size={12}/>,
                 navLink: '/bounties/submissions'
@@ -57,7 +57,7 @@ export const projectManagerItems = [
         icon: <CreditCard size={20}/>,
         children: [
             {
-                id: 'addCredits',
+                id: 'host-addCredits',
                 title: 'Add Credits',
                 icon: <Circle size={12}/>,
                 navLink: '/wallet'
@@ -65,7 +65,7 @@ export const projectManagerItems = [
         ]
     },
     {
-        id: 'faq',
+        id: 'host-faq',
         title: 'FAQ',
         icon: <HelpCircle size={12}/>,
         navLink: '/faq'

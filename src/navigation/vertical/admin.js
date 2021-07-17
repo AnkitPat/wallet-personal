@@ -13,7 +13,7 @@ export const adminItems = [
         icon: <Briefcase size={20}/>,
         children: [
             {
-                id: 'bountyList',
+                id: 'projectList',
                 title: 'List',
                 icon: <Circle size={12}/>,
                 navLink: '/projects'
