@@ -78,7 +78,7 @@ const BountyDetails = () => {
                                             </div>
                                             <div>
                                                 {bounty.bountyTiers.map((item, index) => (
-                                                    <p>Tier {++index}: {item.followerCount}+ friends: {item.reward} stakes</p>
+                                                    <p>Tier {++index}: {item.followerCount}+ friends: {item.reward} PTM</p>
                                                 ))}
                                             </div>
                                             <div
