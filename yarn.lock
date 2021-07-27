@@ -12518,6 +12518,11 @@
     "flatpickr" "^4.5.7"
     "prop-types" "^15.5.10"
 
+"react-ga@^3.3.0":
+  "integrity" "sha512-o8RScHj6Lb8cwy3GMrVH6NJvL+y0zpJvKtc0+wmH7Bt23rszJmnqEQxRbyrqUzk9DTJIHoP42bfO5rswC9SWBQ=="
+  "resolved" "https://registry.npmjs.org/react-ga/-/react-ga-3.3.0.tgz"
+  "version" "3.3.0"
+
 "react-hook-form@^7.4.2":
   "integrity" "sha512-qpiMf670nrbgngH11qmpKTKa/ulTt+5JXNL7lBnF3C3jwusrw17dyyZ9J92mHFAflxwYWndKECPM85DLEnIf0A=="
   "resolved" "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.7.1.tgz"
@@ -12843,7 +12848,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@^16.13.1", "react@17.0.1":
+"react@^15.6.2 || ^16.0 || ^17", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"
