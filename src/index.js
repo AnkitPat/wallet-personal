@@ -32,12 +32,16 @@ import './@core/assets/fonts/feather/iconfont.css'
 import './@core/scss/core.scss'
 import './assets/scss/style.scss'
 
+import ReactGA from 'react-ga'
+
 // ** Service Worker
 import * as serviceWorker from './serviceWorker'
 import axios from 'axios'
 axios.defaults.baseURL = process.env.REACT_APP_API_URL
 // ** Lazy load app
 const LazyApp = lazy(() => import('./App'))
+
+ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS)
 
 ReactDOM.render(
   <Provider store={store}>

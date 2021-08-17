@@ -119,11 +119,13 @@ const Login = props => {
                 <span>Create an account</span>
               </Link>
             </p>
-            <p className='text-center mt-2'>Or</p>
-            <p className='text-center mt-2'>
+            <p className='text-center'>
+              <span className='mr-25'>Or</span>
+            </p>
+            <p className='text-center mt-1'>
               <span className='mr-25'>Become a host?</span>
               <Link to='/register/host'>
-                <span>Register</span>
+                <span>Create an account</span>
               </Link>
             </p>
           </Col>
