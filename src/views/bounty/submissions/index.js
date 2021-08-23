@@ -34,6 +34,9 @@ const Submissions = () => {
         {
             selector: 'user_bounties_result',
             name: 'Submitted Link',
+            cell: row => <a href={row.user_bounties_result} target="_blank">
+                {row.user_bounties_result}
+            </a>,
             style: {
                 width: '20%'
             },
