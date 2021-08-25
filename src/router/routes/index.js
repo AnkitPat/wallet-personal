@@ -60,6 +60,14 @@ const Routes = [
         }
     },
     {
+        path: '/reset-password/:token',
+        component: lazy(() => import('../../views/Authentication/ResetPassword')),
+        layout: 'BlankLayout',
+        meta: {
+            authRoute: true
+        }
+    },
+    {
         path: '/authenticator',
         exact: true,
         component: lazy(() => import('../../views/Authenticator')),
