@@ -59,9 +59,9 @@ export const AddBountyLink = ({ selectedBounty, showConfirmationPopup, setShowCo
                        
                        >
                             <option value="" disabled selected>Select Tier</option>
-                            {selectedBounty && selectedBounty.bountyTiers.map(tier => (
+                            {selectedBounty && selectedBounty.bountyTiers.map((tier, index) => (
                                 <option key={tier.id} value={tier.id}>
-                                    {tier.reward}
+                                    Tier {++index}: {tier.followerCount}+ friends: {tier.reward} PTM
                                 </option>
                             ))}
                         </select>
