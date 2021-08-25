@@ -1,6 +1,6 @@
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-import {Fragment, useEffect, useState} from 'react'
+import {Fragment, useCallback, useEffect, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import {ChevronDown, Facebook, Instagram, Linkedin, Slash, Twitter, UserCheck, Youtube} from 'react-feather'
 import ReactPaginate from 'react-paginate'
@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Button, Card, Col, CustomInput, Input, Label, Row, UncontrolledTooltip} from 'reactstrap'
 import {ProgressLoader} from '../../layouts/ProgressLoader'
 import {blockUser, fetchUsers} from '../../redux/actions/users'
+import debounce from 'lodash.debounce'
 
 // ** Table Header
 const CustomHeader = ({handlePerPage, rowsPerPage, handleFilter, searchTerm}) => {
@@ -48,8 +49,7 @@ const CustomHeader = ({handlePerPage, rowsPerPage, handleFilter, searchTerm}) =>
                             id='search-invoice'
                             className='ml-50 w-100'
                             type='text'
-                            value={searchTerm}
-                            onChange={e => handleFilter(e.target.value)}
+                            onChange={handleFilter}
                         />
                     </div>
                 </Col>
@@ -77,7 +77,6 @@ const UsersList = () => {
             name: 'Social',
             minWidth: '100px',
             cell: row => {
-                console.log(row)
                 return (
                     <Fragment>
                         {row.facebook &&
@@ -178,11 +177,15 @@ const UsersList = () => {
         setRowsPerPage(value)
     }
 
-    // ** Function in get data on search query change
-    const handleFilter = val => {
-        setSearchTerm(val)
-        dispatch(fetchUsers(currentPage - 1, rowsPerPage, val))
+    const changeHandler = event => {
+        setSearchTerm(event.target.value)
+        dispatch(fetchUsers(currentPage - 1, rowsPerPage, event.target.value))
     }
+
+    // ** Function in get data on search query change
+    const debouncedChangeHandler = useCallback(
+        debounce(changeHandler, 1000), []
+    )
 
     // ** Custom Pagination
     const CustomPagination = () => {
@@ -241,7 +244,7 @@ const UsersList = () => {
                             handlePerPage={handlePerPage}
                             rowsPerPage={rowsPerPage}
                             searchTerm={searchTerm}
-                            handleFilter={handleFilter}
+                            handleFilter={debouncedChangeHandler}
                         />
                     }
                 />

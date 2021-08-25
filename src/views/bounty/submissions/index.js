@@ -22,7 +22,7 @@ const Submissions = () => {
 
     const columns = [
         {
-            selector: 'bountyTask.title',
+            selector: 'bountyTask_title',
             name: 'Title',
             style: {
                 width: '20%'
@@ -32,8 +32,11 @@ const Submissions = () => {
             }
         },
         {
-            selector: 'result',
+            selector: 'user_bounties_result',
             name: 'Submitted Link',
+            cell: row => <a href={row.user_bounties_result} target="_blank">
+                {row.user_bounties_result}
+            </a>,
             style: {
                 width: '20%'
             },
@@ -42,7 +45,7 @@ const Submissions = () => {
             }
         },
         {
-            selector: 'bountyTiers.reward',
+            selector: 'bountyTiers_reward',
             name: 'Reward',
             style: {
                 width: '20%'
@@ -52,9 +55,9 @@ const Submissions = () => {
             }
         },
         {
-            selector: 'bountyTask.updatedAt',
+            selector: 'bountyTask_updatedAt',
             name: 'Last updated',
-            format: row => moment(row.bountyTask.updatedAt).format('DD/MM/YYYY'),
+            format: row => moment(row.bountyTask_updatedAt).format('DD/MM/YYYY'),
             style: {
                 width: '20%'
             },
@@ -63,10 +66,10 @@ const Submissions = () => {
             }
         },
         {
-            selector: 'user.name',
+            selector: 'user_name',
             name: 'Submitted by',
             cell: row => <div>
-                {row.user.name}
+                {row.user_name}
             </div>,
             style: {
                 width: '20%'
@@ -80,15 +83,15 @@ const Submissions = () => {
             name: 'Action',
             cell: row => (
                 <div className='column-action d-flex align-items-center'>
-                    <span className="cursor-pointer" onClick={() => dispatch(verifyBounty(row.id, true))}>
-                        <Check size={17} id={`send-tooltip-${row.id}`}/>
-                        <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
+                    <span className="cursor-pointer" onClick={() => dispatch(verifyBounty(row.user_bounties_id, true))}>
+                        <Check size={17} id={`send-tooltip-${row.user_bounties_id}`}/>
+                        <UncontrolledTooltip placement='top' target={`send-tooltip-${row.user_bounties_id}`}>
                             Accept
                         </UncontrolledTooltip>
                     </span>
-                    <span className="cursor-pointer" onClick={() => dispatch(verifyBounty(row.id, false))}>
-                        <X size={17} className='mx-1' id={`pw-tooltip-${row.id}`}/>
-                        <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>
+                    <span className="cursor-pointer" onClick={() => dispatch(verifyBounty(row.user_bounties_id, false))}>
+                        <X size={17} className='mx-1' id={`pw-tooltip-${row.user_bounties_id}`}/>
+                        <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.user_bounties_id}`}>
                             Reject
                         </UncontrolledTooltip>
                     </span>

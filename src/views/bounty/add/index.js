@@ -11,7 +11,7 @@ import {
     FormGroup,
     Button,
     Input,
-    CustomInput
+    CustomInput, UncontrolledTooltip
 } from 'reactstrap'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -24,17 +24,26 @@ import { Controller, useForm } from 'react-hook-form'
 import DatePicker from 'react-datepicker'
 import WYSIWYGEditor from './components/Htmleditor/Editor'
 import { useDispatch, useSelector } from 'react-redux'
-import { addBounty, editBounty, fetchBountyDetails, fetchProjectsAndSocialMediums } from '../../../redux/actions/bounty'
+import {
+    addBounty,
+    editBounty,
+    fetchBountyDetails,
+    fetchMyProjects,
+    fetchProjectsAndSocialMediums
+} from '../../../redux/actions/bounty'
 import { ProgressLoader } from '../../../layouts/ProgressLoader'
 import { Link, useLocation, useParams } from "react-router-dom"
+import {HelpCircle} from "react-feather"
 
 const BlogEdit = () => {
     const dispatch = useDispatch()
     const loading = useSelector(state => state.bounty.buttonLoading)
-    const projects = useSelector(state => state.bounty.projects)
+    const projects = useSelector(state => state.bounty.myProjects)
     const socialMediums = useSelector(state => state.bounty.socialMediums)
     const bounty = useSelector(state => state.bounty.bounty)
     const pageLoading = useSelector(state => state.bounty.loading)
+    const userCredits = useSelector(state => state.auth.userDetails.credit)
+    const minimumBudget = useSelector(state => state.auth.userDetails.minimumBudget)
     const [multipleSubmission, setMultipleSubmission] = useState(false)
 
     const contentDataState =
@@ -51,7 +60,9 @@ const BlogEdit = () => {
         deadline: Yup.string().required('Deadline is required'),
         amount: Yup.number('Invalid Amount').required("Price is required")
             .nullable()
-            .transform(value => (isNaN(value) ? undefined : value)),
+            .transform(value => (isNaN(value) ? undefined : value))
+            .min(minimumBudget, `Minimum budget is ${minimumBudget} credits`)
+            .max(userCredits, 'Insufficient Balance'),
         projectId: Yup.string()
             .required('Project is required'),
         socialMediumId: Yup.string()
@@ -136,6 +147,10 @@ const BlogEdit = () => {
         dispatch(fetchProjectsAndSocialMediums())
     }, [])
 
+    useEffect(() => {
+        dispatch(fetchMyProjects())
+    }, [])
+
 
     const addTier = () => {
         setIndexes(prevIndexes => [...prevIndexes, counter])
@@ -160,7 +175,9 @@ const BlogEdit = () => {
                     <Col sm='12'>
                         <Card>
                             <CardBody>
-
+                                <h5>
+                                    You need to have sufficient credits to create budget for your campaign. If not you can always <Link to={'/wallet'}>buy more.</Link>
+                                </h5>
                                 <Form className='mt-2' onSubmit={handleSubmit(onSubmit)}>
                                     <Row>
                                         <Col md='6'>
@@ -179,7 +196,12 @@ const BlogEdit = () => {
                                         </Col>
                                         <Col md='6'>
                                             <FormGroup className="d-flex flex-column">
-                                                <label htmlFor="price">Budget</label>
+                                                <label htmlFor="price">
+                                                    Budget <HelpCircle size={18} id="UnControlledExample" className='text-muted cursor-pointer' />
+                                                </label>
+                                                <UncontrolledTooltip placement='top' target='UnControlledExample'>
+                                                    If you are not sure about the budget, contact us
+                                                </UncontrolledTooltip>
                                                 <input
                                                     name="amount"
                                                     type="number"
@@ -250,7 +272,7 @@ const BlogEdit = () => {
                                                     <option value={''}>{'Select Project'}</option>
 
                                                     {projects.map(project =>
-                                                        <option key={project.title} value={project.id}>{project.title}</option>
+                                                        <option key={`${project.id}-${project.title}`} value={project.id}>{project.title}</option>
                                                     )}
 
                                                 </Input>
@@ -282,7 +304,7 @@ const BlogEdit = () => {
                                                 >
                                                     <option value={''}>{'Select Social medium'}</option>
                                                     {socialMediums.map(social =>
-                                                        <option key={social.title} value={social.id}>{social.title}</option>
+                                                        <option key={`${social.id}-social`} value={social.id}>{social.title}</option>
                                                     )}
 
                                                 </Input>
@@ -321,7 +343,7 @@ const BlogEdit = () => {
                                     {indexes.map(index => {
                                         const fieldName = `tiers[${index}]`
                                         return (
-                                            <Row key={index.toString()} className="my-1">
+                                            <Row key={`${index.toString()}-tiers`} className="my-1">
 
                                                 <Col md='5'>
                                                     <input
