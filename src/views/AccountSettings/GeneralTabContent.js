@@ -55,8 +55,10 @@ const GeneralTabs = ({ data }) => {
 
 
   const onSubmit = data => {
+    data = { ...data, profilePhoto: avatar }
+    if (data.countryId === ' ') delete data.countryId
     dispatch(handleUserInformationUpdate({
-      data: { ...data, profilePhoto: avatar }, isProfilePhotoUpdated: avatar !== data.avatar
+      data, isProfilePhotoUpdated: avatar !== data.avatar
     }))
   }
 
@@ -93,24 +95,11 @@ const GeneralTabs = ({ data }) => {
               <Label className='form-label' for='register-username'>
                 Username
               </Label>
-              <Controller
-                control={control}
-                id='name'
-                name='name'
-                className={classNames({
-                  'is-invalid': errors.name
-                })}
-                render={({ onChange, value }) => {
-                  return (
-                    <Input
-                      defaultValue={getValues().name}
-                      onChange={e => setValue('name', e.target.value)}
-                      type='text' id='register-username' placeholder='johndoe'
-                      className={classNames({ 'is-invalid': errors['name'] })}
-                      name="name"
-                    />
-                  )
-                }}
+              <input
+                name="name"
+                placeholder="Enter name"
+                {...register('name')}
+                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
               />
               <small className='text-danger'>
                 {errors.name && errors.name.message}
@@ -122,24 +111,12 @@ const GeneralTabs = ({ data }) => {
               <Label className='form-label' for='register-email'>
                 Email
               </Label>
-              <Controller
-                control={control}
-                id='email'
-                name='email'
-                className={classNames({
-                  'is-invalid': errors.email
-                })}
-                render={({ onChange, value }) => {
-                  return (
-                    <Input
-                      defaultValue={getValues().email}
-                      onChange={e => setValue('email', e.target.value)}
-                      type='text' id='register-email' placeholder='johndoe'
-                      className={classNames({ 'is-invalid': errors['email'] })}
-                      name="email"
-                    />
-                  )
-                }}
+              
+              <input
+                name="email"
+                placeholder="Enter email"
+                {...register('email')}
+                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
               />
               <small className='text-danger'>
                 {errors.email && errors.email.message}
@@ -151,25 +128,13 @@ const GeneralTabs = ({ data }) => {
               <Label className='form-label' for='register-phone'>
                 Phone
               </Label>
-              <Controller
-                control={control}
-                id='phone'
-                name='phone'
-                className={classNames({
-                  'is-invalid': errors.phone
-                })}
-                render={({ onChange, value }) => {
-                  return (
-                    <Input
-                      defaultValue={getValues().phone}
-                      onChange={e => setValue('phone', e.target.value)}
-                      type='number' id='register-phone' placeholder='123123123'
-                      className={classNames({ 'is-invalid': errors['phone'] })}
-                      name="phone"
-
-                    />
-                  )
-                }}
+              
+              <input
+                name="phone"
+                placeholder="Enter phone"
+                type="number"
+                {...register('phone')}
+                className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
               />
               <small className='text-danger'>
                 {errors.phone && errors.phone.message}
@@ -194,7 +159,7 @@ const GeneralTabs = ({ data }) => {
                 }}
 
               >
-                <option value={''}>{'Select Country'}</option>
+                <option value={' '}>{'Select Country'}</option>
 
                 {countries && countries.map(country =>
                   <option key={country.name} value={country.id}>{country.name}</option>

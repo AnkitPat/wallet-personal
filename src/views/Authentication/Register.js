@@ -1,24 +1,24 @@
-import {useEffect, useState} from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import InputPasswordToggle from '@components/input-password-toggle'
-import {Card, CardBody, CardTitle, CardText, Form, FormGroup, Label, Input, Button} from 'reactstrap'
+import { Card, CardBody, CardTitle, CardText, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
 import classNames from 'classnames'
-import {useForm} from 'react-hook-form'
-import {yupResolver} from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import {useDispatch, useSelector} from 'react-redux'
-import {handleRegister} from '../../redux/actions/auth'
-import {ProgressLoader} from '../../layouts/ProgressLoader'
+import { useDispatch, useSelector } from 'react-redux'
+import { handleRegister } from '../../redux/actions/auth'
+import { ProgressLoader } from '../../layouts/ProgressLoader'
 import logo from '@src/assets/images/icons/logo-light.png'
 import logoLight from '@src/assets/images/icons/logo.png'
-import {useSkin} from '../../utility/hooks/useSkin'
+import { useSkin } from '../../utility/hooks/useSkin'
 
 
 const Register = () => {
     const [referralCode, setReferralCode] = useState('')
     const [skin, setSkin] = useSkin()
-    const {search} = useLocation()
+    const { search } = useLocation()
     const potentiamLogo = skin !== 'dark' ? logo : logoLight
 
     useEffect(() => {
@@ -33,14 +33,18 @@ const Register = () => {
     const dispatch = useDispatch()
 
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required('Name is required'),
+        name: Yup.string().required('Name is required')
+            .test('space', 'Name is required', val => { return val?.trim().toString().length > 0 })
+            .test('min', 'Name must have 5 characters atleast', val => { return val?.trim().toString().length > 4 }),
         email: Yup.string()
             .required('Email is required')
             .email('Email is invalid'),
-        phone: Yup.string().required('Phone is required'),
+        phone: Yup.string().required('Phone is required').min(10, "Phone number should contain minimum 10 digits"),
         password: Yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Password is required'),
+            .required('Password is required')
+            .test('space', 'Password is required', val => { return val?.trim().toString().length > 0 })
+            .test('min', 'Password must have 6 characters atleast', val => { return val?.trim().toString().length > 5 })
+            .test('spaceatstart', 'Your password can’t start or end with a blank space', val => { return val?.trim().toString().length === val?.toString().length }),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), null], 'Passwords must match')
             .required('Confirm Password is required'),
@@ -50,13 +54,13 @@ const Register = () => {
     const {
         register,
         handleSubmit,
-        formState: {errors},
+        formState: { errors },
         setValue
     } = useForm({
         resolver: yupResolver(validationSchema)
     })
 
-    const onSubmit = values => dispatch(handleRegister({...values, referralCode, roleId: 1}))
+    const onSubmit = values => dispatch(handleRegister({ ...values, referralCode, roleId: 1 }))
 
     const loading = useSelector(state => state.auth.loading)
     return (
@@ -65,7 +69,7 @@ const Register = () => {
                 <Card className='mb-0'>
                     <CardBody>
                         <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
-                            <img src={potentiamLogo} height={100} width={100} alt="logo"/>
+                            <img src={potentiamLogo} height={100} width={100} alt="logo" />
                         </Link>
                         <CardTitle tag='h4' className='mb-1'>
                             Create your account
@@ -77,8 +81,8 @@ const Register = () => {
                                     Name
                                 </Label>
                                 <Input type='text' id='register-name' placeholder='johndoe' autoFocus
-                                       className={classNames({'is-invalid': errors['name']})}
-                                       {...register('name')}
+                                    className={classNames({ 'is-invalid': errors['name'] })}
+                                    {...register('name')}
 
                                 />
                                 <small className='text-danger'>
@@ -90,8 +94,8 @@ const Register = () => {
                                     Email
                                 </Label>
                                 <Input type='email' id='register-email' placeholder='john@example.com'
-                                       className={classNames({'is-invalid': errors['email']})}
-                                       {...register('email')}
+                                    className={classNames({ 'is-invalid': errors['email'] })}
+                                    {...register('email')}
 
                                 />
                                 <small className='text-danger'>
@@ -103,8 +107,8 @@ const Register = () => {
                                     Phone
                                 </Label>
                                 <Input type='number' id='register-phone' placeholder='+4413456789'
-                                       className={classNames({'is-invalid': errors['phone']})}
-                                       {...register('phone')}
+                                    className={classNames({ 'is-invalid': errors['phone'] })}
+                                    {...register('phone')}
                                 />
                                 <small className='text-danger'>
                                     {errors.phone && errors.phone.message}
@@ -116,8 +120,8 @@ const Register = () => {
                                 </Label>
                                 <InputPasswordToggle
                                     className='input-group-merge' id='register-password'
-                                    className={classNames({'is-invalid': errors['password']})}
-                                    {...register('password')}
+                                    className={classNames({ 'is-invalid': errors['password'] })}
+                                    {...register('password', { validate: value => !!value.trime() })}
 
                                 />
                                 <small className='text-danger'>
@@ -129,8 +133,8 @@ const Register = () => {
                                     Confirm Password
                                 </Label>
                                 <InputPasswordToggle className='input-group-merge' id='register-confirm-password'
-                                                     className={classNames({'is-invalid': errors['confirmPassword']})}
-                                                     {...register('confirmPassword')}
+                                    className={classNames({ 'is-invalid': errors['confirmPassword'] })}
+                                    {...register('confirmPassword')}
 
                                 />
                                 <small className='text-danger'>
@@ -138,7 +142,7 @@ const Register = () => {
                                 </small>
                             </FormGroup>
 
-                            {loading ? <ProgressLoader/> : <Button.Ripple color='primary' block type="submit">
+                            {loading ? <ProgressLoader /> : <Button.Ripple color='primary' block type="submit">
                                 Sign up
                             </Button.Ripple>}
                         </Form>

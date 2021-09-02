@@ -15,7 +15,7 @@ const FaqContact = () => {
           <Card className='text-center bg-light-secondary shadow-none py-1'>
             <CardBody>
               <div className='avatar avatar-tag bg-light-primary mb-2 mx-auto'>
-                <Mail size={18} />
+                <a href="mailto:customer.support@potentiam.io"><Mail size={18} /></a>
               </div>
               <h4>customer.support@potentiam.io</h4>
               <span className='text-body'>Best way to get answer faster!</span>

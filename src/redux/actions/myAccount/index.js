@@ -56,7 +56,7 @@ export const handleUserInformationUpdate = action => {
             await updateUserDetailsApi(data)
             dispatch(handleUserInformation())
             toast.success('User information updated successfully')
-            history.goBack()
+            history.replace('/')
             dispatch(setLoadingAction(false))
         } catch (e) {
             console.log(e)
