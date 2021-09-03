@@ -28,8 +28,11 @@ const Login = props => {
       .email('Email is invalid'),
 
     password: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
       .required('Password is required')
+      .test('space', 'Password is required', val => { return val?.trim().toString().length > 0 })
+      .test('min', 'Password must have 6 characters atleast', val => { return val?.trim().toString().length > 5 })
+      .test('max', 'Password must have atmost 100 characters', val => { return val?.trim().toString().length < 101 })
+      .test('spaceatstart', 'Your password can’t start or end with a blank space', val => { return val?.trim().toString().length === val?.toString().length })
 
   })
 
@@ -60,19 +63,19 @@ const Login = props => {
           </span>
         </Link>
         <Col className='d-none d-md-flex px-0 py-0' >
-            <img className="d-flex" height='100%' src={source} alt='Login V2' />
+          <img className="d-flex" height='100%' src={source} alt='Login V2' />
         </Col>
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
             <CardTitle tag='h2' className='font-weight-bold mb-1'>
               Welcome to Potentiam wallet! 👋
-              </CardTitle>
+            </CardTitle>
             <CardText className='mb-2'>Please sign-in to your account and start the adventure</CardText>
             <Form className='auth-login-form mt-2' onSubmit={handleSubmit(onSubmit)}>
               <FormGroup>
                 <Label className='form-label' for='login-email'>
                   Email
-                  </Label>
+                </Label>
 
                 <Input type='email'
                   id='login-email'
@@ -90,7 +93,7 @@ const Login = props => {
                 <div className='d-flex justify-content-between'>
                   <Label className='form-label' for='login-password'>
                     Password
-                    </Label>
+                  </Label>
                 </div>
                 <InputPasswordToggle
                   className='input-group-merge' id='register-password'
@@ -110,7 +113,7 @@ const Login = props => {
               </FormGroup>
               {loading ? <ProgressLoader /> : <Button.Ripple type='submit' color='primary' block>
                 Sign in
-                </Button.Ripple>}
+              </Button.Ripple>}
 
             </Form>
             <p className='text-center mt-2'>

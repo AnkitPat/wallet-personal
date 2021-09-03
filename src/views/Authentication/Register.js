@@ -35,15 +35,17 @@ const Register = () => {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('Name is required')
             .test('space', 'Name is required', val => { return val?.trim().toString().length > 0 })
-            .test('min', 'Name must have 5 characters atleast', val => { return val?.trim().toString().length > 4 }),
+            .test('min', 'Name must have 5 characters atleast', val => { return val?.trim().toString().length > 4 })
+            .test('max', 'Name should have atmost 50 characters', val => { return val?.trim().toString().length < 51 }),
         email: Yup.string()
             .required('Email is required')
             .email('Email is invalid'),
-        phone: Yup.string().required('Phone is required').min(10, "Phone number should contain minimum 10 digits"),
+        phone: Yup.string().required('Phone is required').min(10, "Phone number should contain minimum 10 digits").max(15, "Phone number should contain atmost 15 digits"),
         password: Yup.string()
             .required('Password is required')
             .test('space', 'Password is required', val => { return val?.trim().toString().length > 0 })
             .test('min', 'Password must have 6 characters atleast', val => { return val?.trim().toString().length > 5 })
+            .test('max', 'Password must have atmost 100 characters', val => { return val?.trim().toString().length < 101 })
             .test('spaceatstart', 'Your password can’t start or end with a blank space', val => { return val?.trim().toString().length === val?.toString().length }),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), null], 'Passwords must match')
